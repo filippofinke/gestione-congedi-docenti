@@ -1,0 +1,8 @@
+# Ignoro tutti i file word nella cartella diari
+/diari/docx
+
+# Ignoro i file di mac
+.DS_Store
+
+# Ignoro la cartella vendor
+/codice/vendor

@@ -1,0 +1,36 @@
+La gestione dei permessi va in base a LDAP oppure deve essere a parte?
+Dipende da gestione del programma oppure no.
+
+La modifica, cancellazione e modifica dei campi riguarda i nomi dei vari congedi oppure anche per utenti?
+Si, anche per gli utenti.
+
+Il login è abilitato a quale persone? Gruppo LDAP?
+Sia LDAP che non.
+
+Attivare / Eliminare utenti, in che senso? (dato che si usa LDAP)
+Per utenti locali.
+
+La gestione degli utenti è quindi esterna a LDAP?
+Solo per i locali.
+
+Per l'invio delle email quale servizio dovrà essere utilizzato?
+È presente un server mail infomaniak?
+Usare la funzione send_mail php.
+
+Inviare email quando cambia lo stato di un congedo o solamente all'interno del sito? (Propongo email dato che già utilizzato per password)
+Inviare per email e per sito.
+
+I vicedirettori accedono anche ai recipienti della segreteria?
+(Vedono quindi i recipienti a cascata?)
+Si, vedono tutto a cascata.
+
+Come viene mandato/gestito un congedo allo step successivo?
+Dalla segreteria in su, i permessi sono a cascata. Il permesso massimo vede tutto e così via.
+
+La firma digitale per me non può essere utilizzata, da discutere con il formatore.
+
+La struttura del congedo deve avere un calendario? È necessario?
+Si.
+
+Chi ha accesso allo storico delle richieste? 
+Segreteria, Vicedirettore e Direttrice.

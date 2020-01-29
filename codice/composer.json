@@ -1,0 +1,15 @@
+{
+    "name": "filippofinke/gestione-congedi",
+    "description": "Applicativo web per la gestione delle richieste di congedo dei docenti del CPT",
+    "type": "project",
+    "require": {
+        "filippofinke/php-rest": "dev-master"
+    },
+    "authors": [
+        {
+            "name": "Filippo Finke",
+            "email": "filippo.finke@samtrevano.ch"
+        }
+    ],
+    "minimum-stability": "dev"
+}
