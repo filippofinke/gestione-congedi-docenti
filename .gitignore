@@ -6,3 +6,7 @@
 
 # Ignoro la cartella vendor
 /codice/vendor
+/codice/composer.lock
+
+# Ignoro il file di config corrente
+/codice/config.php
