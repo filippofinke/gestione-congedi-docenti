@@ -11,5 +11,10 @@
             "email": "filippo.finke@samtrevano.ch"
         }
     ],
-    "minimum-stability": "dev"
+    "minimum-stability": "dev",
+    "autoload": {
+        "psr-4": {
+            "FilippoFinke\\":"src/"
+        }
+    }
 }
