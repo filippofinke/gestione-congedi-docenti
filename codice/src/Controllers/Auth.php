@@ -4,6 +4,8 @@ namespace FilippoFinke\Controllers;
 use FilippoFinke\Libs\Ldap;
 use FilippoFinke\Libs\Session;
 use FilippoFinke\Libs\LocalAuth;
+use FilippoFinke\Libs\Validators;
+use FilippoFinke\Models\Tokens;
 
 class Auth
 {
@@ -17,8 +19,8 @@ class Auth
     {
         $username = $request->getParam("username");
         $password = $request->getParam("password");
-        if ($username && $password) {
-            if (filter_var($username, FILTER_VALIDATE_EMAIL)) {
+        if ($username && Validators::isValidPassword($password)) {
+            if (Validators::isValidEmail($username)) {
                 $user = LocalAuth::login($username, $password);
             } else {
                 $user = Ldap::login($username, $password);
@@ -44,5 +46,25 @@ class Auth
     {
         Session::logout();
         return $response->redirect("/login");
+    }
+
+    public static function forgotPassword($request, $response)
+    {
+        $email = $request->getParam('email');
+        if (Validators::isValidEmail($email) && Tokens::resetTokens($email)) {
+            Tokens::sendToken($email);
+            return $response->withStatus(200);
+        }
+        return $response->withStatus(400);
+    }
+
+    public static function tokenLogin($request, $response)
+    {
+        $token = $request->getAttribute('token');
+        if (Tokens::login($token)) {
+            $response->redirect('/administration');
+        } else {
+            $response->redirect('/login');
+        }
     }
 }
