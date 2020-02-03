@@ -100,7 +100,7 @@ INSERT INTO permissions(name) VALUES ("Direzione");
 INSERT INTO users(username) VALUES("filippo.finke");
 
 # Inserimento amministratore di prova.
-INSERT INTO administrators(email, name, last_name, password) VALUES ("filippo.finke@samtrevano.ch","Filippo","Finke","$2y$10$gNJwmb3LFcJRJWTt97rvQudx1d2i2UkXJAvc7dNFRqsAEgHq1mijC"); # Password: 1234
+INSERT INTO administrators(email, name, last_name, password) VALUES ("filippo.finke@samtrevano.ch","Filippo","Finke","$2y$10$5TLq/1LFthARn3i0AosZV.hPJBj4Ps729q9.IbyfLsi1LxLO0cBkO"); # Password: 123456
 
 # Inserimento motivazione di prova.
 INSERT INTO reasons(name, description) VALUES ("Adozione","(16 settimane, previo giustificazione dei motivi)");
