@@ -3,7 +3,10 @@ use FilippoFinke\Utils\Database;
 use FilippoFinke\Libs\Ldap;
 use FilippoFinke\Libs\Mail;
 use FilippoFinke\Router;
-use FilippoFinke\Libs\Session;
+use FilippoFinke\Middlewares\AdministratorRequired;
+use FilippoFinke\Middlewares\AuthRequired;
+use FilippoFinke\Middlewares\LdapUserRequired;
+use FilippoFinke\RouteGroup;
 
 /**
  * index.php
@@ -51,17 +54,40 @@ $router = new Router();
 $router->get('/assets/js/{asset}', 'FilippoFinke\Controllers\Assets::js');
 $router->get('/assets/css/{asset}', 'FilippoFinke\Controllers\Assets::css');
 $router->get('/assets/fonts/{asset}', 'FilippoFinke\Controllers\Assets::fonts');
+$router->get('/assets/img/{asset}', 'FilippoFinke\Controllers\Assets::img');
 
 $router->get('/login', 'FilippoFinke\Controllers\Auth::index');
-$router->get('/logout', 'FilippoFinke\Controllers\Auth::logout');
+$router->get('/login/{token}', 'FilippoFinke\Controllers\Auth::tokenLogin');
 $router->post('/login', 'FilippoFinke\Controllers\Auth::doLogin');
+$router->get('/logout', 'FilippoFinke\Controllers\Auth::logout');
+$router->post('/forgot-password', 'FilippoFinke\Controllers\Auth::forgotPassword');
+
+$adminRoutes = new RouteGroup();
+$adminRoutes->add(
+    $router->get('/administration', 'FilippoFinke\Controllers\Administration::index'),
+    $router->get('/administration/motivations', 'FilippoFinke\Controllers\Administration::motivations'),
+    $router->put('/users/{username}', 'FilippoFinke\Controllers\Users::update'),
+    $router->post('/users', 'FilippoFinke\Controllers\Users::insert'),
+    $router->put('/users', 'FilippoFinke\Controllers\Users::setPassword'),
+    $router->delete('/users', 'FilippoFinke\Controllers\Users::delete')
+)
+->before(new AuthRequired())
+->before(new AdministratorRequired());
+
+$dashboardRoutes = new RouteGroup();
+$dashboardRoutes->add(
+    $router->get('/dashboard', 'FilippoFinke\Controllers\Dashboard::index')
+)
+->before(new AuthRequired())
+->before(new LdapUserRequired());
+
 
 $router->get('/', function ($req, $res) {
-    if(Session::isAuthenticated()) {
-        var_dump($_SESSION);
+    if ($_SESSION["permission"] == "Administrator") {
+        $res->redirect('/administration');
     } else {
-        return $res->redirect('/login');
+        $res->redirect('/dashboard');
     }
-});
+})->before(new AuthRequired());
 
 $router->start();
