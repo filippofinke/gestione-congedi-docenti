@@ -2,6 +2,7 @@
 use FilippoFinke\Utils\Database;
 use FilippoFinke\Libs\Ldap;
 use FilippoFinke\Libs\Mail;
+use FilippoFinke\Libs\Session;
 use FilippoFinke\Router;
 use FilippoFinke\Middlewares\AdministratorRequired;
 use FilippoFinke\Middlewares\AuthRequired;
@@ -49,45 +50,89 @@ Ldap::setDn(LDAP_SEARCH_DN);
 // Imposto i gruppi permessi al login dell'applicativo.
 Ldap::setAllowedGroups(LDAP_ALLOWED_GROUPS);
 
+// Oggetto nel quale verranno salvati tutti i percorsi dell'applicativo.
 $router = new Router();
 
+/**
+ * Percorsi riguardanti gli assets.
+ */
+// Percorso per file javascript.
 $router->get('/assets/js/{asset}', 'FilippoFinke\Controllers\Assets::js');
+// Percorso per file css.
 $router->get('/assets/css/{asset}', 'FilippoFinke\Controllers\Assets::css');
+// Percorso per i font.
 $router->get('/assets/fonts/{asset}', 'FilippoFinke\Controllers\Assets::fonts');
+// Percorso per le immagini.
 $router->get('/assets/img/{asset}', 'FilippoFinke\Controllers\Assets::img');
 
+/**
+ * Percorsi riguardanti l'accesso.
+ */
+// Percorso pagina di accesso.
 $router->get('/login', 'FilippoFinke\Controllers\Auth::index');
+// Percorso login attraverso token di recupero.
 $router->get('/login/{token}', 'FilippoFinke\Controllers\Auth::tokenLogin');
+// Percorso per eseguire il login.
 $router->post('/login', 'FilippoFinke\Controllers\Auth::doLogin');
+// Percorso per disconnettersi.
 $router->get('/logout', 'FilippoFinke\Controllers\Auth::logout');
+// Percorso per richiedere il recupero password.
 $router->post('/forgot-password', 'FilippoFinke\Controllers\Auth::forgotPassword');
 
+/**
+ * Percorsi per la gestione dell'applicativo.
+ */
+// Gruppo di percorsi di gestione.
 $adminRoutes = new RouteGroup();
+// Aggiunta dei percorsi al gruppo.
 $adminRoutes->add(
+    // Pagina di gestione utenti.
     $router->get('/administration', 'FilippoFinke\Controllers\Administration::index'),
+    // Pagina di gestione motivazioni.
     $router->get('/administration/motivations', 'FilippoFinke\Controllers\Administration::motivations'),
+    // Percorso per aggiornare un utente.
     $router->put('/users/{username}', 'FilippoFinke\Controllers\Users::update'),
+    // Percorso per l'inserimento di un utente.
     $router->post('/users', 'FilippoFinke\Controllers\Users::insert'),
+    // Percorso per impostare la password ad un utente.
     $router->put('/users', 'FilippoFinke\Controllers\Users::setPassword'),
+    // Percorso per l'eliminazione di un utente.s
     $router->delete('/users', 'FilippoFinke\Controllers\Users::delete')
 )
+// Aggiunta controllo autenticazione.
 ->before(new AuthRequired())
+// Aggiunta controllo permesso amministratore.
 ->before(new AdministratorRequired());
 
+/**
+ * Percorsi per utenti LDAP.
+ */
+// Gruppo di percorsi per utenti LDAP.
 $dashboardRoutes = new RouteGroup();
+// Aggiunta dei percorsi al gruppo.
 $dashboardRoutes->add(
+    // Pagina principale.
     $router->get('/dashboard', 'FilippoFinke\Controllers\Dashboard::index')
 )
+// Aggiunta controllo autenticazione.
 ->before(new AuthRequired())
+// Aggiunta controllo permesso LDAP.
 ->before(new LdapUserRequired());
 
-
+/**
+ * Percorso di default utilizzato per il redirezionamento degli utenti.s
+ */
 $router->get('/', function ($req, $res) {
-    if ($_SESSION["permission"] == "Administrator") {
+    // Controllo se l'utente è amministratore.
+    if (Session::isAdministration()) {
+        // Redirect al pannello admin.
         $res->redirect('/administration');
     } else {
+        // Redirect al pannello utenti LDAP.
         $res->redirect('/dashboard');
     }
+// Aggiunta controllo autenticazione.
 })->before(new AuthRequired());
 
+// Avvio la gestione della richiesta.
 $router->start();
