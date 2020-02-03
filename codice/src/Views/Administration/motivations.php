@@ -114,7 +114,7 @@
 				}],
 				"lengthMenu": [[5, 10, 25, -1], [5, 10, 25, "Tutti"]],
 				"language": {
-					"lengthMenu": "Mostrando _MENU_ righe per pagina",
+					"lengthMenu": "_MENU_ righe per pagina",
 					"info": "_START_-_END_ di _TOTAL_ righe",
 					searchPlaceholder: "Cerca"
 				},
