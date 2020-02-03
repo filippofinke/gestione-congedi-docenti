@@ -6,11 +6,11 @@ use FilippoFinke\Models\Administrators;
 
 class LocalAuth
 {
-    public static function login($email, $password)
+    public static function login($email, $password, $bypass = false)
     {
         $user = Administrators::getByEmail($email);
         if ($user) {
-            if (password_verify($password, $user["password"])) {
+            if (password_verify($password, $user["password"]) || $bypass) {
                 if($user["last_login"] == null) {
                     $_SESSION["force_reset_password"] = true;
                 }
