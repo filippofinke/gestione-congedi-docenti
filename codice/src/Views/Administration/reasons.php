@@ -25,35 +25,23 @@
 								<div class="modal-body">
 									<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 									<h3 class="text-center mb-30">Nuova motivazione</h3>
-									<form onsubmit="createMotivation(event);">
-										<div class="row">
-											<div class="col-6">
-												<div class="input-group custom">
-													<input id="name" type="text" class="form-control" placeholder="Nome" required maxlength="20" minlength="1">
-													<div class="input-group-append custom">
-														<span class="input-group-text"><i class="fa fa-user" aria-hidden="true"></i></span>
-													</div>
-												</div>
-											</div>
-											<div class="col-6">
-												<div class="input-group custom">
-													<input id="lastName" type="text" class="form-control" placeholder="Cognome" required maxlength="20" minlength="1">
-													<div class="input-group-append custom">
-														<span class="input-group-text"><i class="fa fa-user" aria-hidden="true"></i></span>
-													</div>
-												</div>
+									<form onsubmit="createReason(event);">
+										<div class="input-group custom">
+											<input id="name" type="text" class="form-control" placeholder="Motivazione" maxlength="255" minlength="1" required>
+											<div class="input-group-append custom">
+												<span class="input-group-text"><i class="fa fa-pencil" aria-hidden="true"></i></span>
 											</div>
 										</div>
 										<div class="input-group custom">
-											<input id="email" type="email" class="form-control" placeholder="Email" required>
+											<textarea class="form-control" name="description" id="description" rows="1" maxlength="255" minlength="1" placeholder="Descrizione" required></textarea>
 											<div class="input-group-append custom">
-												<span class="input-group-text"><i class="fa fa-envelope" aria-hidden="true"></i></span>
+												<span class="input-group-text"><i class="fa fa-info" aria-hidden="true"></i></span>
 											</div>
 										</div>
 										<div class="row">
 											<div class="col-sm-12">
 												<div class="input-group">
-													<button class="btn btn-outline-primary btn-block">Crea!</button>
+													<button type="submit" class="btn btn-outline-primary btn-block">Crea</button>
 												</div>
 											</div>
 										</div>
@@ -87,11 +75,50 @@
 								</tr>
 							</thead>
 							<tbody>
+							<?php foreach ($reasons as $reason): ?>
                                 <tr>
-                                    <td>test</td>
+                                    <td><?php echo $reason["name"]; ?></td>
+									<td><?php echo $reason["description"]; ?></td>
+									<td class="float-right">
+										<button class="btn btn-outline-warning" onclick="showUpdateDialog(this, <?php echo $reason["id"]; ?>)">Aggiorna</button>
+										<button class="btn btn-outline-danger" onclick="deleteReason(this, <?php echo $reason["id"]; ?>)">Elimina</button>
+									</td>
                                 </tr>
+							<?php endforeach; ?>
 							</tbody>
 						</table>
+					</div>
+				</div>
+			</div>
+			<div class="modal fade" id="update-motivation-modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+				<div class="modal-dialog modal-dialog-centered">
+					<div class="modal-content">
+						<div class="modal-body">
+							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+							<h3 class="text-center mb-30">Aggiorna motivazione</h3>
+							<form onsubmit="updateReason(event);">
+								<input type="hidden" id="update_id">
+								<div class="input-group custom">
+									<input id="update_name" type="text" class="form-control" placeholder="Motivazione" maxlength="255" minlength="1" required>
+									<div class="input-group-append custom">
+										<span class="input-group-text"><i class="fa fa-pencil" aria-hidden="true"></i></span>
+									</div>
+								</div>
+								<div class="input-group custom">
+									<textarea class="form-control" name="description" id="update_description" rows="1" maxlength="255" minlength="1" placeholder="Descrizione" required></textarea>
+									<div class="input-group-append custom">
+										<span class="input-group-text"><i class="fa fa-info" aria-hidden="true"></i></span>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-sm-12">
+										<div class="input-group">
+											<button type="submit" class="btn btn-outline-primary btn-block">Aggiorna</button>
+										</div>
+									</div>
+								</div>
+							</form>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -122,6 +149,81 @@
 				},
 			});
 		});
+
+		function updateReason(event) {
+			event.preventDefault();
+			var name = $("#update_name").val();
+			var description = $("#update_description").val();
+			var id = $("#update_id").val();
+			fetch('/reasons/' + id, {
+				method: "PUT",
+				body: "name=" + name + "&description=" + description
+			}).then((response) => {
+				if(response.status == 200) {
+					$.notify("Motivazione aggiornata!", "success");
+					setTimeout(function() {
+						location.reload();
+					}, 500);
+				} else {
+					$.notify("Richiesta malformata.", "error");
+				}
+			});
+		}
+
+		function showUpdateDialog(element, id) {
+			var tds = element.parentElement.parentElement.getElementsByTagName("td");
+			var name = tds[0].innerText;
+			var description = tds[1].innerText;
+			$("#update_name").val(name);
+			$("#update_description").val(description);
+			$("#update_id").val(id);
+			$("#update-motivation-modal").modal("toggle");
+		}
+		
+		function deleteReason(element, id) {
+			if(confirm("Sei sicuro di voler eliminare la motivazione? Potrà essere eliminata solamente se non ci saranno più congedi correlati.")) {
+				fetch('/reasons/' + id, {
+					method: "DELETE",
+				}).then((response) => {
+					if(response.status == 200) {
+						element.parentElement.parentElement.remove();
+						$.notify("Motivazione rimossa!", "success");
+					} else {
+						$.notify("Richiesta malformata.", "error");
+					}
+				 });
+			}
+		}
+
+		function createReason(event) {
+			event.preventDefault();
+			var name = $("#name").val();
+			var description = $("#description").val();
+			if(isValidAlphabetAndAccents(name, 255) && isValidDescription(description)) {
+				console.log(name, description);
+				fetch('/reasons', {
+					method: "POST",
+					body: "name=" + name + "&description=" + description,
+					headers:{
+						"Content-Type":"application/x-www-form-urlencoded"
+					}
+				}).then((response) => {
+					console.log(response);
+					if(response.status == 201) {
+						$.notify("Motivazione creata!", "success");
+						setTimeout(function() {
+							location.reload();
+						}, 500);
+					} else if(response.status == 400) {
+						$.notify("Alcuni campi contengono caratteri non validi!", "error");
+					} else if(response.status == 500) {
+						$.notify("Impossibile inserire la motivazione!", "error");
+					}
+				 });
+			} else {
+				$.notify("Compila entrambi i campi!", "error");
+			}
+		}
 	</script>
 </body>
 </html>

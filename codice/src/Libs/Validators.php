@@ -30,8 +30,13 @@ class Validators
         return strlen($password) >= 6;
     }
 
-    private static function isValidAlphabetAndAccents($text, $max, $min = 1)
+    public static function isValidAlphabetAndAccents($text, $max, $min = 1)
     {
         return preg_match('/^[A-Za-zÀ-ÖØ-öø-ÿ ]{'.$min.','.$max.'}$/', $text);
+    }
+
+    public static function isValidDescription($text) {
+        $safe = htmlspecialchars($text);
+        return strlen($text) >= 1 && strlen($text) <= 255 && $safe == $text;
     }
 }

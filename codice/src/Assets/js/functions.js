@@ -20,6 +20,10 @@ function isValidPassword(password) {
 }
 
 function isValidAlphabetAndAccents(text, max, min = 1) {
-    var re = "/^[A-Za-zÀ-ÖØ-öø-ÿ ]{" + min + "," + max + "}$/";
-    return re.test(text);
+    var re = /^[A-Za-zÀ-ÖØ-öø-ÿ ]*$/;
+    return re.test(text) && text.length >= min && text.length <= max;
+}
+
+function isValidDescription(text) {
+    return text.length >= 1 && text.length <= 255;
 }

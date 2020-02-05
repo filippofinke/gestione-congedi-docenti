@@ -70,7 +70,7 @@
 										<div class="row">
 											<div class="col-sm-12">
 												<div class="input-group">
-													<button class="btn btn-outline-primary btn-block">Crea!</button>
+													<button type="submit" class="btn btn-outline-primary btn-block">Crea</button>
 												</div>
 											</div>
 										</div>
@@ -114,7 +114,7 @@
 										<div class="row">
 											<div class="col-sm-12">
 												<div class="input-group">
-													<button class="btn btn-outline-primary btn-block">Crea!</button>
+													<button type="submit" class="btn btn-outline-primary btn-block">Crea</button>
 												</div>
 											</div>
 										</div>
