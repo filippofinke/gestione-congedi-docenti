@@ -81,7 +81,9 @@
 						<table class="data-table stripe hover nowrap">
 							<thead>
 								<tr>
-									<th>Test</th>
+									<th>Nome</th>
+									<th>Descrizione</th>
+									<th>Azioni</th>
 								</tr>
 							</thead>
 							<tbody>

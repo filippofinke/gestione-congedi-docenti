@@ -89,7 +89,7 @@ $adminRoutes->add(
     // Pagina di gestione utenti.
     $router->get('/administration', 'FilippoFinke\Controllers\Administration::index'),
     // Pagina di gestione motivazioni.
-    $router->get('/administration/motivations', 'FilippoFinke\Controllers\Administration::motivations'),
+    $router->get('/administration/reasons', 'FilippoFinke\Controllers\Administration::reasons'),
     // Percorso per aggiornare un utente.
     $router->put('/users/{username}', 'FilippoFinke\Controllers\Users::update'),
     // Percorso per l'inserimento di un utente.

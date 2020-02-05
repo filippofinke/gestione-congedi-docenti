@@ -16,7 +16,7 @@ use FilippoFinke\Libs\Session;
 							</a>
 						</li>
 						<li>
-							<a href="/administration/motivations" class="dropdown-toggle no-arrow <?php echo ($_SERVER["REQUEST_URI"] == "/administration/motivations")?"active":""; ?>">
+							<a href="/administration/reasons" class="dropdown-toggle no-arrow <?php echo ($_SERVER["REQUEST_URI"] == "/administration/reasons")?"active":""; ?>">
 								<span class="fa fa-pencil"></span><span class="mtext">Motivazioni</span>
 							</a>
 						</li>

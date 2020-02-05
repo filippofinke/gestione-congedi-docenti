@@ -5,6 +5,7 @@ namespace FilippoFinke\Controllers;
 use FilippoFinke\Models\Administrators;
 use FilippoFinke\Models\LdapUsers;
 use FilippoFinke\Models\Permissions;
+use FilippoFinke\Models\Reasons;
 
 class Administration
 {
@@ -25,8 +26,11 @@ class Administration
         }
     }
 
-    public static function motivations($request, $response)
+    public static function reasons($request, $response)
     {
-        return $response->render(__DIR__ . '/../Views/Administration/motivations.php');
+        $reasons = Reasons::getAll();
+        return $response->render(__DIR__ . '/../Views/Administration/reasons.php', array(
+            'reasons' => $reasons
+        ));
     }
 }
