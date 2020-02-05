@@ -18304,7 +18304,7 @@ textarea.form-control {
   background-color: #00bcf2; }
 
 .custom-checkbox .custom-control-input:checked ~ .custom-control-label::after {
-  background-image: url(../images/check-mark.png);
+  background-image: url(/assets/img/check-mark.png);
   background-repeat: no-repeat;
   background-position: center center; }
 

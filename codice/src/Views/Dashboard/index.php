@@ -26,7 +26,14 @@
 				</div>
 				<div class="pd-20 bg-white border-radius-4 box-shadow mb-30">
 					<div class="row">
-						
+						<?php foreach ($reasons as $reason): ?>
+							<div class="col-12">
+								<div class="custom-control custom-checkbox mb-5">
+									<input type="checkbox" class="custom-control-input" id="<?php echo $reason["id"]; ?>">
+									<label class="custom-control-label" for="<?php echo $reason["id"]; ?>"><?php echo $reason["name"]; ?> <?php echo $reason["description"]; ?></label>
+								</div>
+							</div>
+						<?php endforeach; ?>
 					</div>
 				</div>
 			</div>
