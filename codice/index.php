@@ -86,8 +86,11 @@ $router->post('/forgot-password', 'FilippoFinke\Controllers\Auth::forgotPassword
 $adminRoutes = new RouteGroup();
 // Aggiunta dei percorsi al gruppo.
 $adminRoutes->add(
+    // Percorso per l'aggiornamento di una motivazione.
     $router->put('/reasons/{id:[0-9]+}', 'FilippoFinke\Controllers\Reasons::update'),
+    // Percorso per eliminare una motivazione.
     $router->delete('/reasons/{id:[0-9]+}', 'FilippoFinke\Controllers\Reasons::delete'),
+    // Percorso per inserire una motivazione.
     $router->post('/reasons', 'FilippoFinke\Controllers\Reasons::insert'),
     // Pagina di gestione utenti.
     $router->get('/administration', 'FilippoFinke\Controllers\Administration::index'),
