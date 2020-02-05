@@ -124,14 +124,14 @@ $dashboardRoutes->add(
  */
 $router->get('/', function ($req, $res) {
     // Controllo se l'utente è amministratore.
-    if (Session::isAdministration()) {
+    if (Session::isAdministrator()) {
         // Redirect al pannello admin.
         $res->redirect('/administration');
     } else {
         // Redirect al pannello utenti LDAP.
         $res->redirect('/dashboard');
     }
-// Aggiunta controllo autenticazione.
+    // Aggiunta controllo autenticazione.
 })->before(new AuthRequired());
 
 // Avvio la gestione della richiesta.
