@@ -1,0 +1,36 @@
+.reason {
+    margin-bottom: 5px;
+} 
+
+.reason .card-body {
+    padding: 10px 15px !important;
+}
+
+.calendar {
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none;
+}
+
+.calendar-hour {
+    text-align: center;
+    border-bottom: 1px solid black;
+}
+
+.calendar-day {
+    padding: 20px;
+    text-transform: uppercase;
+    border-bottom: 1px solid black;
+    border-right: 1px solid black;
+    min-width: 130px;
+}
+
+.calendar-box {
+    text-align: center;
+    padding: 20px;
+    border-bottom: 1px solid black;
+    border-right: 1px solid black;
+}
