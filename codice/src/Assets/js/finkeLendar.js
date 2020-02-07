@@ -4,18 +4,32 @@ class FinkeLendar {
     this.element = element;
     this.labels = labels;
     this.days = [];
+    this.dates = [];
     for (var i = 0; i < labels.length; i++) {
       this.days.push([]);
+      this.dates.push(null);
     }
     this.hours = hours;
     this.selecting = false;
     this.currentSelection = [];
+    
+    this.week = "";
+  }
+
+  setOnHourClick(callback) {
+    this.onHourClick = callback;
+  }
+
+  setOnSelected(callback) {
+    this.onSelected = callback;
   }
 
   reset() {
     this.days = [];
+    this.dates = [];
     for (var i = 0; i < labels.length; i++) {
       this.days.push([]);
+      this.dates.push(null);
     }
     this.selecting = false;
     this.currentSelection = [];
@@ -39,26 +53,16 @@ class FinkeLendar {
   onCalendarRelease(event) {
     var e = event.target;
     this.selecting = false;
-    if (e.innerHTML == "") {
+    if (e.dataset.selected == "false") {
       this.onCalendarOver(event);
-      var room = prompt("Testo di prova: ", "");
-      for (var i = 0; i < this.currentSelection.length; i++) {
-        var element = this.currentSelection[i];
-        element.innerText = room;
+      if(this.onSelected) {
+        this.onSelected(event);
       }
       this.reorder();
       this.render();
-    } else {
-      this.onCalendarClick(e);
+    } else if (this.onHourClick) {
+      this.onHourClick(event);
     }
-    this.currentSelection = [];
-  }
-
-  onCalendarClick(element) {
-    var edit = prompt("Modifica: ");
-    element.innerHTML = edit;
-    this.reorder();
-    this.render();
   }
 
   onCalendarOver(event) {
@@ -68,6 +72,7 @@ class FinkeLendar {
       this.selecting
       && !this.isSelected(e)
     ) {
+      e.setAttribute("data-selected", "true");
       this.currentSelection.push(e);
       e.style.background = "#defffe";
       this.days[day].push(e);
@@ -95,8 +100,10 @@ class FinkeLendar {
         if (lastEnd == start && lastElement.innerText == element.innerText) {
           lastEnd = end;
           lastElement.style.background = "#defffe";
+          lastElement.setAttribute("data-end", lastEnd);
           elements += 1;
           lastElement.className = "col-" + elements + " calendar-box";
+          this.days[day].splice(i, 1);
           element.remove();
         } else {
           lastStart = start;
@@ -118,10 +125,19 @@ class FinkeLendar {
     spacer.classList = "calendar-day-spacer col";
 
     var btn = document.createElement("button");
-    btn.classList = "btn btn-outline-danger float-right";
+    btn.classList = "btn btn-outline-danger col-6";
     btn.innerText = "Cancella";
     btn.onclick = () => { this.reset(); };
 
+    var select = document.createElement("select");
+    select.classList = "custom-select col-6";
+    select.innerHTML = "<option disabled selected>Settimana</option>";
+    select.innerHTML += "<option>A</option>";
+    select.innerHTML += "<option>B</option>";
+    select.onchange = (event) => {this.week = event.target.value};
+
+
+    spacer.append(select);
     spacer.append(btn);
     header.append(spacer);
 
@@ -131,7 +147,7 @@ class FinkeLendar {
       var allow = hours[i].allow;
       var div = document.createElement("div");
       div.classList = "calendar-hour col-1";
-      div.innerHTML = start + "<br>" + end;
+      div.innerHTML = "<br>" + start + "<br>" + end;
       if (!allow) {
         div.style.background = "#d4d4d4";
       }
@@ -144,11 +160,18 @@ class FinkeLendar {
 
       var row = document.createElement("div");
       row.classList = "row";
-
+      
       var label = document.createElement("div");
       label.classList = "col calendar-day";
-      label.innerHTML = "<b>" + labels[i] + "</b>";
-
+      var date = document.createElement("input");
+      date.type = "date";
+      date.classList = "form-control";
+      date.setAttribute("data-index", i);
+      date.onchange = (event) => {
+        this.dates[event.target.dataset.index] = event.target.value;
+      };
+      label.innerHTML = "<b>" + labels[i] + "</b><br>";
+      label.append(date);
       row.append(label);
 
       for (var s = 0; s < hours.length; s++) {
@@ -158,6 +181,7 @@ class FinkeLendar {
           div.setAttribute("data-start", hours[s].start);
           div.setAttribute("data-end", hours[s].end);
           div.setAttribute("data-day", i);
+          div.setAttribute("data-selected", false);
           div.onmousedown = (event) => { this.onCalendarPress(event); };
           div.onmouseup = (event) => { this.onCalendarRelease(event); };
           div.onmouseover = (event) => { this.onCalendarOver(event); };

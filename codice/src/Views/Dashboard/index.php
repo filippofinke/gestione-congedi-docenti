@@ -28,21 +28,21 @@
 					<div class="tab">
 						<ul class="nav nav-tabs customtab" role="tablist">
 							<li class="nav-item">
-								<a class="nav-link active" data-toggle="tab" href="#reason" role="tab" aria-selected="false">Motivazione</a>
+								<a class="nav-link active" data-toggle="tab" href="#reasonTab" role="tab" aria-selected="false">Motivazione</a>
 							</li>
 							<li class="nav-item">
-								<a class="nav-link" data-toggle="tab" href="#calendar" role="tab" aria-selected="false">Orario</a>
+								<a class="nav-link" data-toggle="tab" href="#calendarTab" role="tab" aria-selected="false">Orario</a>
 							</li>
 						</ul>
 						<div class="tab-content">
-							<div class="tab-pane fade" id="reason" role="tabpanel">	
+							<div class="tab-pane fade active show" id="reasonTab" role="tabpanel">	
 								<div class="row mt-1">
 									<?php foreach ($reasons as $reason): ?>
 										<div class="col-6">
 											<div class="card reason">
 												<div class="card-body">
 													<div class="custom-control custom-checkbox mb-5">
-														<input type="checkbox" class="custom-control-input" id="<?php echo $reason["id"]; ?>">
+														<input type="checkbox" class="custom-control-input" id="<?php echo $reason["id"]; ?>" onchange="toggleReason(<?php echo $reason["id"]; ?>)">
 														<label class="custom-control-label" for="<?php echo $reason["id"]; ?>"><?php echo $reason["name"]; ?> <?php echo $reason["description"]; ?></label>
 													</div>
 												</div>
@@ -51,8 +51,8 @@
 									<?php endforeach; ?>
 								</div>
 							</div>
-							<div class="tab-pane fade active show calendar" id="calendar" role="tabpanel">
-
+							<div class="tab-pane fade" id="calendarTab" role="tabpanel">
+								<div class="calendar" id="calendar"></div>
 							</div>
 						</div>
 					</div>
@@ -60,6 +60,61 @@
 						<div class="col-12">
 							<h5 class="float-left">Data: <?php echo date("d.m.Y"); ?></h5>
 							<h5 class="float-right">Firma: <?php echo $_SESSION["username"]; ?></h5>
+						</div>
+						<div class="col-12 text-center">
+							<button class="btn btn-outline-primary" onclick="sendRequest()">Invia la richiesta</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="modal fade" id="calendar-modal" tabindex="-1" role="dialog">
+				<div class="modal-dialog modal-dialog-centered">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h4 class="modal-title">Modifica</h4>
+							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+						</div>
+						<div class="modal-body">
+							<form onsubmit="save(event)">
+								<div class="form-row">
+									<div class="col-6">
+										<div class="input-group custom">
+											<input id="course" type="text" class="form-control" placeholder="Classe" maxlength="15" minlength="1">
+											<div class="input-group-append custom">
+												<span class="input-group-text"><i class="fa fa-pencil" aria-hidden="true"></i></span>
+											</div>
+										</div>
+									</div>
+									<div class="col-6">
+										<div class="input-group custom">
+											<input id="room" type="text" class="form-control" placeholder="Aula" maxlength="5" minlength="1">
+											<div class="input-group-append custom">
+												<span class="input-group-text"><i class="fa fa-pencil" aria-hidden="true"></i></span>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="form-row">
+									<div class="col-4">
+										<select id="type" class="custom-select col-12">
+											<option selected disabled value="">Tipologia</option>
+											<option>SI</option>
+											<option>SO</option>
+											<option>SP</option>
+											<option>SE</option>
+										</select>
+									</div>
+									<div class="col-8">
+										<div class="input-group custom">
+											<input id="substitute" type="text" class="form-control" placeholder="Supplente" maxlength="30" minlength="1">
+											<div class="input-group-append custom">
+												<span class="input-group-text"><i class="fa fa-user" aria-hidden="true"></i></span>
+											</div>
+										</div>
+									</div>
+								</div>
+								<button type="submit" class="btn btn-primary">Salva</button>
+							</form>
 						</div>
 					</div>
 				</div>
@@ -71,6 +126,18 @@
 	<script src="/assets/js/notify.js"></script>
 	<script src="/assets/js/finkeLendar.js"></script>
 	<script>
+
+		var reasons = [];
+
+		function toggleReason(id) {
+			var index = reasons.indexOf(id);
+            if (index == -1) {
+                reasons.push(id);
+            } else {
+				reasons.splice(index, 1);
+			}
+		}
+
 		var labels = ["Lunedì", "Martedì", "Mercoledì", "Giovedì", "Venerdì", "Sabato"];
 		var hours = [
 			{start:"08:20", end:"09:05", allow:true},
@@ -89,7 +156,77 @@
 			labels,
 			hours
 		);
+
+		var toEdit = null;
+		
+		calendar.setOnHourClick(function(event) {
+			toEdit = event.target;
+			$("#course").val(toEdit.dataset.course);
+			$("#room").val(toEdit.dataset.room);
+			$("#substitute").val(toEdit.dataset.substitute);
+			$("#type").val(toEdit.dataset.type);
+			$('#calendar-modal').modal('toggle');
+		});
+
+		calendar.setOnSelected(function(event) {
+			toEdit = event.target;
+			$('#calendar-modal').modal('toggle');
+		});
+
+		function save(event) {
+			event.preventDefault();
+			var course = $("#course").val();
+			var room = $("#room").val();
+			var substitute = $("#substitute").val();
+			var type = $("#type").val();
+			var originalType = type;
+			if(typeof type == "string") {
+				type = " (" + type + ")";
+			} else {
+				type = "";
+			}
+			if(calendar.currentSelection.length > 0) {
+				for(var i = 0; i < calendar.currentSelection.length; i++) {
+					calendar.currentSelection[i].innerText = course + "\n" + room + "\n" + substitute + type;
+					calendar.currentSelection[i].setAttribute("data-course", course);
+					calendar.currentSelection[i].setAttribute("data-room", room);
+					calendar.currentSelection[i].setAttribute("data-substitute", substitute);
+					calendar.currentSelection[i].setAttribute("data-type", originalType);
+				}
+			} else {
+				toEdit.innerText = course + "\n" + room + "\n" + substitute + type;
+				toEdit.setAttribute("data-course", course);
+				toEdit.setAttribute("data-room", room);
+				toEdit.setAttribute("data-substitute", substitute);
+				toEdit.setAttribute("data-type", originalType);
+			}
+			calendar.currentSelection = [];
+			calendar.reorder();
+			calendar.render();
+			$('#calendar-modal').modal('toggle');
+		}
+
 		calendar.draw();
+
+
+		function sendRequest() {
+			console.log("reasons", reasons);
+			console.log("week", calendar.week);
+			console.log("days", calendar.days);
+			console.log("dates", calendar.dates);
+
+			for(var i = 0; i < calendar.days.length; i++) {
+				var date = calendar.dates[i];
+				var hours = calendar.days[i];
+				for(var x = 0; x < hours.length; x++) {
+					var element = hours[x];
+					console.log(element.dataset);
+
+				}
+
+			}
+		}
+
 	</script>
 	
 </body>
