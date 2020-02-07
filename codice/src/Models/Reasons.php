@@ -5,6 +5,12 @@ namespace FilippoFinke\Models;
 use FilippoFinke\Utils\Database;
 use \PDOException;
 
+/**
+ * Reasons.php
+ * Classe utilizzata per intefacciarsi con la tabella "reasons".
+ *
+ * @author Filippo Finke
+ */
 class Reasons
 {
     public static function getAll()

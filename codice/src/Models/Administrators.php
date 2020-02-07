@@ -6,6 +6,12 @@ use FilippoFinke\Libs\Mail;
 use FilippoFinke\Utils\Database;
 use PDOException;
 
+/**
+ * Administrators.php
+ * Classe utilizzata per intefacciarsi con la tabella "administrators".
+ *
+ * @author Filippo Finke
+ */
 class Administrators
 {
     public static function getAll()

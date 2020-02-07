@@ -1,11 +1,25 @@
 <?php
 namespace FilippoFinke\Models;
+
 use FilippoFinke\Utils\Database;
 use PDOException;
 
-class Permissions {
+/**
+ * Permissions.php
+ * Classe utilizzata per intefacciarsi con la tabella "permission".
+ *
+ * @author Filippo Finke
+ */
+class Permissions
+{
 
-    public static function getAll() {
+     /**
+     * Metodo getter per ricavare tutti i permessi.
+     *
+     * @return Array Un array di permessi.
+     */
+    public static function getAll()
+    {
         $pdo = Database::getConnection();
         $query = "SELECT * FROM permissions";
         try {
@@ -15,5 +29,4 @@ class Permissions {
             return false;
         }
     }
-
 }

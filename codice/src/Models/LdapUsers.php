@@ -5,6 +5,12 @@ namespace FilippoFinke\Models;
 use FilippoFinke\Utils\Database;
 use PDOException;
 
+/**
+ * LdapUsers.php
+ * Classe utilizzata per intefacciarsi con la tabella "users".
+ *
+ * @author Filippo Finke
+ */
 class LdapUsers
 {
     public static function getAll()

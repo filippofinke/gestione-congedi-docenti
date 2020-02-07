@@ -4,6 +4,12 @@ namespace FilippoFinke\Models;
 use FilippoFinke\Utils\Database;
 use PDOException;
 
+/**
+ * Administrator.php
+ * Classe che rappresenta un amministratore.
+ *
+ * @author Filippo Finke
+ */
 class Administrator
 {
 

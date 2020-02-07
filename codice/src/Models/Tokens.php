@@ -8,6 +8,12 @@ use FilippoFinke\Utils\Database;
 use FilippoFinke\Libs\Session;
 use PDOException;
 
+/**
+ * Tokens.php
+ * Classe utilizzata per intefacciarsi con la tabella "tokens".
+ *
+ * @author Filippo Finke
+ */
 class Tokens
 {
     public static function login($token)
