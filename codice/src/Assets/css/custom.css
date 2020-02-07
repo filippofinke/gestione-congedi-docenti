@@ -18,6 +18,14 @@
 .calendar-hour {
     text-align: center;
     border-bottom: 1px solid black;
+    border-right: 1px solid black;
+    border-top: 1px solid black;
+}
+
+.calendar-day-spacer {
+    padding: 20px;
+    border-bottom: 1px solid black;
+    border-right: 1px solid black;
 }
 
 .calendar-day {
@@ -25,7 +33,8 @@
     text-transform: uppercase;
     border-bottom: 1px solid black;
     border-right: 1px solid black;
-    min-width: 130px;
+    border-left: 1px solid black;
+    text-align: right;
 }
 
 .calendar-box {
