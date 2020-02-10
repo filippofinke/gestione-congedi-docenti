@@ -29,7 +29,7 @@
 }
 
 .calendar-day {
-    padding: 20px;
+    padding: 5px;
     text-transform: uppercase;
     border-bottom: 1px solid black;
     border-right: 1px solid black;

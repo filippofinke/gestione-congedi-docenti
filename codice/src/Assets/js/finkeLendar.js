@@ -11,7 +11,7 @@ class FinkeLendar {
     this.hours = hours;
     this.selecting = false;
     this.currentSelection = [];
-    
+
     this.week = "";
   }
 
@@ -26,7 +26,7 @@ class FinkeLendar {
   reset() {
     this.days = [];
     this.dates = [];
-    for (var i = 0; i < labels.length; i++) {
+    for (var i = 0; i < this.labels.length; i++) {
       this.days.push([]);
     }
     this.selecting = false;
@@ -53,7 +53,7 @@ class FinkeLendar {
     this.selecting = false;
     if (e.dataset.selected == "false") {
       this.onCalendarOver(event);
-      if(this.onSelected) {
+      if (this.onSelected) {
         this.onSelected(event);
       }
       this.reorder();
@@ -86,13 +86,19 @@ class FinkeLendar {
   }
 
   render() {
+
+
     for (var day = 0; day < this.days.length; day++) {
       var lastStart = null;
       var lastEnd = null;
       var lastElement = null;
       var elements = 0;
+      var dayHours = [];
       for (var i = 0; i < this.days[day].length; i++) {
-        var element = this.days[day][i];
+        dayHours.push(this.days[day][i]);
+      }
+      for (var i = 0; i < dayHours.length; i++) {
+        var element = dayHours[i];
         var start = element.dataset.start;
         var end = element.dataset.end;
         if (lastEnd == start && lastElement.innerText == element.innerText) {
@@ -101,8 +107,11 @@ class FinkeLendar {
           lastElement.setAttribute("data-end", lastEnd);
           elements += 1;
           lastElement.className = "col-" + elements + " calendar-box";
-          this.days[day].splice(i, 1);
           element.remove();
+          var index = this.days[day].indexOf(element);
+          if (index != -1) {
+            this.days[day].splice(index, 1);
+          }
         } else {
           lastStart = start;
           lastEnd = end;
@@ -132,7 +141,7 @@ class FinkeLendar {
     select.innerHTML = "<option disabled selected>Settimana</option>";
     select.innerHTML += "<option>A</option>";
     select.innerHTML += "<option>B</option>";
-    select.onchange = (event) => {this.week = event.target.value};
+    select.onchange = (event) => { this.week = event.target.value };
 
 
     spacer.append(select);
@@ -158,7 +167,7 @@ class FinkeLendar {
 
       var row = document.createElement("div");
       row.classList = "row";
-      
+
       var label = document.createElement("div");
       label.classList = "col calendar-day";
       var date = document.createElement("input");
