@@ -217,8 +217,12 @@
 							var element = hours[x];
 							var start = element.dataset.start;
 							var end = element.dataset.end;
+							var d = new Date(date);
 							if(typeof date == "undefined") {
 								errors.push("Data mancante!");
+								exit = true;
+							} else if(d.getDay() - 1 != i) {
+								errors.push("La data non corrisponde con il giorno!");
 								exit = true;
 							} else {
 								var course = element.dataset.course;
@@ -238,24 +242,26 @@
 							}
 						}
 					}
-					fetch('/requests', {
-						method: "POST",
-						body: "week=" + calendar.week + "&reasons=" + reasons + "&substitutes=" + JSON.stringify(toSave),
-						headers:{
-							"Content-Type":"application/x-www-form-urlencoded"
-						}
-					}).then((response) => {
-						if(response.status == 201) {
-							event.target.disabled = true;
-							$.notify("Congedo creato!", "success");
-							setTimeout(function() {
-								window.location.href = "/";
-							}, 500);
-						} else if(response.status == 400) {
-							$.notify("Richiesta malformata.", "error");
-						}
-						return response.text();
-					});
+					if(!exit) {
+						fetch('/requests', {
+							method: "POST",
+							body: "week=" + calendar.week + "&reasons=" + reasons + "&substitutes=" + JSON.stringify(toSave),
+							headers:{
+								"Content-Type":"application/x-www-form-urlencoded"
+							}
+						}).then((response) => {
+							if(response.status == 201) {
+								event.target.disabled = true;
+								$.notify("Congedo creato!", "success");
+								setTimeout(function() {
+									window.location.href = "/";
+								}, 500);
+							} else if(response.status == 400) {
+								$.notify("Richiesta malformata.", "error");
+							}
+							return response.text();
+						});
+					}
 				}
 				for(var i = 0; i < errors.length; i++) {
 					$.notify(errors[i], "error");
