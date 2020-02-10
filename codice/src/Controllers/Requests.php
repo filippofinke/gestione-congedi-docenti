@@ -8,6 +8,7 @@ use FilippoFinke\Utils\Database;
 
 class Requests
 {
+
     public static function insert($request, $response)
     {
         $username = $_SESSION["username"];

@@ -30,7 +30,7 @@ use FilippoFinke\Models\Requests;
 					</li>
 					<hr>
 					<li class="dropdown">
-						<a class="dropdown-toggle">
+						<a class="dropdown-toggle <?php echo ($_SERVER["REQUEST_URI"] == "/dashboard/sent" || $_SERVER["REQUEST_URI"] == "/dashboard/history")?"active":""; ?>">
 							<?php
                             $personal = Requests::getWaitingCountByUsername($_SESSION["username"]);
                             ?>
