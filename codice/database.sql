@@ -104,3 +104,5 @@ INSERT INTO administrators(email, name, last_name, password) VALUES ("filippo.fi
 
 # Inserimento motivazione di prova.
 INSERT INTO reasons(name, description) VALUES ("Adozione","(16 settimane, previo giustificazione dei motivi)");
+INSERT INTO reasons(name, description) VALUES ("Prova","Prova");
+INSERT INTO reasons(name, description) VALUES ("Prova","Prova");
