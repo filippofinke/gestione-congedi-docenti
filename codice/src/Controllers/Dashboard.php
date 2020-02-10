@@ -2,6 +2,7 @@
 namespace FilippoFinke\Controllers;
 
 use FilippoFinke\Models\Reasons;
+use FilippoFinke\Models\Requests;
 
 class Dashboard
 {
@@ -15,6 +16,10 @@ class Dashboard
     }
 
     public static function sent($request, $response) {
-        return $response->withStatus(200)->withText("XD");
+        $requests = Requests::getWaitingByUsername($_SESSION["username"]);
+        return $response->render(
+            __DIR__ . '/../Views/Dashboard/sent.php',
+            array("requests" => $requests)
+        );
     }
 }
