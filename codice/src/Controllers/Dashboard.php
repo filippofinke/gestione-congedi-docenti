@@ -13,4 +13,8 @@ class Dashboard
             array('reasons' => $reasons)
         );
     }
+
+    public static function sent($request, $response) {
+        return $response->withStatus(200)->withText("XD");
+    }
 }

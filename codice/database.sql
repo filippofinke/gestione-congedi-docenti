@@ -73,7 +73,7 @@ CREATE TABLE requests(
 CREATE TABLE request_reason(
     request INT NOT NULL,
     reason INT NOT NULL,
-    FOREIGN KEY(request) REFERENCES requests(id),
+    FOREIGN KEY(request) REFERENCES requests(id) ON DELETE CASCADE,
     FOREIGN KEY(reason) REFERENCES reasons(id)
 );
 
@@ -87,7 +87,7 @@ CREATE TABLE substitutes (
     room VARCHAR(5),
     substitute VARCHAR(30),
     class VARCHAR(15),
-    FOREIGN KEY(request) REFERENCES requests(id)
+    FOREIGN KEY(request) REFERENCES requests(id) ON DELETE CASCADE
 );
 
 # Inserimento dei permessi di default presenti nell'applicativo web.
@@ -97,7 +97,7 @@ INSERT INTO permissions(name) VALUES ("Vice direzione");
 INSERT INTO permissions(name) VALUES ("Direzione");
 
 # Inserimento di un utente di prova.
-INSERT INTO users(username) VALUES("filippo.finke");
+INSERT INTO users(username, name, last_name) VALUES("filippo.finke", "Filippo", "Finke");
 
 # Inserimento amministratore di prova.
 INSERT INTO administrators(email, name, last_name, password) VALUES ("filippo.finke@samtrevano.ch","Filippo","Finke","$2y$10$5TLq/1LFthARn3i0AosZV.hPJBj4Ps729q9.IbyfLsi1LxLO0cBkO"); # Password: 123456

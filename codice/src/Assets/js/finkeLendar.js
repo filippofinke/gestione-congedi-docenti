@@ -7,7 +7,6 @@ class FinkeLendar {
     this.dates = [];
     for (var i = 0; i < labels.length; i++) {
       this.days.push([]);
-      this.dates.push(null);
     }
     this.hours = hours;
     this.selecting = false;
@@ -29,7 +28,6 @@ class FinkeLendar {
     this.dates = [];
     for (var i = 0; i < labels.length; i++) {
       this.days.push([]);
-      this.dates.push(null);
     }
     this.selecting = false;
     this.currentSelection = [];
@@ -141,10 +139,10 @@ class FinkeLendar {
     spacer.append(btn);
     header.append(spacer);
 
-    for (var i = 0; i < hours.length; i++) {
-      var start = hours[i].start;
-      var end = hours[i].end;
-      var allow = hours[i].allow;
+    for (var i = 0; i < this.hours.length; i++) {
+      var start = this.hours[i].start;
+      var end = this.hours[i].end;
+      var allow = this.hours[i].allow;
       var div = document.createElement("div");
       div.classList = "calendar-hour col-1";
       div.innerHTML = "<br>" + start + "<br>" + end;
@@ -156,7 +154,7 @@ class FinkeLendar {
 
     this.element.append(header);
 
-    for (var i = 0; i < labels.length; i++) {
+    for (var i = 0; i < this.labels.length; i++) {
 
       var row = document.createElement("div");
       row.classList = "row";
@@ -165,21 +163,24 @@ class FinkeLendar {
       label.classList = "col calendar-day";
       var date = document.createElement("input");
       date.type = "date";
-      date.classList = "form-control";
+      date.style.fontSize = "10px";
+      date.classList = "form-control col-7 float-left";
       date.setAttribute("data-index", i);
-      date.onchange = (event) => {
+      date.addEventListener("change", (event) => {
         this.dates[event.target.dataset.index] = event.target.value;
-      };
-      label.innerHTML = "<b>" + labels[i] + "</b><br>";
+      });
       label.append(date);
+      var text = document.createElement("b");
+      text.innerText = this.labels[i];
+      label.append(text);
       row.append(label);
 
-      for (var s = 0; s < hours.length; s++) {
+      for (var s = 0; s < this.hours.length; s++) {
         var div = document.createElement("div");
         div.classList = "calendar-box col-1";
-        if (hours[s].allow) {
-          div.setAttribute("data-start", hours[s].start);
-          div.setAttribute("data-end", hours[s].end);
+        if (this.hours[s].allow) {
+          div.setAttribute("data-start", this.hours[s].start);
+          div.setAttribute("data-end", this.hours[s].end);
           div.setAttribute("data-day", i);
           div.setAttribute("data-selected", false);
           div.onmousedown = (event) => { this.onCalendarPress(event); };

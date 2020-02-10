@@ -52,6 +52,20 @@ class Reasons
         }
     }
 
+    public static function connect($reason_id, $request_id)
+    {
+        $pdo = Database::getConnection();
+        $query = "INSERT INTO request_reason VALUES(:request_id, :reason_id)";
+        $stm = $pdo->prepare($query);
+        $stm->bindParam(":request_id", $request_id, \PDO::PARAM_INT);
+        $stm->bindParam(":reason_id", $reason_id, \PDO::PARAM_INT);
+        try {
+            return $stm->execute();
+        } catch (PDOException $e) {
+            return false;
+        }
+    }
+
     public static function update($id, $name, $description)
     {
         $pdo = Database::getConnection();

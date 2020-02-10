@@ -1,5 +1,6 @@
 <?php
 use FilippoFinke\Libs\Session;
+use FilippoFinke\Models\Requests;
 
 ?>
 	<div class="left-side-bar">
@@ -30,7 +31,10 @@ use FilippoFinke\Libs\Session;
 					<hr>
 					<li class="dropdown">
 						<a class="dropdown-toggle">
-							<span class="fa fa-inbox"></span><span class="mtext">Personale <span class="badge badge-primary">0</span></span>
+							<?php
+                            $personal = Requests::getWaitingCountByUsername($_SESSION["username"]);
+                            ?>
+							<span class="fa fa-inbox"></span><span class="mtext">Personale <span class="badge badge-primary"><?php echo $personal; ?></span></span>
 						</a>
 						<ul class="submenu">
 							<li><a href="/dashboard/sent">In uscita</a></li>
