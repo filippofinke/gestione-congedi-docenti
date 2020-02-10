@@ -118,7 +118,9 @@ $dashboardRoutes = new RouteGroup();
 // Aggiunta dei percorsi al gruppo.
 $dashboardRoutes->add(
     // Pagina principale.
-    $router->get('/dashboard', 'FilippoFinke\Controllers\Dashboard::index')
+    $router->get('/dashboard', 'FilippoFinke\Controllers\Dashboard::index'),
+    $router->get('/dashboard/sent', 'FilippoFinke\Controllers\Dashboard::sent'),
+    $router->post('/requests', 'FilippoFinke\Controllers\Requests::insert')
 )
 // Aggiunta controllo autenticazione.
 ->before(new AuthRequired())

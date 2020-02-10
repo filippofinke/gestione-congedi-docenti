@@ -62,7 +62,7 @@
 							<h5 class="float-right">Firma: <?php echo $_SESSION["username"]; ?></h5>
 						</div>
 						<div class="col-12 text-center">
-							<button class="btn btn-outline-primary" onclick="sendRequest()">Invia la richiesta</button>
+							<button class="btn btn-outline-primary" onclick="sendRequest(event)">Invia la richiesta</button>
 						</div>
 					</div>
 				</div>
@@ -97,7 +97,7 @@
 								<div class="form-row">
 									<div class="col-4">
 										<select id="type" class="custom-select col-12">
-											<option selected disabled value="">Tipologia</option>
+											<option selected value="">Supplenza</option>
 											<option>SI</option>
 											<option>SO</option>
 											<option>SP</option>
@@ -125,108 +125,176 @@
     <?php include(__DIR__ . '/../Global/script.php'); ?>
 	<script src="/assets/js/notify.js"></script>
 	<script src="/assets/js/finkeLendar.js"></script>
-	<script>
+	<script>	
 
+		var toEdit = null;
 		var reasons = [];
+		var calendar = null;
 
 		function toggleReason(id) {
 			var index = reasons.indexOf(id);
-            if (index == -1) {
-                reasons.push(id);
-            } else {
+			if (index == -1) {
+				reasons.push(id);
+			} else {
 				reasons.splice(index, 1);
 			}
 		}
 
-		var labels = ["Lunedì", "Martedì", "Mercoledì", "Giovedì", "Venerdì", "Sabato"];
-		var hours = [
-			{start:"08:20", end:"09:05", allow:true},
-			{start:"09:05", end:"09:50", allow:true},
-			{start:"10:05", end:"10:50", allow:true},
-			{start:"10:50", end:"11:35", allow:true},
-			{start:"13:15", end:"14:00", allow:true},
-			{start:"14:00", end:"14:45", allow:true},
-			{start:"15:00", end:"15:45", allow:true},
-			{start:"15:45", end:"16:30", allow:true},
-			{start:"16:30", end:"17:45", allow:true},
-		];
+		window.addEventListener("load", function() {		
+			console.log("loaded!");			
 
-		var calendar = new FinkeLendar(
-			document.getElementById('calendar'),
-			labels,
-			hours
-		);
+			var labels = ["Lunedì", "Martedì", "Mercoledì", "Giovedì", "Venerdì", "Sabato"];
+			var hours = [
+				{start:"08:20", end:"09:05", allow:true},
+				{start:"09:05", end:"09:50", allow:true},
+				{start:"10:05", end:"10:50", allow:true},
+				{start:"10:50", end:"11:35", allow:true},
+				{start:"13:15", end:"14:00", allow:true},
+				{start:"14:00", end:"14:45", allow:true},
+				{start:"15:00", end:"15:45", allow:true},
+				{start:"15:45", end:"16:30", allow:true},
+				{start:"16:30", end:"17:45", allow:true},
+			];
 
-		var toEdit = null;
-		
-		calendar.setOnHourClick(function(event) {
-			toEdit = event.target;
-			$("#course").val(toEdit.dataset.course);
-			$("#room").val(toEdit.dataset.room);
-			$("#substitute").val(toEdit.dataset.substitute);
-			$("#type").val(toEdit.dataset.type);
-			$('#calendar-modal').modal('toggle');
+			calendar = new FinkeLendar(
+				document.getElementById('calendar'),
+				labels,
+				hours
+			);
+			
+			calendar.setOnHourClick(function(event) {
+				toEdit = event.target;
+				$("#course").val(toEdit.dataset.course);
+				$("#room").val(toEdit.dataset.room);
+				$("#substitute").val(toEdit.dataset.substitute);
+				$("#type").val(toEdit.dataset.type);
+				$('#calendar-modal').modal('toggle');
+			});
+
+			calendar.setOnSelected(function(event) {
+				toEdit = event.target;
+				$('#calendar-modal').modal('toggle');
+			});
+
+			calendar.draw();
 		});
 
-		calendar.setOnSelected(function(event) {
-			toEdit = event.target;
-			$('#calendar-modal').modal('toggle');
-		});
+		function sendRequest(event) {
+				console.log("reasons", reasons);
+				console.log("week", calendar.week);
+				console.log("days", calendar.days);
+				console.log("dates", calendar.dates);
+
+				var errors = [];
+				if(reasons.length == 0) {
+					errors.push("Seleziona una motivazione!");
+				}
+				if(calendar.week == "") {
+					errors.push("Seleziona una settimana!");
+				}
+				var selected = false;
+				for(var i = 0; i < calendar.days.length; i++) { 
+					if(calendar.days[i].length > 0) {
+						selected = true;
+						break;
+					}
+				}
+				if(!selected) {
+					errors.push("Seleziona un periodo!");
+				}
+
+				if(calendar.dates.length == 0) {
+					errors.push("Seleziona le date!");
+				}
+
+				if(errors.length == 0) {
+					var exit = false;
+					var toSave = [];
+					for(var i = 0; i < calendar.days.length && !exit; i++) {
+						var date = calendar.dates[i];
+						var hours = calendar.days[i];
+						for(var x = 0; x < hours.length && !exit; x++) {
+							var element = hours[x];
+							var start = element.dataset.start;
+							var end = element.dataset.end;
+							if(typeof date == "undefined") {
+								errors.push("Data mancante!");
+								exit = true;
+							} else {
+								var course = element.dataset.course;
+								var room = toEdit.dataset.room;
+								var substitute = toEdit.dataset.substitute;
+								var type = toEdit.dataset.type;
+								var start = date + " " + start;
+								var end = date + " " + end;
+								toSave.push({
+									from_date: start,
+									to_date: end,
+									type: type,
+									room: room,
+									substitute: substitute,
+									class: course
+								});
+							}
+						}
+					}
+					fetch('/requests', {
+						method: "POST",
+						body: "week=" + calendar.week + "&reasons=" + reasons + "&substitutes=" + JSON.stringify(toSave),
+						headers:{
+							"Content-Type":"application/x-www-form-urlencoded"
+						}
+					}).then((response) => {
+						if(response.status == 201) {
+							event.target.disabled = true;
+							$.notify("Congedo creato!", "success");
+							setTimeout(function() {
+								window.location.href = "/";
+							}, 500);
+						} else if(response.status == 400) {
+							$.notify("Richiesta malformata.", "error");
+						}
+						return response.text();
+					});
+				}
+				for(var i = 0; i < errors.length; i++) {
+					$.notify(errors[i], "error");
+				}
+				
+			}
 
 		function save(event) {
-			event.preventDefault();
-			var course = $("#course").val();
-			var room = $("#room").val();
-			var substitute = $("#substitute").val();
-			var type = $("#type").val();
-			var originalType = type;
-			if(typeof type == "string") {
-				type = " (" + type + ")";
-			} else {
-				type = "";
-			}
-			if(calendar.currentSelection.length > 0) {
-				for(var i = 0; i < calendar.currentSelection.length; i++) {
-					calendar.currentSelection[i].innerText = course + "\n" + room + "\n" + substitute + type;
-					calendar.currentSelection[i].setAttribute("data-course", course);
-					calendar.currentSelection[i].setAttribute("data-room", room);
-					calendar.currentSelection[i].setAttribute("data-substitute", substitute);
-					calendar.currentSelection[i].setAttribute("data-type", originalType);
+				event.preventDefault();
+				var course = $("#course").val();
+				var room = $("#room").val();
+				var substitute = $("#substitute").val();
+				var type = $("#type").val();
+				var originalType = type;
+				if(type != "") {
+					type = " (" + type + ")";
+				} else {
+					type = "";
 				}
-			} else {
-				toEdit.innerText = course + "\n" + room + "\n" + substitute + type;
-				toEdit.setAttribute("data-course", course);
-				toEdit.setAttribute("data-room", room);
-				toEdit.setAttribute("data-substitute", substitute);
-				toEdit.setAttribute("data-type", originalType);
-			}
-			calendar.currentSelection = [];
-			calendar.reorder();
-			calendar.render();
-			$('#calendar-modal').modal('toggle');
-		}
-
-		calendar.draw();
-
-
-		function sendRequest() {
-			console.log("reasons", reasons);
-			console.log("week", calendar.week);
-			console.log("days", calendar.days);
-			console.log("dates", calendar.dates);
-
-			for(var i = 0; i < calendar.days.length; i++) {
-				var date = calendar.dates[i];
-				var hours = calendar.days[i];
-				for(var x = 0; x < hours.length; x++) {
-					var element = hours[x];
-					console.log(element.dataset);
-
+				if(calendar.currentSelection.length > 0) {
+					for(var i = 0; i < calendar.currentSelection.length; i++) {
+						calendar.currentSelection[i].innerText = course + "\n" + room + "\n" + substitute + type;
+						calendar.currentSelection[i].setAttribute("data-course", course);
+						calendar.currentSelection[i].setAttribute("data-room", room);
+						calendar.currentSelection[i].setAttribute("data-substitute", substitute);
+						calendar.currentSelection[i].setAttribute("data-type", originalType);
+					}
+				} else {
+					toEdit.innerText = course + "\n" + room + "\n" + substitute + type;
+					toEdit.setAttribute("data-course", course);
+					toEdit.setAttribute("data-room", room);
+					toEdit.setAttribute("data-substitute", substitute);
+					toEdit.setAttribute("data-type", originalType);
 				}
-
+				calendar.currentSelection = [];
+				calendar.reorder();
+				calendar.render();
+				$('#calendar-modal').modal('toggle');
 			}
-		}
-
 	</script>
 	
 </body>
