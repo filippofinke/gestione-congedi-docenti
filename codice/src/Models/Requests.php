@@ -8,6 +8,21 @@ use PDOException;
 
 class Requests
 {
+    public static function getWaitingByUsername($username)
+    {
+        $pdo = Database::getConnection();
+        $query = "SELECT * FROM requests WHERE username = :username AND status = :status";
+        $stm = $pdo->prepare($query);
+        $stm->bindParam(":username", $username);
+        $stm->bindValue(":status", RequestStatus::WAITING);
+        try {
+            $stm->execute();
+            return $stm->fetchAll(\PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+        }
+        return false;
+    }
+
     public static function getWaitingCountByUsername($username)
     {
         $pdo = Database::getConnection();

@@ -5,9 +5,24 @@ namespace FilippoFinke\Models;
 use FilippoFinke\Utils\Database;
 use PDOException;
 
-class Substitutes {
+class Substitutes
+{
+    public static function getByRequestId($id)
+    {
+        $pdo = Database::getConnection();
+        $query = "SELECT * FROM substitutes WHERE request = :id";
+        $stm = $pdo->prepare($query);
+        $stm->bindParam(":id", $id);
+        try {
+            $stm->execute();
+            return $stm->fetchAll(\PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            return false;
+        }
+    }
 
-    public static function insert($request, $from, $to, $type, $room, $substitute, $class) {
+    public static function insert($request, $from, $to, $type, $room, $substitute, $class)
+    {
         $pdo = Database::getConnection();
         $query = "INSERT INTO substitutes VALUES(:id, :from, :to, :type, :room, :substitute, :class)";
         $stm = $pdo->prepare($query);
@@ -25,5 +40,4 @@ class Substitutes {
             return false;
         }
     }
-
 }

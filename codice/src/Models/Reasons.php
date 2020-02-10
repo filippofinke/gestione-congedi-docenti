@@ -25,6 +25,20 @@ class Reasons
         }
     }
 
+    public static function getByRequestId($id)
+    {
+        $pdo = Database::getConnection();
+        $query = "SELECT name FROM reasons WHERE id IN (SELECT reason FROM request_reason WHERE request = :id)";
+        $stm = $pdo->prepare($query);
+        $stm->bindParam(":id", $id);
+        try {
+            $stm->execute();
+            return $stm->fetchAll(\PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            return false;
+        }
+    }
+
     public static function insert($name, $description)
     {
         $pdo = Database::getConnection();
