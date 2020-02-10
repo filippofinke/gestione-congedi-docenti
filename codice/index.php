@@ -119,7 +119,9 @@ $dashboardRoutes = new RouteGroup();
 $dashboardRoutes->add(
     // Pagina principale.
     $router->get('/dashboard', 'FilippoFinke\Controllers\Dashboard::index'),
+    // Pagina di congedi in attesa.
     $router->get('/dashboard/sent', 'FilippoFinke\Controllers\Dashboard::sent'),
+    // Percorso per la creazione di un congedo.
     $router->post('/requests', 'FilippoFinke\Controllers\Requests::insert')
 )
 // Aggiunta controllo autenticazione.
