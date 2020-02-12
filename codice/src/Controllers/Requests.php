@@ -32,10 +32,10 @@ class Requests
                     }
                 }
                 foreach ($substitutes as $substitute) {
-                    if (Validators::isValidName($substitute["substitute"])
-                    && Validators::isValidDescription($substitute["room"], 1, 5)
-                    && Validators::isValidDescription($substitute["class"], 1, 15)
-                    && !Substitutes::insert(
+                    if ((strlen($substitute["substitute"]) > 0 && !Validators::isValidName($substitute["substitute"]))
+                    || !Validators::isValidDescription($substitute["room"], 0, 5)
+                    || !Validators::isValidDescription($substitute["class"], 0, 15)
+                    || !Substitutes::insert(
                         $id,
                         $substitute["from_date"],
                         $substitute["to_date"],
