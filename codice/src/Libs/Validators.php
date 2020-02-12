@@ -35,8 +35,9 @@ class Validators
         return preg_match('/^[A-Za-zÀ-ÖØ-öø-ÿ ]{'.$min.','.$max.'}$/', $text);
     }
 
-    public static function isValidDescription($text) {
+
+    public static function isValidDescription($text, $min = 1, $max = 255) {
         $safe = htmlspecialchars($text);
-        return strlen($text) >= 1 && strlen($text) <= 255 && $safe == $text;
+        return strlen($text) >= $min && strlen($text) <= $max && $safe == $text;
     }
 }
