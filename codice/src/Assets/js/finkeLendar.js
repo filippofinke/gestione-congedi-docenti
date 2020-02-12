@@ -134,7 +134,11 @@ class FinkeLendar {
     var btn = document.createElement("button");
     btn.classList = "btn btn-outline-danger col-6 float-right";
     btn.innerText = "Cancella";
-    btn.onclick = () => { this.reset(); };
+    btn.onclick = () => { 
+      if(confirm("Sei sicuro di voler cancellare le date selezionate?")) {
+        this.reset(); 
+      }
+    };
 
     var select = document.createElement("select");
     select.classList = "custom-select col-5";
