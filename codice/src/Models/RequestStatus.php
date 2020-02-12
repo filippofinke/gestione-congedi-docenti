@@ -1,6 +1,6 @@
 <?php
 
-namespace Filippofinke\Models;
+namespace FilippoFinke\Models;
 
 /**
  * RequestStatus.php
