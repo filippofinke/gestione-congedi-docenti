@@ -23,17 +23,16 @@ class Requests
         return false;
     }
 
-    public static function getWaitingCountByUsername($username)
+    public static function getByStatusAndContainer($status, $container)
     {
         $pdo = Database::getConnection();
-        $query = "SELECT COUNT(*) as 'count' FROM requests WHERE username = :username AND status = :status";
+        $query = "SELECT * FROM requests WHERE status = :status AND container = :container";
         $stm = $pdo->prepare($query);
-        $stm->bindParam(":username", $username);
-        $stm->bindValue(":status", RequestStatus::WAITING);
+        $stm->bindParam(":status", $status);
+        $stm->bindValue(":container", $container);
         try {
-            if ($stm->execute()) {
-                return $stm->fetch()["count"];
-            }
+            $stm->execute();
+            return $stm->fetchAll(\PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
         }
         return false;
