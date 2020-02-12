@@ -132,12 +132,12 @@ class FinkeLendar {
     spacer.classList = "calendar-day-spacer col";
 
     var btn = document.createElement("button");
-    btn.classList = "btn btn-outline-danger col-6";
+    btn.classList = "btn btn-outline-danger col-6 float-right";
     btn.innerText = "Cancella";
     btn.onclick = () => { this.reset(); };
 
     var select = document.createElement("select");
-    select.classList = "custom-select col-6";
+    select.classList = "custom-select col-5";
     select.innerHTML = "<option disabled selected>Settimana</option>";
     select.innerHTML += "<option>A</option>";
     select.innerHTML += "<option>B</option>";
