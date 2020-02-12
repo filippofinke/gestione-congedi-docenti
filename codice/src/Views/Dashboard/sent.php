@@ -40,7 +40,6 @@ include(__DIR__ . '/../Global/head.php'); ?>
 							<tr>
 								<th>Data di creazione</th>
 								<th>Motivi/o</th>
-								<th>Settimana</th>
 								<th>Assenze</th>
 								<th>Stato</th>
 							</tr>
@@ -59,8 +58,8 @@ include(__DIR__ . '/../Global/head.php'); ?>
 										<?php endforeach; ?>
 									</ul>
 								</td>
-								<td><?php echo $request["week"]; ?></td>
 								<td>
+									Settimana <?php echo $request["week"]; ?>
 									<ul>
 										<?php 
 										$lastDate = null;
