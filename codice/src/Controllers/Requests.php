@@ -2,13 +2,13 @@
 
 namespace FilippoFinke\Controllers;
 
+use FilippoFinke\Libs\Validators;
 use FilippoFinke\Models\Reasons;
 use FilippoFinke\Models\Substitutes;
 use FilippoFinke\Utils\Database;
 
 class Requests
 {
-
     public static function insert($request, $response)
     {
         $username = $_SESSION["username"];
@@ -16,8 +16,8 @@ class Requests
         $reasons = $request->getParam('reasons');
         $reasons = explode(",", $reasons);
         $substitutes = json_decode($request->getParam("substitutes"), true);
-        foreach($substitutes as $index => $substitute) {
-            foreach($substitute as $key => $value) {
+        foreach ($substitutes as $index => $substitute) {
+            foreach ($substitute as $key => $value) {
                 $substitutes[$index][$key] = htmlspecialchars($value);
             }
         }
@@ -32,7 +32,10 @@ class Requests
                     }
                 }
                 foreach ($substitutes as $substitute) {
-                    if (!Substitutes::insert(
+                    if (Validators::isValidName($substitute["substitute"])
+                    && Validators::isValidDescription($substitute["room"], 1, 5)
+                    && Validators::isValidDescription($substitute["class"], 1, 15)
+                    && !Substitutes::insert(
                         $id,
                         $substitute["from_date"],
                         $substitute["to_date"],
@@ -40,7 +43,7 @@ class Requests
                         $substitute["room"],
                         $substitute["substitute"],
                         $substitute["class"]
-                        )) {
+                    )) {
                         Database::getConnection()->rollBack();
                         return $response->withStatus(400);
                     }
