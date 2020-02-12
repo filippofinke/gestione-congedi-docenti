@@ -274,6 +274,14 @@
 				var course = $("#course").val();
 				var room = $("#room").val();
 				var substitute = $("#substitute").val();
+
+				if((substitute.length > 0 && !isValidName(substitute))
+				|| (room.length > 0 && !isValidDescription(room, 1, 5))
+				|| (course.length > 0 && !isValidDescription(course, 1, 15))) {
+					$.notify("I valori inseriti non sono validi!", "error");
+					return;
+				}
+
 				var type = $("#type").val();
 				var originalType = type;
 				if(type != "") {
