@@ -207,9 +207,9 @@
 					errors.push("Seleziona le date!");
 				}
 
+				var toSave = [];
 				if(errors.length == 0) {
 					var exit = false;
-					var toSave = [];
 					for(var i = 0; i < calendar.days.length && !exit; i++) {
 						var date = calendar.dates[i];
 						var hours = calendar.days[i];
