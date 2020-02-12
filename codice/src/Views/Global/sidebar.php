@@ -1,6 +1,8 @@
 <?php
 use FilippoFinke\Libs\Session;
 use FilippoFinke\Models\Requests;
+use FilippoFinke\Models\RequestStatus;
+use FilippoFinke\Models\Container;
 
 ?>
 	<div class="left-side-bar">
@@ -32,9 +34,9 @@ use FilippoFinke\Models\Requests;
 					<li class="dropdown">
 						<a class="dropdown-toggle <?php echo ($_SERVER["REQUEST_URI"] == "/dashboard/sent" || $_SERVER["REQUEST_URI"] == "/dashboard/history")?"active":""; ?>">
 							<?php
-                            $personal = Requests::getWaitingCountByUsername($_SESSION["username"]);
+                            $requests = Requests::getWaitingByUsername($_SESSION["username"]);
                             ?>
-							<span class="fa fa-inbox"></span><span class="mtext">Personale <span class="badge badge-primary"><?php echo $personal; ?></span></span>
+							<span class="fa fa-inbox"></span><span class="mtext">Personale <span class="badge badge-primary"><?php echo count($requests); ?></span></span>
 						</a>
 						<ul class="submenu">
 							<li><a href="/dashboard/sent">In uscita</a></li>
@@ -43,10 +45,12 @@ use FilippoFinke\Models\Requests;
 					</li>
 					<hr>
 					<?php endif; ?>
-					<?php if (Session::isSecretary()): ?>
+					<?php if (Session::isSecretary()):
+                            $secretariat = Requests::getByStatusAndContainer(RequestStatus::WAITING, Container::SECRETARY);
+                    ?>
 					<li class="dropdown">
 						<a class="dropdown-toggle">
-							<span class="fa fa-inbox"></span><span class="mtext">Segreteria <span class="badge badge-primary">0</span></span>
+							<span class="fa fa-inbox"></span><span class="mtext">Segreteria <span class="badge badge-primary"><?php echo count($secretariat); ?></span></span>
 						</a>
 						<ul class="submenu">
 							<li><a href="/dashboard/secretariat">In entrata</a></li>
@@ -54,10 +58,12 @@ use FilippoFinke\Models\Requests;
 					</li>
 					<hr>
 					<?php endif; ?>
-					<?php if (Session::isAdministration()): ?>
+					<?php if (Session::isAdministration()):
+                            $administration = Requests::getByStatusAndContainer(RequestStatus::WAITING, Container::ADMINISTRATION);
+                    ?>
 					<li class="dropdown">
 						<a class="dropdown-toggle">
-							<span class="fa fa-inbox"></span><span class="mtext">Direzione <span class="badge badge-primary">0</span></span>
+							<span class="fa fa-inbox"></span><span class="mtext">Direzione <span class="badge badge-primary"><?php echo count($administration); ?></span></span>
 						</a>
 						<ul class="submenu">
 							<li><a href="/dashboard/administration">In entrata</a></li>
