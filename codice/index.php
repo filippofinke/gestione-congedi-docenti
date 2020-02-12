@@ -7,6 +7,7 @@ use FilippoFinke\Router;
 use FilippoFinke\Middlewares\AdministratorRequired;
 use FilippoFinke\Middlewares\AuthRequired;
 use FilippoFinke\Middlewares\LdapUserRequired;
+use FilippoFinke\Middlewares\SecretaryRequired;
 use FilippoFinke\RouteGroup;
 
 /**
@@ -121,8 +122,12 @@ $dashboardRoutes->add(
     $router->get('/dashboard', 'FilippoFinke\Controllers\Dashboard::index'),
     // Pagina di congedi in attesa.
     $router->get('/dashboard/sent', 'FilippoFinke\Controllers\Dashboard::sent'),
+    $router->get('/dashboard/secretariat', 'FilippoFinke\Controllers\Dashboard::secretariat')
+    ->before(new SecretaryRequired()),
+
     // Percorso per la creazione di un congedo.
     $router->post('/requests', 'FilippoFinke\Controllers\Requests::insert')
+
 )
 // Aggiunta controllo autenticazione.
 ->before(new AuthRequired())
