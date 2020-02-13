@@ -1,3 +1,10 @@
+<?php
+$editing = false;
+if (isset($request)) {
+    $editing = true;
+}?>
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -42,7 +49,7 @@
 											<div class="card reason">
 												<div class="card-body">
 													<div class="custom-control custom-checkbox mb-5">
-														<input type="checkbox" class="custom-control-input" id="<?php echo $reason["id"]; ?>" onchange="toggleReason(<?php echo $reason["id"]; ?>)">
+														<input type="checkbox" class="custom-control-input" id="<?php echo $reason["id"]; ?>" onchange="toggleReason(<?php echo $reason["id"]; ?>)" <?php echo ($editing && in_array($reason["id"], $request["reasons"]))?'checked':''; ?>>
 														<label class="custom-control-label" for="<?php echo $reason["id"]; ?>"><?php echo $reason["name"]; ?> <?php echo $reason["description"]; ?></label>
 													</div>
 												</div>
@@ -58,8 +65,14 @@
 					</div>
 					<div class="row mt-1">
 						<div class="col-12">
-							<h5 class="float-left">Data: <?php echo date("d.m.Y"); ?></h5>
-							<h5 class="float-right">Firma: <?php echo $_SESSION["username"]; ?></h5>
+							<h5 class="float-left">Data: 
+								<?php echo ($editing)?date("d.m.Y", strtotime($request["request"]["created_at"])):date("d.m.Y"); ?>
+							</h5>
+							<h5 class="float-right">Firma: 
+								<?php
+                                    echo ($editing)?$request["user"]["name"]." ".$request["user"]["last_name"]:$_SESSION["name"]." ".$_SESSION["lastName"];
+                                ?>
+							</h5>
 						</div>
 						<div class="col-12 text-center">
 							<button class="btn btn-outline-primary" onclick="sendRequest(event)">Invia la richiesta</button>
@@ -177,6 +190,43 @@
 			});
 
 			calendar.draw();
+
+			<?php if ($editing): ?>
+				calendar.setWeek("<?php echo $request["request"]["week"]; ?>");
+				var substitues = JSON.parse('<?php echo json_encode($request["substitutes"]); ?>');
+				console.log(substitues);
+				for(var substitute of substitues) {
+					var start = new Date(substitute.from_date);
+					var end = new Date(substitute.to_date);
+					var day = start.getDay() - 1;
+					var startHour = start.getHours() + ":" + start.getMinutes();
+					var endHour = end.getHours() + ":" + end.getMinutes();
+					var currentStart = new Date("1990-01-01 " + startHour);
+					var currentEnd = new Date("1990-01-01 " + endHour);
+					var blocks = $("[data-day='" + day + "']");
+					if(substitute.type == null) {
+						substitute.type = "";
+					}
+					for(var block of blocks) {
+						var blockStart = new Date("1990-01-01 " + block.dataset.start);
+						var blockEnd = new Date("1990-01-01 " + block.dataset.end);
+
+						if(blockStart.getTime() >= currentStart.getTime() && blockEnd.getTime() <= currentEnd.getTime()) {
+							calendar.onCalendarOver({target:block}, true);
+							block.setAttribute("data-course", substitute.class);
+							block.setAttribute("data-room", substitute.room);
+							block.setAttribute("data-substitute", substitute.substitute);
+							block.setAttribute("data-type", substitute.type);
+							if(type != "") {
+								type = " (" + type + ")";
+							}
+							block.innerText = substitute.class + "\n" + substitute.room + "\n" + substitute.substitute + substitute.type;
+						}
+					}
+				}
+				calendar.reorder();
+				calendar.render();
+			<?php endif; ?>
 		});
 
 		function sendRequest(event) {
@@ -226,9 +276,9 @@
 								exit = true;
 							} else {
 								var course = element.dataset.course;
-								var room = toEdit.dataset.room;
-								var substitute = toEdit.dataset.substitute;
-								var type = toEdit.dataset.type;
+								var room = element.dataset.room;
+								var substitute = element.dataset.substitute;
+								var type = element.dataset.type;
 								var start = date + " " + start;
 								var end = date + " " + end;
 								toSave.push({
