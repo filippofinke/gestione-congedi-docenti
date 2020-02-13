@@ -24,7 +24,8 @@ class Dashboard
     }
 
     public static function secretariat($request, $response) {
-        $request = Requests::getByStatusAndContainer(RequestStatus::WAITING, Container::SECRETARY);
-        var_dump($request);
+        return $response->render(
+            __DIR__ . '/../Views/Dashboard/secretariat.php'
+        );
     }
 }
