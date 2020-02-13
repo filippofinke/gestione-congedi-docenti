@@ -29,51 +29,8 @@
 							<ul>
 								<li>
 									<a href="#">
-										<img src="vendors/images/img.jpg" alt="">
-										<h3 class="clearfix">John Doe <span>3 mins ago</span></h3>
-										<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed...</p>
-									</a>
-								</li>
-								<li>
-									<a href="#">
-										<img src="vendors/images/img.jpg" alt="">
-										<h3 class="clearfix">John Doe <span>3 mins ago</span></h3>
-										<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed...</p>
-									</a>
-								</li>
-								<li>
-									<a href="#">
-										<img src="vendors/images/img.jpg" alt="">
-										<h3 class="clearfix">John Doe <span>3 mins ago</span></h3>
-										<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed...</p>
-									</a>
-								</li>
-								<li>
-									<a href="#">
-										<img src="vendors/images/img.jpg" alt="">
-										<h3 class="clearfix">John Doe <span>3 mins ago</span></h3>
-										<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed...</p>
-									</a>
-								</li>
-								<li>
-									<a href="#">
-										<img src="vendors/images/img.jpg" alt="">
-										<h3 class="clearfix">John Doe <span>3 mins ago</span></h3>
-										<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed...</p>
-									</a>
-								</li>
-								<li>
-									<a href="#">
-										<img src="vendors/images/img.jpg" alt="">
-										<h3 class="clearfix">John Doe <span>3 mins ago</span></h3>
-										<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed...</p>
-									</a>
-								</li>
-								<li>
-									<a href="#">
-										<img src="vendors/images/img.jpg" alt="">
-										<h3 class="clearfix">John Doe <span>3 mins ago</span></h3>
-										<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed...</p>
+										<h3 class="clearfix">Sistema <span>3 minuti fa</span></h3>
+										<p>Notifica di prova</p>
 									</a>
 								</li>
 							</ul>
