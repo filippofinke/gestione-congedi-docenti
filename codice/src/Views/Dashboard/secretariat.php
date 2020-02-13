@@ -77,8 +77,7 @@ include(__DIR__ . '/../Global/head.php'); ?>
 										<?php endif; ?>
 											<li class="ml-5">
 												-
-												<?php echo date("H:i", strtotime($substitute["from_date"])); ?>
-												- <?php echo date("H:i", strtotime($substitute["to_date"])); ?> 
+												<?php echo date("H:i", strtotime($substitute["from_date"])); ?>-<?php echo date("H:i", strtotime($substitute["to_date"])); ?> 
 												<?php echo $substitute["class"]; ?> <?php echo $substitute["room"]; ?>
 												<?php echo $substitute["substitute"]; ?>
 												<?php echo $substitute["type"]; ?>
@@ -94,6 +93,7 @@ include(__DIR__ . '/../Global/head.php'); ?>
 								</td>
 								<td>
                                     <a class="btn btn-outline-primary text-primary">Visualizza</a>
+                                    <button class="btn btn-outline-success">Approva</button>
 								</td>
 							</tr>
 							<?php endforeach; ?>
