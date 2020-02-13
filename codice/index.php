@@ -122,12 +122,13 @@ $dashboardRoutes->add(
     $router->get('/dashboard', 'FilippoFinke\Controllers\Dashboard::index'),
     // Pagina di congedi in attesa.
     $router->get('/dashboard/sent', 'FilippoFinke\Controllers\Dashboard::sent'),
+    // Pagina congedi in attesa segreteria.
     $router->get('/dashboard/secretariat', 'FilippoFinke\Controllers\Dashboard::secretariat')
     ->before(new SecretaryRequired()),
-
     // Percorso per la creazione di un congedo.
-    $router->post('/requests', 'FilippoFinke\Controllers\Requests::insert')
-
+    $router->post('/requests', 'FilippoFinke\Controllers\Requests::insert'),
+    // Percorso per l'aggiornamento dei dati di un congedo.
+    $router->put('/requests', 'FilippoFinke\Controllers\Requests::update')
 )
 // Aggiunta controllo autenticazione.
 ->before(new AuthRequired())
