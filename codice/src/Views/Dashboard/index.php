@@ -212,7 +212,7 @@ if (isset($request)) {
 						var blockEnd = new Date("1990-01-01 " + block.dataset.end);
 
 						if(blockStart.getTime() >= currentStart.getTime() && blockEnd.getTime() <= currentEnd.getTime()) {
-							calendar.onCalendarOver({target:block}, true);
+							calendar.onCalendarHover({target:block}, true);
 							block.setAttribute("data-course", substitute.class);
 							block.setAttribute("data-room", substitute.room);
 							block.setAttribute("data-substitute", substitute.substitute);

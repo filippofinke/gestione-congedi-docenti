@@ -50,14 +50,14 @@ class FinkeLendar {
 
   onCalendarPress(event) {
     this.selecting = true;
-    this.onCalendarOver(event);
+    this.onCalendarHover(event);
   }
 
   onCalendarRelease(event) {
     var e = event.target;
     this.selecting = false;
     if (e.dataset.selected == "false") {
-      this.onCalendarOver(event);
+      this.onCalendarHover(event);
       if (this.onSelected) {
         this.onSelected(event);
       }
@@ -68,7 +68,7 @@ class FinkeLendar {
     }
   }
 
-  onCalendarOver(event, bypass = false) {
+  onCalendarHover(event, bypass = false) {
     var e = event.target;
     var day = e.dataset.day;
     if (
@@ -203,7 +203,7 @@ class FinkeLendar {
           div.setAttribute("data-selected", false);
           div.onmousedown = (event) => { this.onCalendarPress(event); };
           div.onmouseup = (event) => { this.onCalendarRelease(event); };
-          div.onmouseover = (event) => { this.onCalendarOver(event); };
+          div.onmouseover = (event) => { this.onCalendarHover(event); };
         } else {
           div.style.background = "#d4d4d4";
         }
