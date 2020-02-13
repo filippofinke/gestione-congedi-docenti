@@ -26,7 +26,7 @@ class Requests
     public static function getByStatusAndContainer($status, $container)
     {
         $pdo = Database::getConnection();
-        $query = "SELECT * FROM requests WHERE status = :status AND container = :container";
+        $query = "SELECT * FROM requests WHERE status = :status AND container = :container ORDER BY created_at DESC";
         $stm = $pdo->prepare($query);
         $stm->bindParam(":status", $status);
         $stm->bindValue(":container", $container);
@@ -47,6 +47,20 @@ class Requests
         $stm->bindValue(":id", $id);
         try {
             return $stm->execute();
+        } catch (PDOException $e) {
+        }
+        return false;
+    }
+
+    public static function getById($id)
+    {
+        $pdo = Database::getConnection();
+        $query = "SELECT * FROM requests WHERE id = :id";
+        $stm = $pdo->prepare($query);
+        $stm->bindParam(":id", $id);
+        try {
+            $stm->execute();
+            return $stm->fetch(\PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
         }
         return false;

@@ -28,7 +28,7 @@ class Reasons
     public static function getByRequestId($id)
     {
         $pdo = Database::getConnection();
-        $query = "SELECT name FROM reasons WHERE id IN (SELECT reason FROM request_reason WHERE request = :id)";
+        $query = "SELECT * FROM reasons WHERE id IN (SELECT reason FROM request_reason WHERE request = :id)";
         $stm = $pdo->prepare($query);
         $stm->bindParam(":id", $id);
         try {
