@@ -49,7 +49,7 @@ use FilippoFinke\Models\Container;
                             $secretariat = Requests::getByStatusAndContainer(RequestStatus::WAITING, Container::SECRETARY);
                     ?>
 					<li class="dropdown">
-						<a class="dropdown-toggle">
+						<a class="dropdown-toggle <?php echo ($_SERVER["REQUEST_URI"] == "/dashboard/secretariat")?"active":""; ?>">
 							<span class="fa fa-inbox"></span><span class="mtext">Segreteria <span class="badge badge-primary"><?php echo count($secretariat); ?></span></span>
 						</a>
 						<ul class="submenu">
