@@ -15,6 +15,11 @@ class FinkeLendar {
     this.week = "";
   }
 
+  setWeek(week) {
+    this.week = week;
+    this.select.value = week;
+  }
+
   setOnHourClick(callback) {
     this.onHourClick = callback;
   }
@@ -63,12 +68,12 @@ class FinkeLendar {
     }
   }
 
-  onCalendarOver(event) {
+  onCalendarOver(event, bypass = false) {
     var e = event.target;
     var day = e.dataset.day;
     if (
-      this.selecting
-      && !this.isSelected(e)
+      (this.selecting
+      && !this.isSelected(e)) || bypass
     ) {
       e.setAttribute("data-selected", "true");
       this.currentSelection.push(e);
@@ -140,15 +145,15 @@ class FinkeLendar {
       }
     };
 
-    var select = document.createElement("select");
-    select.classList = "custom-select col-5";
-    select.innerHTML = "<option disabled selected>Settimana</option>";
-    select.innerHTML += "<option>A</option>";
-    select.innerHTML += "<option>B</option>";
-    select.onchange = (event) => { this.week = event.target.value };
+    this.select = document.createElement("select");
+    this.select.classList = "custom-select col-5";
+    this.select.innerHTML = "<option disabled selected>Settimana</option>";
+    this.select.innerHTML += "<option>A</option>";
+    this.select.innerHTML += "<option>B</option>";
+    this.select.onchange = (event) => { this.week = event.target.value };
 
 
-    spacer.append(select);
+    spacer.append(this.select);
     spacer.append(btn);
     header.append(spacer);
 
