@@ -126,7 +126,8 @@ $dashboardRoutes->add(
     $router->get('/dashboard/secretariat', 'FilippoFinke\Controllers\Dashboard::secretariat')
     ->before(new SecretaryRequired()),
     // Percorso per la creazione di un congedo.
-    $router->post('/requests', 'FilippoFinke\Controllers\Requests::insert'),
+    $router->post('/requests', 'FilippoFinke\Controllers\Requests::insert')
+    ->before(new SecretaryRequired()),
     // Percorso per l'aggiornamento dei dati di un congedo.
     $router->put('/requests', 'FilippoFinke\Controllers\Requests::update')
 )
