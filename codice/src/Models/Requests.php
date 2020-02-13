@@ -38,6 +38,20 @@ class Requests
         return false;
     }
 
+    public static function setContainer($id, $container)
+    {
+        $pdo = Database::getConnection();
+        $query = "UPDATE requests SET container = :container WHERE id = :id";
+        $stm = $pdo->prepare($query);
+        $stm->bindParam(":container", $container);
+        $stm->bindValue(":id", $id);
+        try {
+            return $stm->execute();
+        } catch (PDOException $e) {
+        }
+        return false;
+    }
+
     public static function insert($username, $week)
     {
         $pdo = Database::getConnection();

@@ -132,7 +132,17 @@ include(__DIR__ . '/../Global/head.php'); ?>
     
     function approve(id) {
         if(confirm("Sei sicuro/a di voler mandare il congedo in direzione?")) {
-
+            console.log("Approving " + id);
+            fetch('/requests/' + id, {
+				method: "PUT",
+				body: "approve=true"
+			}).then((response) => {
+				if(response.status == 200) {
+					$.notify("Congedo mandato in direzione!", "success");
+				} else {
+					$.notify("Impossibile approvare il congedo!", "error");
+                }
+			});
         }
     }
 

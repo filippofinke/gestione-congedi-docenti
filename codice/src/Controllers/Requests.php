@@ -3,8 +3,11 @@
 namespace FilippoFinke\Controllers;
 
 use FilippoFinke\Libs\Validators;
+use FilippoFinke\Models\Container;
 use FilippoFinke\Models\Reasons;
+use FilippoFinke\Models\Requests as ModelsRequests;
 use FilippoFinke\Models\Substitutes;
+use FilippoFinke\Request;
 use FilippoFinke\Utils\Database;
 
 class Requests
@@ -53,5 +56,19 @@ class Requests
             }
         }
         return $response->withStatus(400);
+    }
+
+    public static function update($request, $response)
+    {
+        $id = $request->getAttribute('id');
+        $approve = $request->getParam('approve');
+        if ($approve) {
+            if (ModelsRequests::setContainer($id, Container::ADMINISTRATION)) {
+                return $response->withStatus(200);
+            } else {
+                return $response->withStatus(400);
+            }
+        } else {
+        }
     }
 }

@@ -126,10 +126,10 @@ $dashboardRoutes->add(
     $router->get('/dashboard/secretariat', 'FilippoFinke\Controllers\Dashboard::secretariat')
     ->before(new SecretaryRequired()),
     // Percorso per la creazione di un congedo.
-    $router->post('/requests', 'FilippoFinke\Controllers\Requests::insert')
-    ->before(new SecretaryRequired()),
+    $router->post('/requests', 'FilippoFinke\Controllers\Requests::insert'),
     // Percorso per l'aggiornamento dei dati di un congedo.
-    $router->put('/requests', 'FilippoFinke\Controllers\Requests::update')
+    $router->put('/requests/{id:[0-9]+}', 'FilippoFinke\Controllers\Requests::update')
+    ->before(new SecretaryRequired())
 )
 // Aggiunta controllo autenticazione.
 ->before(new AuthRequired())
