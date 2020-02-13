@@ -47,17 +47,17 @@ include(__DIR__ . '/../Global/head.php'); ?>
 							</tr>
 						</thead>
 						<tbody>
-							<?php foreach($secretariat as $request): 
-								$reasons = Reasons::getByRequestId($request["id"]);
+							<?php foreach ($secretariat as $request):
+                                $reasons = Reasons::getByRequestId($request["id"]);
                                 $substitutes = Substitutes::getByRequestId($request["id"]);
                                 $user = LdapUsers::getByUsername($request["username"]);
-							?>
+                            ?>
 							<tr>
                                 <td><?php echo $user["last_name"]." ".$user["name"]; ?></td>
 								<td><?php echo date("d.m.Y", strtotime($request["created_at"])); ?></td>
 								<td>
 									<ul>
-										<?php foreach($reasons as $reason): ?>
+										<?php foreach ($reasons as $reason): ?>
 											<li><?php echo $reason["name"]; ?></li>
 										<?php endforeach; ?>
 									</ul>
@@ -65,12 +65,12 @@ include(__DIR__ . '/../Global/head.php'); ?>
 								<td>
 									Settimana <?php echo $request["week"]; ?>
 									<ul>
-										<?php 
-										$lastDate = null;
-										foreach($substitutes as $substitute): 
-											$currentDate = date("d.m.Y", strtotime($substitute["from_date"]));
-										?>
-										<?php if($lastDate != $currentDate): ?>
+										<?php
+                                        $lastDate = null;
+                                        foreach ($substitutes as $substitute):
+                                            $currentDate = date("d.m.Y", strtotime($substitute["from_date"]));
+                                        ?>
+										<?php if ($lastDate != $currentDate): ?>
 											<li>
 												<?php echo $currentDate; ?>
 												<ul>
@@ -82,9 +82,9 @@ include(__DIR__ . '/../Global/head.php'); ?>
 												<?php echo $substitute["substitute"]; ?>
 												<?php echo $substitute["type"]; ?>
 											</li>
-										<?php if($lastDate != $currentDate): 
-											$lastDate = $currentDate;
-										?>
+										<?php if ($lastDate != $currentDate):
+                                            $lastDate = $currentDate;
+                                        ?>
 												</ul>
 											</li>
 										<?php endif; ?>
@@ -93,7 +93,7 @@ include(__DIR__ . '/../Global/head.php'); ?>
 								</td>
 								<td>
                                     <a class="btn btn-outline-primary text-primary">Visualizza</a>
-                                    <button class="btn btn-outline-success">Approva</button>
+                                    <button class="btn btn-outline-success" onclick="approve(<?php echo $request["id"]; ?>)">Conferma</button>
 								</td>
 							</tr>
 							<?php endforeach; ?>
@@ -128,7 +128,14 @@ include(__DIR__ . '/../Global/head.php'); ?>
                 }
 			},
 		});
-	});
+    });
+    
+    function approve(id) {
+        if(confirm("Sei sicuro/a di voler mandare il congedo in direzione?")) {
+
+        }
+    }
+
 	</script>
 </body>
 </html>
