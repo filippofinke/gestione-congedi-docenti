@@ -145,7 +145,11 @@
 				"language": {
 					"lengthMenu": "_MENU_ righe per pagina",
 					"info": "_START_-_END_ di _TOTAL_ righe",
-					searchPlaceholder: "Cerca"
+					searchPlaceholder: "Cerca",
+					"paginate": {
+						"previous": "Prima",
+						"next": "Prossima"
+					}
 				},
 			});
 		});
