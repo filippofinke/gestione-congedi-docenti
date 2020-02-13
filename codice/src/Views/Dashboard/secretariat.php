@@ -28,8 +28,7 @@ include(__DIR__ . '/../Global/head.php'); ?>
 							<nav aria-label="breadcrumb" role="navigation">
 								<ol class="breadcrumb">
 									<li class="breadcrumb-item"><a href="/dashboard">Dashboard</a></li>
-									<li class="breadcrumb-item">In uscita</li>
-									<li class="breadcrumb-item active" aria-current="page">Personale</li>
+									<li class="breadcrumb-item active" aria-current="page">Segreteria</li>
 								</ol>
 							</nav>
 						</div>
