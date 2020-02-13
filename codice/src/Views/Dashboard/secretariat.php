@@ -120,7 +120,8 @@ include(__DIR__ . '/../Global/head.php'); ?>
 			"lengthMenu": [[5, 10, 25, -1], [5, 10, 25, "Tutti"]],
 			"language": {
 				"lengthMenu": "_MENU_ righe per pagina",
-				"info": "_START_-_END_ di _TOTAL_ righe",
+                "info": "_START_-_END_ di _TOTAL_ righe",
+                "emptyTable": "Non sono presenti congedi in attesa!",
                 searchPlaceholder: "Cerca",
                 "paginate": {
                     "previous": "Prima",
@@ -138,7 +139,10 @@ include(__DIR__ . '/../Global/head.php'); ?>
 				body: "approve=true"
 			}).then((response) => {
 				if(response.status == 200) {
-					$.notify("Congedo mandato in direzione!", "success");
+                    $.notify("Congedo mandato in direzione!", "success");
+                    setTimeout(function() {
+						location.reload();
+					}, 500);
 				} else {
 					$.notify("Impossibile approvare il congedo!", "error");
                 }

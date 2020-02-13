@@ -45,15 +45,15 @@ include(__DIR__ . '/../Global/head.php'); ?>
 							</tr>
 						</thead>
 						<tbody>
-							<?php foreach($requests as $request): 
-								$reasons = Reasons::getByRequestId($request["id"]);
-								$substitutes = Substitutes::getByRequestId($request["id"]);
-							?>
+							<?php foreach ($requests as $request):
+                                $reasons = Reasons::getByRequestId($request["id"]);
+                                $substitutes = Substitutes::getByRequestId($request["id"]);
+                            ?>
 							<tr>
 								<td><?php echo date("d.m.Y", strtotime($request["created_at"])); ?></td>
 								<td>
 									<ul>
-										<?php foreach($reasons as $reason): ?>
+										<?php foreach ($reasons as $reason): ?>
 											<li><?php echo $reason["name"]; ?></li>
 										<?php endforeach; ?>
 									</ul>
@@ -61,12 +61,12 @@ include(__DIR__ . '/../Global/head.php'); ?>
 								<td>
 									Settimana <?php echo $request["week"]; ?>
 									<ul>
-										<?php 
-										$lastDate = null;
-										foreach($substitutes as $substitute): 
-											$currentDate = date("d.m.Y", strtotime($substitute["from_date"]));
-										?>
-										<?php if($lastDate != $currentDate): ?>
+										<?php
+                                        $lastDate = null;
+                                        foreach ($substitutes as $substitute):
+                                            $currentDate = date("d.m.Y", strtotime($substitute["from_date"]));
+                                        ?>
+										<?php if ($lastDate != $currentDate): ?>
 											<li>
 												<?php echo $currentDate; ?>
 												<ul>
@@ -78,9 +78,9 @@ include(__DIR__ . '/../Global/head.php'); ?>
 												<?php echo $substitute["substitute"]; ?>
 												<?php echo $substitute["type"]; ?>
 											</li>
-										<?php if($lastDate != $currentDate): 
-											$lastDate = $currentDate;
-										?>
+										<?php if ($lastDate != $currentDate):
+                                            $lastDate = $currentDate;
+                                        ?>
 												</ul>
 											</li>
 										<?php endif; ?>
@@ -116,7 +116,8 @@ include(__DIR__ . '/../Global/head.php'); ?>
 			"language": {
 				"lengthMenu": "_MENU_ righe per pagina",
 				"info": "_START_-_END_ di _TOTAL_ righe",
-                searchPlaceholder: "Cerca",
+				searchPlaceholder: "Cerca",
+				"emptyTable": "Non sono presenti congedi in attesa!",
                 "paginate": {
                     "previous": "Prima",
                     "next": "Prossima"
