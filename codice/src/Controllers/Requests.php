@@ -35,17 +35,17 @@ class Requests
                     }
                 }
                 foreach ($substitutes as $substitute) {
-                    if ((strlen($substitute["substitute"]) > 0 && !Validators::isValidName($substitute["substitute"]))
-                    || !Validators::isValidDescription($substitute["room"], 0, 5)
-                    || !Validators::isValidDescription($substitute["class"], 0, 15)
+                    if ((strlen($substitute["substitute"] ?? "") > 0 && !Validators::isValidName($substitute["substitute"] ?? ""))
+                    || !Validators::isValidDescription($substitute["room"] ?? "", 0, 5)
+                    || !Validators::isValidDescription($substitute["class"] ?? "", 0, 15)
                     || !Substitutes::insert(
                         $id,
                         $substitute["from_date"],
                         $substitute["to_date"],
-                        $substitute["type"],
-                        $substitute["room"],
-                        $substitute["substitute"],
-                        $substitute["class"]
+                        $substitute["type"] ?? "",
+                        $substitute["room"] ?? "",
+                        $substitute["substitute"] ?? "",
+                        $substitute["class"] ?? ""
                     )) {
                         Database::getConnection()->rollBack();
                         return $response->withStatus(400);
