@@ -92,7 +92,7 @@ include(__DIR__ . '/../Global/head.php'); ?>
 									</ul>
 								</td>
 								<td>
-                                    <a class="btn btn-outline-primary text-primary">Visualizza</a>
+                                    <a class="btn btn-outline-primary text-primary" href="/dashboard/<?php echo $request["id"]; ?>">Visualizza</a>
                                     <button class="btn btn-outline-success" onclick="approve(<?php echo $request["id"]; ?>)">Conferma</button>
 								</td>
 							</tr>

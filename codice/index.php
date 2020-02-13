@@ -118,6 +118,9 @@ $adminRoutes->add(
 $dashboardRoutes = new RouteGroup();
 // Aggiunta dei percorsi al gruppo.
 $dashboardRoutes->add(
+    // Pagina di visione e modifica congedi.
+    $router->get('/dashboard/{id:[0-9]+}', 'FilippoFinke\Controllers\Dashboard::index')
+    ->before(new SecretaryRequired()),
     // Pagina principale.
     $router->get('/dashboard', 'FilippoFinke\Controllers\Dashboard::index'),
     // Pagina di congedi in attesa.
