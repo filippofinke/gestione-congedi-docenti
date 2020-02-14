@@ -194,10 +194,11 @@ if (isset($request)) {
 			<?php if ($editing): ?>
 				calendar.setWeek("<?php echo $request["request"]["week"]; ?>");
 				var substitues = JSON.parse('<?php echo json_encode($request["substitutes"]); ?>');
-				console.log(substitues);
 				for(var substitute of substitues) {
 					var start = new Date(substitute.from_date);
 					var end = new Date(substitute.to_date);
+					var dateSelect = $("[data-index='" + day + "']");
+					dateSelect.val(start.toISOString().slice(0,10));
 					var day = start.getDay() - 1;
 					var startHour = start.getHours() + ":" + start.getMinutes();
 					var endHour = end.getHours() + ":" + end.getMinutes();
