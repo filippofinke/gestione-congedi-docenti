@@ -75,7 +75,14 @@ if (isset($request)) {
 							</h5>
 						</div>
 						<div class="col-12 text-center">
-							<button class="btn btn-outline-primary" onclick="sendRequest(event)">Invia la richiesta</button>
+							<button class="btn btn-outline-primary" onclick="sendRequest(event)">
+							<?php
+                                echo ($editing)?"Aggiorna la richiesta":"Invia la richiesta";
+                            ?>
+							</button>
+							<?php if ($editing): ?>
+							<button class="btn btn-outline-dark" onclick="window.history.back();">Torna indietro</button>
+							<?php endif; ?>
 						</div>
 					</div>
 				</div>
@@ -141,7 +148,11 @@ if (isset($request)) {
 	<script>	
 
 		var toEdit = null;
+		<?php if($editing) :?>
+		var reasons = [<?php echo implode(",", $request["reasons"]); ?>];
+		<?php else: ?>
 		var reasons = [];
+		<?php endif; ?>
 		var calendar = null;
 
 		function toggleReason(id) {
@@ -199,6 +210,7 @@ if (isset($request)) {
 					var end = new Date(substitute.to_date);
 					var dateSelect = $("[data-index='" + day + "']");
 					dateSelect.val(start.toISOString().slice(0,10));
+					calendar.dates[day] = dateSelect.val();
 					var day = start.getDay() - 1;
 					var startHour = start.getHours() + ":" + start.getMinutes();
 					var endHour = end.getHours() + ":" + end.getMinutes();
@@ -294,24 +306,37 @@ if (isset($request)) {
 						}
 					}
 					if(!exit) {
-						fetch('/requests', {
-							method: "POST",
+
+						var url = "<?php echo ($editing)?"/requests/".$request["request"]["id"]:"/requests";?>";
+						var method = "<?php echo ($editing)?"PUT":"POST";?>";
+						var toUpdate = <?php echo ($editing)?"true":"false"; ?>;
+
+						fetch(url, {
+							method: method,
 							body: "week=" + calendar.week + "&reasons=" + reasons + "&substitutes=" + JSON.stringify(toSave),
 							headers:{
 								"Content-Type":"application/x-www-form-urlencoded"
 							}
 						}).then((response) => {
-							if(response.status == 201) {
+							if(response.status == 201 || response.status == 200) {
 								event.target.disabled = true;
-								$.notify("Congedo creato!", "success");
+								if(toUpdate) {
+									$.notify("Congedo aggiornato!", "success");
+								} else {
+									$.notify("Congedo creato!", "success");
+								}
 								setTimeout(function() {
-									window.location.href = "/";
+									if(toUpdate) {
+										window.history.back();
+									} else {
+										window.location.href = "/";
+									}
 								}, 500);
 							} else if(response.status == 400) {
 								$.notify("Richiesta malformata.", "error");
 							}
 							return response.text();
-						});
+						}).then(r => console.log(r));
 					}
 				}
 				for(var i = 0; i < errors.length; i++) {

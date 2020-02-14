@@ -66,6 +66,46 @@ class Requests
         return false;
     }
 
+    public static function update($id, $week)
+    {
+        $pdo = Database::getConnection();
+        $query = "UPDATE requests SET week = :week WHERE id = :id";
+        $stm = $pdo->prepare($query);
+        $stm->bindParam(":id", $id);
+        $stm->bindparam(":week", $week);
+        try {
+            return $stm->execute();
+        } catch (PDOException $e) {
+        }
+        return false;
+    }
+
+    public static function deleteReasons($id)
+    {
+        $pdo = Database::getConnection();
+        $query = "DELETE FROM request_reason WHERE request = :id";
+        $stm = $pdo->prepare($query);
+        $stm->bindParam(':id', $id);
+        try {
+            return $stm->execute();
+        } catch (PDOException $e) {
+        }
+        return false;
+    }
+
+    public static function deleteSubstitutes($id)
+    {
+        $pdo = Database::getConnection();
+        $query = "DELETE FROM substitutes WHERE request = :id";
+        $stm = $pdo->prepare($query);
+        $stm->bindParam(':id', $id);
+        try {
+            return $stm->execute();
+        } catch (PDOException $e) {
+        }
+        return false;
+    }
+
     public static function insert($username, $week)
     {
         $pdo = Database::getConnection();
