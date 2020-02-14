@@ -7,14 +7,33 @@ use FilippoFinke\Libs\LocalAuth;
 use FilippoFinke\Libs\Validators;
 use FilippoFinke\Models\Tokens;
 
+/**
+ * Auth.php
+ * Controller che si occupa di gestire tutti i percorsi relativi all'autenticazione.
+ *
+ * @author Filippo Finke
+ */
 class Auth
 {
+    /**
+     * Metodo che si occupa di renderizzare la pagina di accesso.
+     *
+     * @param $request La richiesta.
+     * @param $response La risposta.
+     * @return Response La risposta.
+     */
     public static function index($request, $response)
     {
-        $response->withHeader("Content-Type", "text/html");
         return $response->render(__DIR__ . '/../Views/Auth/login.php');
     }
 
+    /**
+     * Metodo utilizzato per verificare le credenziali dell'utente.
+     *
+     * @param $request La richiesta.
+     * @param $response La risposta.
+     * @return Response La risposta.
+     */
     public static function doLogin($request, $response)
     {
         $username = $request->getParam("username");
@@ -42,12 +61,26 @@ class Auth
         }
     }
 
+    /**
+     * Metodo utilizzato per eseguire il logout.
+     *
+     * @param $request La richiesta.
+     * @param $response La risposta.
+     * @return Response La risposta.
+     */
     public static function logout($request, $response)
     {
         Session::logout();
         return $response->redirect("/login");
     }
 
+    /**
+     * Metodo utilizzato per la richiesta di un'email di recupero password.
+     *
+     * @param $request La richiesta.
+     * @param $response La risposta.
+     * @return Response La risposta.
+     */
     public static function forgotPassword($request, $response)
     {
         $email = $request->getParam('email');
@@ -58,6 +91,13 @@ class Auth
         return $response->withStatus(400);
     }
 
+    /**
+     * Metodo utilizzato per autenticarsi attraverso il token di recupero password.
+     *
+     * @param $request La richiesta.
+     * @param $response La risposta.
+     * @return Response La risposta.
+     */
     public static function tokenLogin($request, $response)
     {
         $token = $request->getAttribute('token');

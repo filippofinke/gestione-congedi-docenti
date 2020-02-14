@@ -7,11 +7,23 @@ use FilippoFinke\Models\Container;
 use FilippoFinke\Models\Reasons;
 use FilippoFinke\Models\Requests as ModelsRequests;
 use FilippoFinke\Models\Substitutes;
-use FilippoFinke\Request;
 use FilippoFinke\Utils\Database;
 
+/**
+ * Requests.php
+ * Controller che si occupa di gestire tutti i percorsi relativi ai congedi.
+ *
+ * @author Filippo Finke
+ */
 class Requests
 {
+    /**
+     * Metodo utilizzato per inserire un congedo.
+     *
+     * @param $request La richiesta.
+     * @param $response La risposta.
+     * @return Response La risposta.
+     */
     public static function insert($request, $response)
     {
         $username = $_SESSION["username"];
@@ -58,6 +70,13 @@ class Requests
         return $response->withStatus(400);
     }
 
+    /**
+     * Metodo utilizzato per aggiornare un congedo.
+     *
+     * @param $request La richiesta.
+     * @param $response La risposta.
+     * @return Response La risposta.
+     */
     public static function update($request, $response)
     {
         $id = $request->getAttribute('id');
@@ -73,6 +92,11 @@ class Requests
             $reasons = $request->getParam('reasons');
             $reasons = explode(",", $reasons);
             $substitutes = json_decode($request->getParam("substitutes"), true);
+            foreach ($substitutes as $index => $substitute) {
+                foreach ($substitute as $key => $value) {
+                    $substitutes[$index][$key] = htmlspecialchars($value);
+                }
+            }
             if (($week == "A" || $week == "B") && is_array($reasons) && is_array($substitutes)) {
                 Database::getConnection()->beginTransaction();
                 if (

@@ -6,8 +6,21 @@ use FilippoFinke\Libs\Validators;
 use FilippoFinke\Models\Administrators;
 use FilippoFinke\Models\LdapUsers;
 
+/**
+ * Users.php
+ * Controller che si occupa di gestire tutti i percorsi relativi agli utenti.
+ *
+ * @author Filippo Finke
+ */
 class Users
 {
+    /**
+     * Metodo utilizzato per aggiornare un utente.
+     *
+     * @param $request La richiesta.
+     * @param $response La risposta.
+     * @return Response La risposta.
+     */
     public static function update($request, $response)
     {
         $username = $request->getAttribute('username');
@@ -18,6 +31,13 @@ class Users
         return $response->withStatus(400);
     }
 
+    /**
+     * Metodo utilizzato per inserire un utente.
+     *
+     * @param $request La richiesta.
+     * @param $response La risposta.
+     * @return Response La risposta.
+     */
     public static function insert($request, $response)
     {
         $type = $request->getParam('type');
@@ -54,6 +74,13 @@ class Users
         return $response->withStatus(400);
     }
 
+    /**
+     * Metodo utilizzato per aggiornare la password di un utente.
+     *
+     * @param $request La richiesta.
+     * @param $response La risposta.
+     * @return Response La risposta.
+     */
     public static function setPassword($request, $response)
     {
         $password = $request->getParam('password');
@@ -64,6 +91,13 @@ class Users
         return $response->withStatus(400);
     }
 
+    /**
+     * Metodo utilizzato per eliminare un utente.
+     *
+     * @param $request La richiesta.
+     * @param $response La risposta.
+     * @return Response La risposta.
+     */
     public static function delete($request, $response)
     {
         $email = $request->getParam('email');

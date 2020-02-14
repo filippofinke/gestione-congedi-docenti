@@ -6,12 +6,28 @@ use FilippoFinke\Models\Reasons;
 use FilippoFinke\Models\Requests;
 use FilippoFinke\Models\Substitutes;
 
+/**
+ * Dashboard.php
+ * Controller che si occupa di gestire tutti i percorsi relativi alle
+ * pagine mostrate agli utenti LDAP.
+ *
+ * @author Filippo Finke
+ */
 class Dashboard
 {
+    /**
+     * Metodo che si occupa di renderizzare la pagina di creazione di
+     * un congedo.
+     *
+     * @param $request La richiesta.
+     * @param $response La risposta.
+     * @return Response La risposta.
+     */
     public static function index($request, $response)
     {
         $reasons = Reasons::getAll();
         $id = $request->getAttribute("id");
+        // Se è presente un identificativo apri la visualizzazione in modifica.
         if ($id) {
             $request = Requests::getById($id);
             if ($request) {
@@ -42,6 +58,14 @@ class Dashboard
         }
     }
 
+    /**
+     * Metodo che si occupa di renderizzare la pagina che mostra i
+     * congedi in attesa dell'utente.
+     *
+     * @param $request La richiesta.
+     * @param $response La risposta.
+     * @return Response La risposta.
+     */
     public static function sent($request, $response)
     {
         return $response->render(
@@ -49,6 +73,13 @@ class Dashboard
         );
     }
 
+    /**
+     * Metodo che si occupa di renderizzare il contenitore della segreteria.
+     *
+     * @param $request La richiesta.
+     * @param $response La risposta.
+     * @return Response La risposta.
+     */
     public static function secretariat($request, $response)
     {
         return $response->render(
