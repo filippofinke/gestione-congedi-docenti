@@ -148,7 +148,7 @@ if (isset($request)) {
 	<script>	
 
 		var toEdit = null;
-		<?php if($editing) :?>
+		<?php if ($editing) :?>
 		var reasons = [<?php echo implode(",", $request["reasons"]); ?>];
 		<?php else: ?>
 		var reasons = [];
@@ -237,6 +237,7 @@ if (isset($request)) {
 						}
 					}
 				}
+				calendar.currentSelection = [];
 				calendar.reorder();
 				calendar.render();
 			<?php endif; ?>
