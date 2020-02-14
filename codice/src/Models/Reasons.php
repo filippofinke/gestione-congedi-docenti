@@ -13,6 +13,12 @@ use \PDOException;
  */
 class Reasons
 {
+
+    /**
+     * Metodo utilizzato per ricavare tutte le motivazioni.
+     *
+     * @return array Array di motivazioni.
+     */
     public static function getAll()
     {
         $pdo = Database::getConnection();
@@ -25,6 +31,12 @@ class Reasons
         }
     }
 
+    /**
+     * Metodo utilizzato per ricavare una motivazione dal suo id.
+     *
+     * @param $id L'id della motivazione.
+     * @return array Array di motivazioni.
+     */
     public static function getByRequestId($id)
     {
         $pdo = Database::getConnection();
@@ -39,6 +51,13 @@ class Reasons
         }
     }
 
+    /**
+     * Metodo utilizzato per inserire una motivazione.
+     *
+     * @param $name Il nome.
+     * @param $description La descrizione.
+     * @return boolean True o false.
+     */
     public static function insert($name, $description)
     {
         $pdo = Database::getConnection();
@@ -53,6 +72,12 @@ class Reasons
         }
     }
 
+    /**
+     * Metodo utilizzato per eliminare una motivazione.
+     *
+     * @param $id L'id.
+     * @return boolean True o false.
+     */
     public static function delete($id)
     {
         $pdo = Database::getConnection();
@@ -66,6 +91,13 @@ class Reasons
         }
     }
 
+    /**
+     * Metodo utilizzato per collegare una motivazione ad un congedo.
+     *
+     * @param $reason_id L'id della motivazione.
+     * @param $request_id L'id del congedo.
+     * @return boolean True o false.
+     */
     public static function connect($reason_id, $request_id)
     {
         $pdo = Database::getConnection();
@@ -80,6 +112,14 @@ class Reasons
         }
     }
 
+    /**
+     * Metodo utilizzato per aggiornare una motivazione.
+     *
+     * @param $id L'id.
+     * @param $name Il nome.
+     * @param $description La descrizione.
+     * @return boolean True o false.
+     */
     public static function update($id, $name, $description)
     {
         $pdo = Database::getConnection();

@@ -91,6 +91,9 @@ class LdapUser
         $this->setPermission();
     }
 
+    /**
+     * Metodo utilizzato per impostare il permesso dell'utente.
+     */
     private function setPermission()
     {
         $data = LdapUsers::getByUsername($this->username);
@@ -102,6 +105,9 @@ class LdapUser
         }
     }
 
+    /**
+     * Metodo utilizzato per aggiornare l'ultimo accesso.
+     */
     public function updateLastLogin()
     {
         $pdo = Database::getConnection();

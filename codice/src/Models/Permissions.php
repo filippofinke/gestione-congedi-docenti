@@ -12,11 +12,10 @@ use PDOException;
  */
 class Permissions
 {
-
-     /**
+    /**
      * Metodo getter per ricavare tutti i permessi.
      *
-     * @return Array Un array di permessi.
+     * @return array Un array di permessi.
      */
     public static function getAll()
     {

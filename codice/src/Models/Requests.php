@@ -6,8 +6,20 @@ use FilippoFinke\Models\RequestStatus;
 use FilippoFinke\Utils\Database;
 use PDOException;
 
+/**
+ * Requests.php
+ * Classe utilizzata per gestire i congedi.
+ *
+ * @author Filippo Finke
+ */
 class Requests
 {
+    /**
+     * Metodo utilizzato per ricavare i congedi in attesa di un utente.
+     *
+     * @param $username L'username dell'utente.
+     * @return array Array di congedi.
+     */
     public static function getWaitingByUsername($username)
     {
         $pdo = Database::getConnection();
@@ -23,6 +35,13 @@ class Requests
         return false;
     }
 
+    /**
+     * Metodo utilizzato per ricavare i congedi grazie al loro stato e contenitore.
+     *
+     * @param $status Lo stato dei congedi.
+     * @param $container Il contenitore dei congedi.
+     * @return array Array di congedi.
+     */
     public static function getByStatusAndContainer($status, $container)
     {
         $pdo = Database::getConnection();
@@ -38,6 +57,13 @@ class Requests
         return false;
     }
 
+    /**
+     * Metodo utilizzato per impostare un contenitore.
+     *
+     * @param $id L'id del congedo.
+     * @param $container Il contenitore.
+     * @return array True o false.
+     */
     public static function setContainer($id, $container)
     {
         $pdo = Database::getConnection();
@@ -52,6 +78,12 @@ class Requests
         return false;
     }
 
+    /**
+     * Metodo utilizzato per ricavare un congedo dal suo id.
+     *
+     * @param $id L'id del congedo.
+     * @return array Il congedo.
+     */
     public static function getById($id)
     {
         $pdo = Database::getConnection();

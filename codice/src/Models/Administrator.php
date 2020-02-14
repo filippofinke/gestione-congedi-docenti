@@ -91,6 +91,9 @@ class Administrator
     }
 
 
+    /**
+     * Metodo utilizzato per aggiornare l'ultimo accesso.
+     */
     public function updateLastLogin()
     {
         $pdo = Database::getConnection();

@@ -14,6 +14,11 @@ use PDOException;
  */
 class Administrators
 {
+    /**
+     * Metodo utilizzato per ricavare tutti gli amministratori.
+     *
+     * @return array Array di amministratori.
+     */
     public static function getAll()
     {
         $pdo = Database::getConnection();
@@ -26,6 +31,13 @@ class Administrators
         }
     }
 
+    /**
+     * Metodo utilizzato per ricavare un amministratore dalla sua
+     * email.
+     *
+     * @param $email L'indirizzo email da cercare.
+     * @return array L'amministratore oppure false.
+     */
     public static function getByEmail($email)
     {
         $pdo = Database::getConnection();
@@ -40,6 +52,13 @@ class Administrators
         }
     }
 
+    /**
+     * Metodo utilizzato per eliminare un amministratore usando la sua
+     * email.
+     *
+     * @param $email L'indirizzo email da cercare.
+     * @return boolean True oppure false.
+     */
     public static function delete($email)
     {
         $pdo = Database::getConnection();
@@ -53,6 +72,14 @@ class Administrators
         }
     }
 
+    /**
+     * Metodo utilizzato per inserire un amministratore.
+     *
+     * @param $name Il nome.
+     * @param $lastName Il cognome.
+     * @param $email L'indirizzo email.
+     * @return boolean True oppure false.
+     */
     public static function insert($name, $lastName, $email)
     {
         $pdo = Database::getConnection();
@@ -74,6 +101,13 @@ class Administrators
         }
     }
     
+    /**
+     * Metodo utilizzato per impostare la password di un amministratore.
+     *
+     * @param $email L'indirizzo email dell'amministratore.
+     * @param $password La nuova password.
+     * @return boolean True oppure false.
+     */
     public static function setPassword($email, $password)
     {
         $hash = password_hash($password, PASSWORD_DEFAULT);
@@ -89,6 +123,11 @@ class Administrators
         }
     }
 
+    /**
+     * Metodo utilizzato per generare una password random di 20 caratteri.
+     *
+     * @return string La password generata randomicamente.
+     */
     private static function randomPassword()
     {
         $keyspace = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';

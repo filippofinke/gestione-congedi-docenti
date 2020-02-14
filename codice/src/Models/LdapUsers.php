@@ -13,6 +13,11 @@ use PDOException;
  */
 class LdapUsers
 {
+    /**
+     * Metodo utilizzato per ricavare tutti gli utenti LDAP.
+     *
+     * @return array Array di utenti LDAP.
+     */
     public static function getAll()
     {
         $pdo = Database::getConnection();
@@ -25,6 +30,12 @@ class LdapUsers
         }
     }
 
+    /**
+     * Metodo utilizzato per ricavare un utente LDAP dal suo username.
+     *
+     * @param $username L'username da cercare.
+     * @return array L'amministratore oppure false.
+     */
     public static function getByUsername($username)
     {
         $pdo = Database::getConnection();
@@ -39,6 +50,14 @@ class LdapUsers
         }
     }
 
+    /**
+     * Metodo utilizzato per inserire un utente LDAP.
+     *
+     * @param $username L'username.
+     * @param $name Il nome.
+     * @param $lastName Il cognome.
+     * @return boolean True oppure false.
+     */
     public static function insert($username, $name, $lastName)
     {
         $pdo = Database::getConnection();
@@ -54,6 +73,13 @@ class LdapUsers
         }
     }
 
+    /**
+     * Metodo utilizzato per impostare il permesso di un utente LDAP.
+     *
+     * @param $username L'username.
+     * @param $permission Il permesso.
+     * @return boolean True oppure false.
+     */
     public static function setPermission($username, $permission)
     {
         $pdo = Database::getConnection();
