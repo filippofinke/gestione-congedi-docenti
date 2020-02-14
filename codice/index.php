@@ -120,6 +120,7 @@ $dashboardRoutes = new RouteGroup();
 $dashboardRoutes->add(
     // Pagina di visione e modifica congedi.
     $router->get('/dashboard/{id:[0-9]+}', 'FilippoFinke\Controllers\Dashboard::index')
+    // Controllo che l'utente appartenga alla segreteria.
     ->before(new SecretaryRequired()),
     // Pagina principale.
     $router->get('/dashboard', 'FilippoFinke\Controllers\Dashboard::index'),
@@ -127,11 +128,13 @@ $dashboardRoutes->add(
     $router->get('/dashboard/sent', 'FilippoFinke\Controllers\Dashboard::sent'),
     // Pagina congedi in attesa segreteria.
     $router->get('/dashboard/secretariat', 'FilippoFinke\Controllers\Dashboard::secretariat')
+    // Controllo che l'utente appartenga alla segreteria.
     ->before(new SecretaryRequired()),
     // Percorso per la creazione di un congedo.
     $router->post('/requests', 'FilippoFinke\Controllers\Requests::insert'),
     // Percorso per l'aggiornamento dei dati di un congedo.
     $router->put('/requests/{id:[0-9]+}', 'FilippoFinke\Controllers\Requests::update')
+    // Controllo che l'utente appartenga alla segreteria.
     ->before(new SecretaryRequired())
 )
 // Aggiunta controllo autenticazione.
