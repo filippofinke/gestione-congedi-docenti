@@ -25,7 +25,7 @@ if (isset($request)) {
 							<nav aria-label="breadcrumb" role="navigation">
 								<ol class="breadcrumb">
 									<li class="breadcrumb-item"><a href="/dashboard">Dashboard</a></li>
-									<li class="breadcrumb-item active" aria-current="page">Home</li>
+									<li class="breadcrumb-item active" aria-current="page"><?php echo ($editing)?"Modifica":"Home"; ?></li>
 								</ol>
 							</nav>
 						</div>
