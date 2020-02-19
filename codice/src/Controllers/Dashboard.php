@@ -86,4 +86,10 @@ class Dashboard
             __DIR__ . '/../Views/Dashboard/secretariat.php'
         );
     }
+
+    public static function administration($request, $response) {
+        return $response->render(
+            __DIR__ . '/../Views/Dashboard/administration.php'
+        );
+    }
 }
