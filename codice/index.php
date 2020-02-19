@@ -3,6 +3,7 @@ use FilippoFinke\Utils\Database;
 use FilippoFinke\Libs\Ldap;
 use FilippoFinke\Libs\Mail;
 use FilippoFinke\Libs\Session;
+use FilippoFinke\Middlewares\AdministrationRequired;
 use FilippoFinke\Router;
 use FilippoFinke\Middlewares\AdministratorRequired;
 use FilippoFinke\Middlewares\AuthRequired;
@@ -135,7 +136,11 @@ $dashboardRoutes->add(
     // Percorso per l'aggiornamento dei dati di un congedo.
     $router->put('/requests/{id:[0-9]+}', 'FilippoFinke\Controllers\Requests::update')
     // Controllo che l'utente appartenga alla segreteria.
-    ->before(new SecretaryRequired())
+    ->before(new SecretaryRequired()),
+    // Pagina congedi in attesa direzione.
+    $router->get('/dashboard/administration', 'FilippoFinke\Controllers\Dashboard::administration')
+    // Controllo che l'utente appartenga all'amministrazione.
+    ->before(new AdministrationRequired())
 )
 // Aggiunta controllo autenticazione.
 ->before(new AuthRequired())
