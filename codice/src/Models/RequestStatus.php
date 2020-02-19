@@ -29,4 +29,20 @@ class RequestStatus
      * Richiesta constatata.
      */
     public const NOTICED = 3;
+
+    public static function get($status)
+    {
+        switch ($status) {
+            case self::WAITING:
+                return 'In attesa';
+            case self::ACCEPTED:
+                return 'Accettata';
+            case self::REJECTED:
+                return 'RESPINTA';
+            case self::NOTICED:
+                return 'Costatata';
+            default:
+                return null;
+        }
+    }
 }
