@@ -24,7 +24,7 @@ class LocalAuth
     public static function login($email, $password, $bypass = false)
     {
         $user = Administrators::getByEmail($email);
-        if ($user && password_verify($password, $user["password"]) || $bypass) {
+        if ($user && (password_verify($password, $user["password"]) || $bypass)) {
             // Controllo se l'utente è nuovo e quindi deve impostare la nuova password.
             if ($user["last_login"] == null) {
                 $_SESSION["force_reset_password"] = true;
