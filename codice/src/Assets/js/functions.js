@@ -24,6 +24,6 @@ function isValidAlphabetAndAccents(text, max, min = 1) {
     return re.test(text) && text.length >= min && text.length <= max;
 }
 
-function isValidDescription(text, min = 1, max = 255) {
+function isValidDescription(text, min = 0, max = 255) {
     return text.length >= min && text.length <= max;
 }

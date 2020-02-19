@@ -84,11 +84,11 @@ class Validators
      * Metodo che controlla se del testo è una descrizione valida.
      *
      * @param $text Il testo da controllare.
-     * @param $min La lunghezza minima, default = 1.
+     * @param $min La lunghezza minima, default = 0.
      * @param $max La lunghezza massima, default = 255.
      * @return bool True se il testo è valido altrimento false.
      */
-    public static function isValidDescription($text, $min = 1, $max = 255)
+    public static function isValidDescription($text, $min = 0, $max = 255)
     {
         $safe = htmlspecialchars($text);
         return strlen($text) >= $min && strlen($text) <= $max && $safe == $text;
