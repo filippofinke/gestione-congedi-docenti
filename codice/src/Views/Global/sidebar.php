@@ -62,7 +62,7 @@ use FilippoFinke\Models\Container;
                             $administration = Requests::getByStatusAndContainer(RequestStatus::WAITING, Container::ADMINISTRATION);
                     ?>
 					<li class="dropdown">
-						<a class="dropdown-toggle">
+						<a class="dropdown-toggle <?php echo ($_SERVER["REQUEST_URI"] == "/dashboard/administration")?"active":""; ?>">
 							<span class="fa fa-inbox"></span><span class="mtext">Direzione <span class="badge badge-primary"><?php echo count($administration); ?></span></span>
 						</a>
 						<ul class="submenu">
