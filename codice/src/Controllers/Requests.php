@@ -8,6 +8,7 @@ use FilippoFinke\Models\Reasons;
 use FilippoFinke\Models\Requests as ModelsRequests;
 use FilippoFinke\Models\Substitutes;
 use FilippoFinke\Utils\Database;
+use FilippoFinke\Libs\Session;
 
 /**
  * Requests.php
@@ -90,6 +91,8 @@ class Requests
         } else {
             $week = $request->getParam('week');
             $reasons = $request->getParam('reasons');
+            $status = $request->getParam('status');
+            $observations = $request->getParam('observations');
             $reasons = explode(",", $reasons);
             $substitutes = json_decode($request->getParam("substitutes"), true);
             foreach ($substitutes as $index => $substitute) {
@@ -99,6 +102,17 @@ class Requests
             }
             if (($week == "A" || $week == "B") && is_array($reasons) && is_array($substitutes)) {
                 Database::getConnection()->beginTransaction();
+
+                if (isset($status)
+                && isset($observations)
+                && Session::isAdministration()) {
+                    if (!Validators::isValidDescription($observations)
+                    || !\FilippoFinke\Models\Requests::update($id, null, $status, $observations)) {
+                        Database::getConnection()->rollBack();
+                        return $response->withStatus(400);
+                    }
+                }
+
                 if (
                     \FilippoFinke\Models\Requests::update($id, $week)
                 &&  \FilippoFinke\Models\Requests::deleteReasons($id)
