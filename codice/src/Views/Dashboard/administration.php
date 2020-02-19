@@ -96,8 +96,6 @@ include(__DIR__ . '/../Global/head.php'); ?>
                                 <td><?php echo RequestStatus::get($request["status"]); ?></td>
 								<td>
                                     <a class="btn btn-outline-primary text-primary" href="/dashboard/<?php echo $request["id"]; ?>">Visualizza</a>
-                                    <br>
-                                    <button class="btn btn-outline-success mt-1" onclick="approve(<?php echo $request["id"]; ?>)">Conferma</button>
 								</td>
 							</tr>
 							<?php endforeach; ?>
@@ -134,25 +132,6 @@ include(__DIR__ . '/../Global/head.php'); ?>
 			},
 		});
     });
-    
-    function approve(id) {
-        if(confirm("Sei sicuro/a di voler mandare il congedo in direzione?")) {
-            console.log("Approving " + id);
-            fetch('/requests/' + id, {
-				method: "PUT",
-				body: "approve=true"
-			}).then((response) => {
-				if(response.status == 200) {
-                    $.notify("Congedo mandato in direzione!", "success");
-                    setTimeout(function() {
-						location.reload();
-					}, 500);
-				} else {
-					$.notify("Impossibile approvare il congedo!", "error");
-                }
-			});
-        }
-    }
 
 	</script>
 </body>
