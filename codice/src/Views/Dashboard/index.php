@@ -1,4 +1,7 @@
 <?php
+
+use FilippoFinke\Libs\Session;
+
 $editing = false;
 if (isset($request)) {
     $editing = true;
@@ -74,7 +77,20 @@ if (isset($request)) {
                                 ?>
 							</h5>
 						</div>
-						<div class="col-12 text-center">
+						<?php if (Session::isAdministration() && $editing): ?>
+						<div class="col-12 mt-1">
+							<textarea class="form-control" style="height: 135px;" maxlength="255" placeholder="Osservazioni" id="observations"></textarea>
+						</div>
+						<div class="col-12 mt-1">
+							<select class="custom-select col-12" id="status">
+									<option selected="" value="0">Stato della richiesta</option>
+									<option value="3">CONSTATATA</option>
+									<option value="1">ACCETTATA</option>
+									<option value="2">RESPINTA</option>
+								</select>
+						</div>
+						<?php endif; ?>
+						<div class="col-12 text-center mt-1">
 							<button class="btn btn-outline-primary" onclick="sendRequest(event)">
 							<?php
                                 echo ($editing)?"Aggiorna la richiesta":"Invia la richiesta";
@@ -311,10 +327,21 @@ if (isset($request)) {
 						var url = "<?php echo ($editing)?"/requests/".$request["request"]["id"]:"/requests";?>";
 						var method = "<?php echo ($editing)?"PUT":"POST";?>";
 						var toUpdate = <?php echo ($editing)?"true":"false"; ?>;
+						var toAdd = "";
+						<?php if (Session::isAdministration() && $editing): ?>
+							var status = $("#status").val();
+							var observations = $("#observations").val();
+							if(!isValidDescription(observations)) {
+								$.notify("Le osservazioni contengono caratteri non ammessi!", "error");
+								return;
+							}
+							toAdd = "&status=" + status + "&observations=" + observations;
+							
+						<?php endif; ?>
 
 						fetch(url, {
 							method: method,
-							body: "week=" + calendar.week + "&reasons=" + reasons + "&substitutes=" + JSON.stringify(toSave),
+							body: "week=" + calendar.week + "&reasons=" + reasons + "&substitutes=" + JSON.stringify(toSave) + toAdd,
 							headers:{
 								"Content-Type":"application/x-www-form-urlencoded"
 							}
