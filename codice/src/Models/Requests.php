@@ -98,13 +98,46 @@ class Requests
         return false;
     }
 
-    public static function update($id, $week)
+    public static function update($id, $week = null, $status = null, $observations = null)
     {
         $pdo = Database::getConnection();
-        $query = "UPDATE requests SET week = :week WHERE id = :id";
+        $toSet = "";
+        if ($week) {
+            $toAdd = "week = :week";
+            if ($toSet == "") {
+                $toSet = $toAdd;
+            } else {
+                $toSet .= ", ".$toAdd;
+            }
+        }
+        if ($status) {
+            $toAdd = "status = :status";
+            if ($toSet == "") {
+                $toSet = $toAdd;
+            } else {
+                $toSet .= ", ".$toAdd;
+            }
+        }
+        if ($observations) {
+            $toAdd = "observations = :observations";
+            if ($toSet == "") {
+                $toSet = $toAdd;
+            } else {
+                $toSet .= ", ".$toAdd;
+            }
+        }
+        $query = "UPDATE requests SET $toSet WHERE id = :id";
         $stm = $pdo->prepare($query);
         $stm->bindParam(":id", $id);
-        $stm->bindparam(":week", $week);
+        if ($week) {
+            $stm->bindParam(":week", $week);
+        }
+        if ($status) {
+            $stm->bindParam(":status", $status);
+        }
+        if ($observations) {
+            $stm->bindParam(":observations", $observations);
+        }
         try {
             return $stm->execute();
         } catch (PDOException $e) {
