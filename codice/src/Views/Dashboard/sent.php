@@ -116,6 +116,7 @@ include(__DIR__ . '/../Global/head.php'); ?>
 			"language": {
 				"lengthMenu": "_MENU_ righe per pagina",
 				"info": "_START_-_END_ di _TOTAL_ righe",
+				"infoEmpty": "Non sono presenti congedi da mostrare",
 				searchPlaceholder: "Cerca",
 				"emptyTable": "Non sono presenti congedi in attesa!",
                 "paginate": {
