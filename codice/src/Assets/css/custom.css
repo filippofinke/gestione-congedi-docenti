@@ -44,3 +44,7 @@
     border-right: 1px solid black;
     background: white;
 }
+
+.highlight {
+    background: lightblue;
+}
