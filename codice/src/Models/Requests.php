@@ -14,6 +14,7 @@ use PDOException;
  */
 class Requests
 {
+
     /**
      * Metodo utilizzato per ricavare i congedi in attesa di un utente.
      *
@@ -26,6 +27,35 @@ class Requests
         $query = "SELECT * FROM requests WHERE username = :username AND status = :status";
         $stm = $pdo->prepare($query);
         $stm->bindParam(":username", $username);
+        $stm->bindValue(":status", RequestStatus::WAITING);
+        try {
+            $stm->execute();
+            return $stm->fetchAll(\PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+        }
+        return false;
+    }
+
+    public static function getPersonalHistory($username)
+    {
+        $pdo = Database::getConnection();
+        $query = "SELECT * FROM requests WHERE status <> :status AND username = :username ORDER BY updated_at DESC";
+        $stm = $pdo->prepare($query);
+        $stm->bindValue(":status", RequestStatus::WAITING);
+        $stm->bindValue(":username", $username);
+        try {
+            $stm->execute();
+            return $stm->fetchAll(\PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+        }
+        return false;
+    }
+
+    public static function getAll()
+    {
+        $pdo = Database::getConnection();
+        $query = "SELECT * FROM requests WHERE status <> :status ORDER BY updated_at DESC";
+        $stm = $pdo->prepare($query);
         $stm->bindValue(":status", RequestStatus::WAITING);
         try {
             $stm->execute();

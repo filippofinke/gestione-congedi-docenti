@@ -87,9 +87,28 @@ class Dashboard
         );
     }
 
-    public static function administration($request, $response) {
+    public static function administration($request, $response)
+    {
         return $response->render(
             __DIR__ . '/../Views/Dashboard/administration.php'
+        );
+    }
+
+    public static function history($request, $response)
+    {
+        $personal = false;
+        if ($request->getUri() == "/dashboard/history") {
+            $history = Requests::getPersonalHistory($_SESSION["username"]);
+            $personal = true;
+        } else {
+            $history = Requests::getAll();
+        }
+        return $response->render(
+            __DIR__ . '/../Views/Dashboard/history.php',
+            array( 
+                'history' => $history,
+                'personal' => $personal
+            )
         );
     }
 }

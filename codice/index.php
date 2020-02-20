@@ -125,6 +125,11 @@ $dashboardRoutes->add(
     ->before(new SecretaryRequired()),
     // Pagina principale.
     $router->get('/dashboard', 'FilippoFinke\Controllers\Dashboard::index'),
+    // Pagina di istoriato personale.
+    $router->get('/dashboard/history', 'FilippoFinke\Controllers\Dashboard::history'),
+    // Pagina di istoriato generale.
+    $router->get('/dashboard/administration/history', 'FilippoFinke\Controllers\Dashboard::history')
+    ->before(new AdministrationRequired()),
     // Pagina di congedi in attesa.
     $router->get('/dashboard/sent', 'FilippoFinke\Controllers\Dashboard::sent'),
     // Pagina congedi in attesa segreteria.
