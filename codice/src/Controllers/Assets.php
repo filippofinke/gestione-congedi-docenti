@@ -95,7 +95,7 @@ class Assets
     {
         $must = realpath(self::ASSETS_FOLDER);
         $realPath = realpath($file);
-        
+
         if (strpos($realPath, $must) !== false && file_exists($file)) {
             if (!$type) {
                 $type = mime_content_type($file);
