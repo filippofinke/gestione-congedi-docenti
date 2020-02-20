@@ -100,7 +100,7 @@ include(__DIR__ . '/../Global/head.php'); ?>
 									<?php echo RequestStatus::get($request["status"]); ?>
                                 </td>
                                 <td>
-                                    <btn class="btn btn-outline-primary text-primary">Visualizza PDF</btn>
+                                    <button class="btn btn-outline-primary">Visualizza PDF</button>
                                 </td>
 							</tr>
 							<?php endforeach; ?>

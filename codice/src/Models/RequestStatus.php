@@ -38,7 +38,7 @@ class RequestStatus
             case self::ACCEPTED:
                 return 'Accettata';
             case self::REJECTED:
-                return 'RESPINTA';
+                return 'Respinta';
             case self::NOTICED:
                 return 'Costatata';
             default:
