@@ -107,24 +107,31 @@ include(__DIR__ . '/../Global/head.php'); ?>
 	<script src="/assets/js/notify.js"></script>
 	<script>
 	$('document').ready(function(){
-		$('.data-table').DataTable({
+		var table = $('.data-table').DataTable({
 			scrollCollapse: true,
 			autoWidth: false,
 			responsive: true,
 			ordering: false,
 			"lengthMenu": [[5, 10, 25, -1], [5, 10, 25, "Tutti"]],
 			"language": {
-				"lengthMenu": "_MENU_ righe per pagina",
-				"info": "_START_-_END_ di _TOTAL_ righe",
-				"infoEmpty": "Non sono presenti congedi da mostrare",
+				"lengthMenu": "Mostra _MENU_ congedi per pagina",
+				"info": "_START_-_END_ di _TOTAL_ congedi",
+                "infoEmpty": "",
+                "zeroRecords": "Nessun risultato corrispondente alla ricerca.",
 				searchPlaceholder: "Cerca",
-				"emptyTable": "Non sono presenti congedi in attesa!",
+                "emptyTable": "Nessun dato da mostrare.",
+                "infoFiltered": "(filtrate da _MAX_ congedi totali)",
                 "paginate": {
                     "previous": "Prima",
-                    "next": "Prossima"
+                    "next": "Dopo"
                 }
 			},
 		});
+        table.on( 'draw', function (e) {
+            var body = $( table.table().body() );
+            body.unhighlight();
+            body.highlight( table.search() );  
+        });
 	});
 	</script>
 </body>
