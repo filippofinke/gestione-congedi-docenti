@@ -71,7 +71,7 @@ use FilippoFinke\Models\Container;
 					</li>
 					<hr>
 					<li>
-						<a href="/dashboard/administration/history" class="dropdown-toggle no-arrow">
+						<a href="/dashboard/administration/history" class="dropdown-toggle no-arrow <?php echo ($_SERVER["REQUEST_URI"] == "/dashboard/administration/history")?"active":""; ?>">
 							<span class="fa fa-history"></span><span class="mtext">Storico</span>
 						</a>
 					</li>
