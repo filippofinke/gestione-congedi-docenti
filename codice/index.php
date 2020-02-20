@@ -136,6 +136,8 @@ $dashboardRoutes->add(
     $router->get('/dashboard/secretariat', 'FilippoFinke\Controllers\Dashboard::secretariat')
     // Controllo che l'utente appartenga alla segreteria.
     ->before(new SecretaryRequired()),
+    // Percorso per la generazione del pdf.
+    $router->get('/requests/{id:[0-9]+}/pdf', 'FilippoFinke\Controllers\Requests::pdf'),
     // Percorso per la creazione di un congedo.
     $router->post('/requests', 'FilippoFinke\Controllers\Requests::insert'),
     // Percorso per l'aggiornamento dei dati di un congedo.

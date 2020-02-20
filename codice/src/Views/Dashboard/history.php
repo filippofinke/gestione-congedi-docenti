@@ -100,12 +100,30 @@ include(__DIR__ . '/../Global/head.php'); ?>
 									<?php echo RequestStatus::get($request["status"]); ?>
                                 </td>
                                 <td>
-                                    <button class="btn btn-outline-primary">Visualizza PDF</button>
+                                    <button class="btn btn-outline-primary" onclick="showPdf(<?php echo $request["id"]; ?>);">Visualizza PDF</button>
                                 </td>
 							</tr>
 							<?php endforeach; ?>
 						</tbody>
 					</table>
+				</div>
+			</div>
+			<div class="modal fade" id="pdf-modal" tabindex="-1" role="dialog">
+				<div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-full-screen">
+					<div class="modal-content modal-content-full-screen">
+						<div class="modal-header">
+							<h4 class="modal-title" >Visualizza PDF</h4>
+							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+						</div>
+						<div class="modal-body">
+							<div style="margin:0px;padding:0px;overflow:hidden">
+								<iframe id="iframe" frameborder="0" style="overflow:hidden;overflow-x:hidden;overflow-y:hidden;height:100%;width:100%;position:absolute;top:0px;left:0px;right:0px;bottom:0px" height="100%" width="100%"></iframe>					
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-dismiss="modal">Chiudi</button>
+						</div>
+					</div>
 				</div>
 			</div>
 			<?php include(__DIR__ . '/../Global/footer.php'); ?>
@@ -118,6 +136,13 @@ include(__DIR__ . '/../Global/head.php'); ?>
 	<script src="/assets/js/responsive.bootstrap4.js"></script>
     <script src="/assets/js/notify.js"></script>
 	<script>
+
+	function showPdf(id) {
+		var url = "/requests/" + id + "/pdf";
+		$('#iframe').attr("src", url);
+		$('#pdf-modal').modal('toggle');
+	}
+	
 	$('document').ready(function(){
 		var table = $('.data-table').DataTable({
 			scrollCollapse: true,
