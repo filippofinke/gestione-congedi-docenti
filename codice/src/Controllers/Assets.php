@@ -9,25 +9,27 @@ namespace FilippoFinke\Controllers;
  */
 class Assets
 {
+    private const ASSETS_FOLDER = __DIR__ . '/../Assets';
+
     /**
      * Cartella per i file JavaScript.
      */
-    private const JS_FOLDER = __DIR__ . '/../Assets/js/';
+    private const JS_FOLDER = self::ASSETS_FOLDER . '/js/';
 
     /**
      * Cartella per i file CSS.
      */
-    private const CSS_FOLDER = __DIR__ . '/../Assets/css/';
+    private const CSS_FOLDER = self::ASSETS_FOLDER . '/css/';
 
     /**
      * Cartella per i fonts.
      */
-    private const FONTS_FOLDER = __DIR__ . '/../Assets/fonts/';
+    private const FONTS_FOLDER = self::ASSETS_FOLDER . '/fonts/';
 
     /**
      * Cartella per le immagini.
      */
-    private const IMAGES_FOLDER = __DIR__ . '/../Assets/img/';
+    private const IMAGES_FOLDER = self::ASSETS_FOLDER . '/img/';
 
     /**
      * Metodo che si occupa di ricavare le risorse JavaScript.
@@ -91,7 +93,10 @@ class Assets
      */
     private static function handle($file, $response, $type = null)
     {
-        if (file_exists($file)) {
+        $must = realpath(self::ASSETS_FOLDER);
+        $realPath = realpath($file);
+        
+        if (strpos($realPath, $must) !== false && file_exists($file)) {
             if (!$type) {
                 $type = mime_content_type($file);
             }
