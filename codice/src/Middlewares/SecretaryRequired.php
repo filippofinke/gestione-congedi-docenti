@@ -23,7 +23,7 @@ class SecretaryRequired
     public function __invoke($request, $response)
     {
         if (!Session::isSecretary()) {
-            $response->redirect('/dashboard');
+            $response->redirect(BASE_URL . '/dashboard');
             exit;
         }
     }

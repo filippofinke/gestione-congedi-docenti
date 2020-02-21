@@ -9,9 +9,9 @@ use FilippoFinke\Models\Substitutes;
 use FilippoFinke\Models\RequestStatus;
 
 include(__DIR__ . '/../Global/head.php'); ?>
-	<link rel="stylesheet" type="text/css" href="/assets/css/jquery.dataTables.css">
-	<link rel="stylesheet" type="text/css" href="/assets/css/dataTables.bootstrap4.css">
-	<link rel="stylesheet" type="text/css" href="/assets/css/responsive.dataTables.css">
+	<link rel="stylesheet" type="text/css" href="<?php echo BASE_URL; ?>/assets/css/jquery.dataTables.css">
+	<link rel="stylesheet" type="text/css" href="<?php echo BASE_URL; ?>/assets/css/dataTables.bootstrap4.css">
+	<link rel="stylesheet" type="text/css" href="<?php echo BASE_URL; ?>/assets/css/responsive.dataTables.css">
 </head>
 <body>
     <?php include(__DIR__ . '/../Global/header.php'); ?>
@@ -27,7 +27,7 @@ include(__DIR__ . '/../Global/head.php'); ?>
 							</div>
 							<nav aria-label="breadcrumb" role="navigation">
 								<ol class="breadcrumb">
-									<li class="breadcrumb-item"><a href="/dashboard">Dashboard</a></li>
+									<li class="breadcrumb-item"><a href="<?php echo BASE_URL; ?>/dashboard">Dashboard</a></li>
 									<li class="breadcrumb-item active" aria-current="page">Direzione</li>
 								</ol>
 							</nav>
@@ -95,7 +95,7 @@ include(__DIR__ . '/../Global/head.php'); ?>
                                 <td><?php echo $request["observations"]; ?></td>
                                 <td><?php echo RequestStatus::get($request["status"]); ?></td>
 								<td>
-                                    <a class="btn btn-outline-primary text-primary" href="/dashboard/<?php echo $request["id"]; ?>">Visualizza</a>
+                                    <a class="btn btn-outline-primary text-primary" href="<?php echo BASE_URL; ?>/dashboard/<?php echo $request["id"]; ?>">Visualizza</a>
 								</td>
 							</tr>
 							<?php endforeach; ?>
@@ -107,11 +107,11 @@ include(__DIR__ . '/../Global/head.php'); ?>
 		</div>
 	</div>
 	<?php include(__DIR__ . '/../Global/script.php'); ?>
-	<script src="/assets/js/jquery.dataTables.min.js"></script>
-	<script src="/assets/js/dataTables.bootstrap4.js"></script>
-	<script src="/assets/js/dataTables.responsive.js"></script>
-	<script src="/assets/js/responsive.bootstrap4.js"></script>
-	<script src="/assets/js/notify.js"></script>
+	<script src="<?php echo BASE_URL; ?>/assets/js/jquery.dataTables.min.js"></script>
+	<script src="<?php echo BASE_URL; ?>/assets/js/dataTables.bootstrap4.js"></script>
+	<script src="<?php echo BASE_URL; ?>/assets/js/dataTables.responsive.js"></script>
+	<script src="<?php echo BASE_URL; ?>/assets/js/responsive.bootstrap4.js"></script>
+	<script src="<?php echo BASE_URL; ?>/assets/js/notify.js"></script>
 	<script>
 	$('document').ready(function(){
 		var table = $('.data-table').DataTable({

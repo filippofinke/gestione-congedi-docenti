@@ -48,7 +48,7 @@ class Dashboard
                     )
                 );
             } else {
-                return $response->redirect("/dashboard/secretariat");
+                return $response->redirect(BASE_URL . "/dashboard/secretariat");
             }
         } else {
             return $response->render(

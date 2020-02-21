@@ -17,7 +17,7 @@
 							</div>
 							<nav aria-label="breadcrumb" role="navigation">
 								<ol class="breadcrumb">
-									<li class="breadcrumb-item"><a href="/administration">Amministrazione</a></li>
+									<li class="breadcrumb-item"><a href="<?php echo BASE_URL; ?>/administration">Amministrazione</a></li>
 									<li class="breadcrumb-item active" aria-current="page">Imposta password</li>
 								</ol>
 							</nav>
@@ -54,14 +54,14 @@
 		</div>
 	</div>
     <?php include(__DIR__ . '/../Global/script.php'); ?>
-	<script src="assets/js/notify.js"></script>
+	<script src="<?php echo BASE_URL; ?>/assets/js/notify.js"></script>
 	<script>
         function setPassword(event) {
             event.preventDefault();
             var password = $("#password").val();
             var repeat = $("#repeat_password").val();
             if(isValidPassword(password) && password == repeat) {
-                fetch('/users', {
+                fetch('<?php echo BASE_URL; ?>/users', {
                     method: "PUT",
                     body: "password=" + password
                 }).then((response) => {

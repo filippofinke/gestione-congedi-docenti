@@ -43,7 +43,7 @@
 		var password = $("#password").val();
 		console.log(username, password);
 		if((isValidLdapUsername(username) || isValidEmail(username)) && password.length > 0) {
-			fetch('/login', {
+			fetch('<?php echo BASE_URL; ?>/login', {
 				method:'post',
 				body: "username=" + username + "&password=" + password,
 				headers:{
@@ -54,7 +54,7 @@
 					$("#error").css("display","none");
 					$("#success").css("display","block").text("Accesso eseguito!");
 					setTimeout(function() {
-						window.location = "/";
+						window.location = "<?php echo BASE_URL; ?>/";
 					}, 500);
 				} else {
 					$("#error").css("display","block").text("Credenziali errate!");
@@ -70,7 +70,7 @@
 	function forgotPassword() {
 		var username = $("#username").val();
 		if(isValidEmail(username)) {
-			fetch('/forgot-password', {
+			fetch('<?php echo BASE_URL; ?>/forgot-password', {
 				method:'POST',
 				body: "email=" + username,
 				headers:{

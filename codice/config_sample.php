@@ -7,6 +7,11 @@
  */
 
 /**
+ * Url di base.
+ */
+define("BASE_URL", "");
+
+/**
  * Configurazioni riguardanti la banca dati.
  */
 // Indirizzo di connessione del database.

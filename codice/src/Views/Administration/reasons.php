@@ -2,9 +2,9 @@
 <html>
 <head>
     <?php include(__DIR__ . '/../Global/head.php'); ?>
-	<link rel="stylesheet" type="text/css" href="/assets/css/jquery.dataTables.css">
-	<link rel="stylesheet" type="text/css" href="/assets/css/dataTables.bootstrap4.css">
-	<link rel="stylesheet" type="text/css" href="/assets/css/responsive.dataTables.css">
+	<link rel="stylesheet" type="text/css" href="<?php echo BASE_URL; ?>/assets/css/jquery.dataTables.css">
+	<link rel="stylesheet" type="text/css" href="<?php echo BASE_URL; ?>/assets/css/dataTables.bootstrap4.css">
+	<link rel="stylesheet" type="text/css" href="<?php echo BASE_URL; ?>/assets/css/responsive.dataTables.css">
 </head>
 <body>
     <?php include(__DIR__ . '/../Global/header.php'); ?>
@@ -57,7 +57,7 @@
 							</div>
 							<nav aria-label="breadcrumb" role="navigation">
 								<ol class="breadcrumb">
-									<li class="breadcrumb-item"><a href="/administration">Amministrazione</a></li>
+									<li class="breadcrumb-item"><a href="<?php echo BASE_URL; ?>/administration">Amministrazione</a></li>
 									<li class="breadcrumb-item active" aria-current="page">Motivazioni</li>
 								</ol>
 							</nav>
@@ -126,11 +126,11 @@
 		</div>
 	</div>
     <?php include(__DIR__ . '/../Global/script.php'); ?>
-	<script src="/assets/js/jquery.dataTables.min.js"></script>
-	<script src="/assets/js/dataTables.bootstrap4.js"></script>
-	<script src="/assets/js/dataTables.responsive.js"></script>
-	<script src="/assets/js/responsive.bootstrap4.js"></script>
-	<script src="/assets/js/notify.js"></script>
+	<script src="<?php echo BASE_URL; ?>/assets/js/jquery.dataTables.min.js"></script>
+	<script src="<?php echo BASE_URL; ?>/assets/js/dataTables.bootstrap4.js"></script>
+	<script src="<?php echo BASE_URL; ?>/assets/js/dataTables.responsive.js"></script>
+	<script src="<?php echo BASE_URL; ?>/assets/js/responsive.bootstrap4.js"></script>
+	<script src="<?php echo BASE_URL; ?>/assets/js/notify.js"></script>
 	<script>
 		$('document').ready(function(){
 			$('.data-table').DataTable({
@@ -159,7 +159,7 @@
 			var name = $("#update_name").val();
 			var description = $("#update_description").val();
 			var id = $("#update_id").val();
-			fetch('/reasons/' + id, {
+			fetch('<?php echo BASE_URL; ?>/reasons/' + id, {
 				method: "PUT",
 				body: "name=" + name + "&description=" + description
 			}).then((response) => {
@@ -186,7 +186,7 @@
 		
 		function deleteReason(element, id) {
 			if(confirm("Sei sicuro di voler eliminare la motivazione? Potrà essere eliminata solamente se non ci saranno più congedi correlati.")) {
-				fetch('/reasons/' + id, {
+				fetch('<?php echo BASE_URL; ?>/reasons/' + id, {
 					method: "DELETE",
 				}).then((response) => {
 					if(response.status == 200) {
@@ -205,7 +205,7 @@
 			var description = $("#description").val();
 			if(isValidAlphabetAndAccents(name, 255) && isValidDescription(description)) {
 				console.log(name, description);
-				fetch('/reasons', {
+				fetch('<?php echo BASE_URL; ?>/reasons', {
 					method: "POST",
 					body: "name=" + name + "&description=" + description,
 					headers:{

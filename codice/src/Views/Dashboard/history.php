@@ -8,9 +8,9 @@ use FilippoFinke\Models\Substitutes;
 use FilippoFinke\Models\LdapUsers;
 
 include(__DIR__ . '/../Global/head.php'); ?>
-	<link rel="stylesheet" type="text/css" href="/assets/css/jquery.dataTables.css">
-	<link rel="stylesheet" type="text/css" href="/assets/css/dataTables.bootstrap4.css">
-	<link rel="stylesheet" type="text/css" href="/assets/css/responsive.dataTables.css">
+	<link rel="stylesheet" type="text/css" href="<?php echo BASE_URL; ?>/assets/css/jquery.dataTables.css">
+	<link rel="stylesheet" type="text/css" href="<?php echo BASE_URL; ?>/assets/css/dataTables.bootstrap4.css">
+	<link rel="stylesheet" type="text/css" href="<?php echo BASE_URL; ?>/assets/css/responsive.dataTables.css">
 </head>
 <body>
     <?php include(__DIR__ . '/../Global/header.php'); ?>
@@ -26,7 +26,7 @@ include(__DIR__ . '/../Global/head.php'); ?>
 							</div>
 							<nav aria-label="breadcrumb" role="navigation">
 								<ol class="breadcrumb">
-									<li class="breadcrumb-item"><a href="/dashboard">Dashboard</a></li>
+									<li class="breadcrumb-item"><a href="<?php echo BASE_URL; ?>/dashboard">Dashboard</a></li>
 									<li class="breadcrumb-item active"><?php echo ($personal)?"Storico personale":"Storico generale"; ?></li>
 								</ol>
 							</nav>
@@ -130,15 +130,15 @@ include(__DIR__ . '/../Global/head.php'); ?>
 		</div>
 	</div>
 	<?php include(__DIR__ . '/../Global/script.php'); ?>
-    <script src="/assets/js/jquery.dataTables.min.js"></script>
-	<script src="/assets/js/dataTables.bootstrap4.js"></script>
-	<script src="/assets/js/dataTables.responsive.js"></script>
-	<script src="/assets/js/responsive.bootstrap4.js"></script>
-    <script src="/assets/js/notify.js"></script>
+    <script src="<?php echo BASE_URL; ?>/assets/js/jquery.dataTables.min.js"></script>
+	<script src="<?php echo BASE_URL; ?>/assets/js/dataTables.bootstrap4.js"></script>
+	<script src="<?php echo BASE_URL; ?>/assets/js/dataTables.responsive.js"></script>
+	<script src="<?php echo BASE_URL; ?>/assets/js/responsive.bootstrap4.js"></script>
+    <script src="<?php echo BASE_URL; ?>/assets/js/notify.js"></script>
 	<script>
 
 	function showPdf(id) {
-		var url = "/requests/" + id + "/pdf";
+		var url = "<?php echo BASE_URL; ?>/requests/" + id + "/pdf";
 		$('#iframe').attr("src", url);
 		$('#pdf-modal').modal('toggle');
 	}

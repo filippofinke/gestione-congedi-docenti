@@ -27,7 +27,7 @@ if (isset($request)) {
 							</div>
 							<nav aria-label="breadcrumb" role="navigation">
 								<ol class="breadcrumb">
-									<li class="breadcrumb-item"><a href="/dashboard">Dashboard</a></li>
+									<li class="breadcrumb-item"><a href="<?php echo BASE_URL; ?>/dashboard">Dashboard</a></li>
 									<li class="breadcrumb-item active" aria-current="page"><?php echo ($editing)?"Modifica":"Home"; ?></li>
 								</ol>
 							</nav>
@@ -324,7 +324,7 @@ if (isset($request)) {
 					}
 					if(!exit) {
 
-						var url = "<?php echo ($editing)?"/requests/".$request["request"]["id"]:"/requests";?>";
+						var url = "<?php echo BASE_URL; ?><?php echo ($editing)?"/requests/".$request["request"]["id"]:"/requests";?>";
 						var method = "<?php echo ($editing)?"PUT":"POST";?>";
 						var toUpdate = <?php echo ($editing)?"true":"false"; ?>;
 						var toAdd = "";
@@ -357,7 +357,7 @@ if (isset($request)) {
 									if(toUpdate) {
 										window.history.back();
 									} else {
-										window.location.href = "/";
+										window.location.href = "<?php echo BASE_URL; ?>/";
 									}
 								}, 500);
 							} else if(response.status == 400) {

@@ -23,7 +23,7 @@ class AuthRequired
     public function __invoke($request, $response)
     {
         if (!Session::isAuthenticated()) {
-            $response->redirect('/login');
+            $response->redirect(BASE_URL . '/login');
             exit;
         }
     }

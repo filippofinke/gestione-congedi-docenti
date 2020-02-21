@@ -28,6 +28,8 @@ if (!file_exists("config.php")) {
 }
 // Includo del file di configurazione dell'applicativo.
 require __DIR__ . '/config.php';
+$_SERVER["REQUEST_URI"] = str_replace(BASE_URL, "", $_SERVER["REQUEST_URI"]);
+
 // Includo dell'autoloader del gestore di pacchetti Composer.
 require __DIR__ . '/vendor/autoload.php';
 
@@ -161,10 +163,10 @@ $router->get('/', function ($req, $res) {
     // Controllo se l'utente è amministratore.
     if (Session::isAdministrator()) {
         // Redirect al pannello admin.
-        $res->redirect('/administration');
+        $res->redirect(BASE_URL . '/administration');
     } else {
         // Redirect al pannello utenti LDAP.
-        $res->redirect('/dashboard');
+        $res->redirect(BASE_URL . '/dashboard');
     }
     // Aggiunta controllo autenticazione.
 })->before(new AuthRequired());

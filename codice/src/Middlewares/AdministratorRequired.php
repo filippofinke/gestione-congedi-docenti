@@ -22,7 +22,7 @@ class AdministratorRequired
     public function __invoke($request, $response)
     {
         if (!Session::isAdministrator()) {
-            $response->redirect('/');
+            $response->redirect(BASE_URL . '/');
             exit;
         }
     }

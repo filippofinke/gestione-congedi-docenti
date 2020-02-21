@@ -10,8 +10,8 @@
 	<meta name="author" content="Filippo Finke">
 
 	<!-- Google Font -->
-	<link href="/assets/css/work-sans.css" rel="stylesheet">
-	<link href="/assets/css/open-sans.css" rel="stylesheet">
+	<link href="<?php echo BASE_URL; ?>/assets/css/work-sans.css" rel="stylesheet">
+	<link href="<?php echo BASE_URL; ?>/assets/css/open-sans.css" rel="stylesheet">
 	<!-- CSS -->
-	<link rel="stylesheet" href="/assets/css/style.css">
-	<link rel="stylesheet" href="/assets/css/custom.css">
+	<link rel="stylesheet" href="<?php echo BASE_URL; ?>/assets/css/style.css">
+	<link rel="stylesheet" href="<?php echo BASE_URL; ?>/assets/css/custom.css">

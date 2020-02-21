@@ -14,33 +14,33 @@ use FilippoFinke\Models\Container;
 				<ul id="accordion-menu">
 					<?php if (Session::isAdministrator()) :?> 
 						<li>
-							<a href="/administration" class="dropdown-toggle no-arrow <?php echo ($_SERVER["REQUEST_URI"] == "/administration")?"active":""; ?>">
+							<a href="<?php echo BASE_URL; ?>/administration" class="dropdown-toggle no-arrow <?php echo ($_SERVER["REQUEST_URI"] == BASE_URL . "/administration")?"active":""; ?>">
 								<span class="fa fa-users"></span><span class="mtext">Utenti</span>
 							</a>
 						</li>
 						<li>
-							<a href="/administration/reasons" class="dropdown-toggle no-arrow <?php echo ($_SERVER["REQUEST_URI"] == "/administration/reasons")?"active":""; ?>">
+							<a href="<?php echo BASE_URL; ?>/administration/reasons" class="dropdown-toggle no-arrow <?php echo ($_SERVER["REQUEST_URI"] == BASE_URL . "/administration/reasons")?"active":""; ?>">
 								<span class="fa fa-pencil"></span><span class="mtext">Motivazioni</span>
 							</a>
 						</li>
 					<?php endif; ?>
 					<?php if (Session::isTeacher()): ?>
 					<li>
-						<a href="/dashboard" class="dropdown-toggle no-arrow <?php echo ($_SERVER["REQUEST_URI"] == "/dashboard")?"active":""; ?>">
+						<a href="<?php echo BASE_URL; ?>/dashboard" class="dropdown-toggle no-arrow <?php echo ($_SERVER["REQUEST_URI"] == BASE_URL . "/dashboard")?"active":""; ?>">
 							<span class="fa fa-home"></span><span class="mtext">Home</span>
 						</a>
 					</li>
 					<hr>
 					<li class="dropdown">
-						<a class="dropdown-toggle <?php echo ($_SERVER["REQUEST_URI"] == "/dashboard/sent" || $_SERVER["REQUEST_URI"] == "/dashboard/history")?"active":""; ?>">
+						<a class="dropdown-toggle <?php echo ($_SERVER["REQUEST_URI"] == BASE_URL . "/dashboard/sent" || $_SERVER["REQUEST_URI"] == BASE_URL . "/dashboard/history")?"active":""; ?>">
 							<?php
                             $requests = Requests::getWaitingByUsername($_SESSION["username"]);
                             ?>
 							<span class="fa fa-inbox"></span><span class="mtext">Personale <span class="badge badge-primary"><?php echo count($requests); ?></span></span>
 						</a>
 						<ul class="submenu">
-							<li><a href="/dashboard/sent">In uscita</a></li>
-							<li><a href="/dashboard/history">Storico</a></li>
+							<li><a href="<?php echo BASE_URL; ?>/dashboard/sent">In uscita</a></li>
+							<li><a href="<?php echo BASE_URL; ?>/dashboard/history">Storico</a></li>
 						</ul>
 					</li>
 					<hr>
@@ -49,11 +49,11 @@ use FilippoFinke\Models\Container;
                             $secretariat = Requests::getByStatusAndContainer(RequestStatus::WAITING, Container::SECRETARY);
                     ?>
 					<li class="dropdown">
-						<a class="dropdown-toggle <?php echo ($_SERVER["REQUEST_URI"] == "/dashboard/secretariat")?"active":""; ?>">
+						<a class="dropdown-toggle <?php echo ($_SERVER["REQUEST_URI"] == BASE_URL . "/dashboard/secretariat")?"active":""; ?>">
 							<span class="fa fa-inbox"></span><span class="mtext">Segreteria <span class="badge badge-primary"><?php echo count($secretariat); ?></span></span>
 						</a>
 						<ul class="submenu">
-							<li><a href="/dashboard/secretariat">In entrata</a></li>
+							<li><a href="<?php echo BASE_URL; ?>/dashboard/secretariat">In entrata</a></li>
 						</ul>
 					</li>
 					<hr>
@@ -62,16 +62,16 @@ use FilippoFinke\Models\Container;
                             $administration = Requests::getByStatusAndContainer(RequestStatus::WAITING, Container::ADMINISTRATION);
                     ?>
 					<li class="dropdown">
-						<a class="dropdown-toggle <?php echo ($_SERVER["REQUEST_URI"] == "/dashboard/administration")?"active":""; ?>">
+						<a class="dropdown-toggle <?php echo ($_SERVER["REQUEST_URI"] == BASE_URL . "/dashboard/administration")?"active":""; ?>">
 							<span class="fa fa-inbox"></span><span class="mtext">Direzione <span class="badge badge-primary"><?php echo count($administration); ?></span></span>
 						</a>
 						<ul class="submenu">
-							<li><a href="/dashboard/administration">In entrata</a></li>
+							<li><a href="<?php echo BASE_URL; ?>/dashboard/administration">In entrata</a></li>
 						</ul>
 					</li>
 					<hr>
 					<li>
-						<a href="/dashboard/administration/history" class="dropdown-toggle no-arrow <?php echo ($_SERVER["REQUEST_URI"] == "/dashboard/administration/history")?"active":""; ?>">
+						<a href="<?php echo BASE_URL; ?>/dashboard/administration/history" class="dropdown-toggle no-arrow <?php echo ($_SERVER["REQUEST_URI"] == BASE_URL . "/dashboard/administration/history")?"active":""; ?>">
 							<span class="fa fa-history"></span><span class="mtext">Storico</span>
 						</a>
 					</li>

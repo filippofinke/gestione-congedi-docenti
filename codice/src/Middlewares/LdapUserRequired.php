@@ -22,7 +22,7 @@ class LdapUserRequired
     public function __invoke($request, $response)
     {
         if (!Session::isTeacher()) {
-            $response->redirect('/login');
+            $response->redirect(BASE_URL . '/login');
             exit;
         }
     }

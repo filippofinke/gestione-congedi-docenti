@@ -71,7 +71,7 @@ class Auth
     public static function logout($request, $response)
     {
         Session::logout();
-        return $response->redirect("/login");
+        return $response->redirect(BASE_URL . "/login");
     }
 
     /**
@@ -102,9 +102,9 @@ class Auth
     {
         $token = $request->getAttribute('token');
         if (Tokens::login($token)) {
-            $response->redirect('/administration');
+            $response->redirect(BASE_URL . '/administration');
         } else {
-            $response->redirect('/login');
+            $response->redirect(BASE_URL . '/login');
         }
     }
 }
