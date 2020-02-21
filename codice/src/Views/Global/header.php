@@ -14,7 +14,7 @@
 						<span class="user-name"><?php echo $_SESSION["name"]." ".$_SESSION["lastName"]; ?></span>
 					</a>
 					<div class="dropdown-menu dropdown-menu-right">
-						<a class="dropdown-item" href="/logout"><i class="fa fa-sign-out" aria-hidden="true"></i> Esci</a>
+						<a class="dropdown-item" href="<?php echo BASE_URL; ?>/logout"><i class="fa fa-sign-out" aria-hidden="true"></i> Esci</a>
 					</div>
 				</div>
 			</div>
