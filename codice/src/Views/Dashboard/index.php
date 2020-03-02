@@ -28,7 +28,7 @@ if (isset($request)) {
 							<nav aria-label="breadcrumb" role="navigation">
 								<ol class="breadcrumb">
 									<li class="breadcrumb-item"><a href="<?php echo BASE_URL; ?>/dashboard">Dashboard</a></li>
-									<li class="breadcrumb-item active" aria-current="page"><?php echo ($editing)?"Modifica":"Home"; ?></li>
+									<li class="breadcrumb-item active" aria-current="page"><?php echo ($editing)?"Modifica come ".$_SESSION["permission"]:"Home"; ?></li>
 								</ol>
 							</nav>
 						</div>
