@@ -121,6 +121,7 @@ include(__DIR__ . '/../Global/head.php'); ?>
 							</div>
 						</div>
 						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary" onclick="printPdf()">Stampa</button>
 							<button type="button" class="btn btn-secondary" data-dismiss="modal">Chiudi</button>
 						</div>
 					</div>
@@ -141,6 +142,10 @@ include(__DIR__ . '/../Global/head.php'); ?>
 		var url = "<?php echo BASE_URL; ?>/requests/" + id + "/pdf";
 		$('#iframe').attr("src", url);
 		$('#pdf-modal').modal('toggle');
+	}
+
+	function printPdf() {
+		$('#iframe').get(0).contentWindow.print();
 	}
 	
 	$('document').ready(function(){
