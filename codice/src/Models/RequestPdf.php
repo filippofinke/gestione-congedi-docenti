@@ -5,7 +5,7 @@ use Fpdf\Fpdf;
 
 class RequestPdf extends Fpdf
 {
-    public function __construct($totalReasons, $reasons, $request, $hours, $user)
+    public function __construct($reasons, $request, $hours, $user)
     {
         parent::__construct('L', 'mm', 'letter');
         $this->AliasNbPages();
@@ -22,7 +22,7 @@ class RequestPdf extends Fpdf
 
         $newLine = 0;
         $width = ($this->GetPageWidth() - 20) / 2;
-        foreach ($totalReasons as $reason) {
+        foreach ($reasons as $reason) {
             $y = $this->GetY();
             $x = $this->GetX();
             $this->Multicell($width, 6, $reason["name"]."\n".$reason["description"], 1);
@@ -35,39 +35,160 @@ class RequestPdf extends Fpdf
         }
         $this->ln(40);
 
+        // Pagina del calendario
+        $this->AddPage();
+        $this->SetFont('Arial', 'BI', 13);
+        $this->Cell(20, 10, "Piano di supplenza:");
+        $this->SetFont('Arial', '', 13);
+        $this->Cell(30);
+        $this->Cell(50, 10, 'Settimana '.$request["week"]);
+        $this->SetFont('Arial', '', 10);
+        $this->Cell(100, 10, 'Nella casella "classe" indicare la sigla della professione e la classe');
+        $this->Ln(7);
+        $this->SetFont('Arial', 'UI', 9);
+        $this->Cell(30, 10, 'Possibili soluzioni');
+        $this->SetFont('Arial', '', 9);
+        $this->Cell(100, 10, 'Indicare a fianco del nome del supplente la sigla corrispondente: supplenza interna (SI), scambio d\'orario (SO), sorveglianza parallela (SP), supplente esterno (SE)');
+        $this->Ln(10);
 
-        foreach ($totalReasons as $reason) {
-            foreach ($reason as $key => $value) {
-                $this->Cell(40, 10, $key);
-                $this->Cell(40, 10, $value);
-                $this->Ln(10);
+        $this->Cell(10, 10, '', 1);
+        $this->SetFont('Arial', 'B', 11);
+        $this->Cell(13, 10, 'Ora', 1, 0, 'C');
+        $this->SetFont('Arial', '', 8);
+        $hoursWidth = 13;
+        $this->SetFillColor(219, 219, 219);
+        foreach (CALENDAR_HOURS as $hour) {
+            $fill = false;
+            if (!$hour["allow"]) {
+                $fill = true;
             }
+            $y = $this->GetY();
+            $x = $this->getX();
+            $this->MultiCell($hoursWidth, 5, $hour["start"]."\n".$hour["end"], 1, 'C', $fill);
+            $this->SetY($y);
+            $this->SetX($x + $hoursWidth);
         }
+        $this->ln(10);
 
-        foreach ($reasons as $reason) {
-            foreach ($reason as $key => $value) {
-                $this->Cell(40, 10, $key);
-                $this->Cell(40, 10, $value);
-                $this->Ln(10);
+        $rowHeight = 21;
+        foreach (CALENDAR_LABELS as $index => $label) {
+            $this->Cell(5, $rowHeight, '', 1);
+            $label = iconv('UTF-8', 'windows-1252', strtoupper($label));
+            $width = round($this->GetStringWidth($label));
+            $margin = $rowHeight - (($rowHeight - $width) / 2);
+            $this->TextWithDirection($this->GetX() - 1.7, $this->GetY() + $margin, $label, 'U');
+            $this->Cell(5, $rowHeight, '', 1);
+            foreach ($hours as $hour) {
+                $date = strtotime($hour["from_date"]);
+                $i = date("N", $date) - 1;
+                if ($i == $index) {
+                    $string = date("d.m.Y", $date);
+                    $width = round($this->GetStringWidth($string));
+                    $margin = $rowHeight - (($rowHeight - $width) / 2);
+                    $this->TextWithDirection($this->GetX() - 1.7, $this->GetY() + $margin, $string, 'U');
+                    break;
+                }
             }
-        }
 
-        foreach ($request as $key => $value) {
-            $this->Cell(40, 10, $key);
-            $this->Cell(40, 10, $value);
-            $this->Ln(10);
-        }
+            $this->SetFont('Arial', '', 7);
+            $h = $rowHeight / 3;
+            $this->Cell(13, $h, 'Classe', 1, 0, 'C');
+            $this->SetY($this->GetY() + $h);
+            $this->Cell(10);
+            $this->Cell(13, $h, 'Aula', 1, 0, 'C');
+            $this->SetY($this->GetY() + $h);
+            $this->Cell(10);
+            $this->Cell(13, $h, 'Supplente', 1, 0, 'C');
+            $this->Ln();
 
-        foreach ($hours as $hour) {
-            foreach ($hour as $key => $value) {
-                $this->Cell(40, 10, $key);
-                $this->Cell(40, 10, $value);
-                $this->Ln(10);
+            $this->SetY($this->GetY() - $rowHeight);
+            $this->Cell(23);
+            // Classe
+            foreach (CALENDAR_HOURS as $hour) {
+                $fill = false;
+                if (!$hour["allow"]) {
+                    $fill = true;
+                }
+
+                $block = $this->getCurrentBlock($index, $hour, $hours);
+                $class = $block["class"];
+                $this->Cell($hoursWidth, $h, $class, 1, 0, 'C', $fill);
             }
+
+            $this->SetY($this->GetY() + $rowHeight / 3);
+            $this->Cell(23);
+            // Aula
+            foreach (CALENDAR_HOURS as $hour) {
+                $fill = false;
+                if (!$hour["allow"]) {
+                    $fill = true;
+                }
+                $block = $this->getCurrentBlock($index, $hour, $hours);
+                $room = $block["room"];
+                $this->Cell($hoursWidth, $h, $room, 1, 0, 'C', $fill);
+            }
+
+            $this->SetY($this->GetY() + $rowHeight / 3);
+            $this->Cell(23);
+            // Supplente
+            foreach (CALENDAR_HOURS as $hour) {
+                $fill = false;
+                if (!$hour["allow"]) {
+                    $fill = true;
+                }
+                $block = $this->getCurrentBlock($index, $hour, $hours);
+                $substitute = $block["substitute"];
+                $type = $block["type"];
+                $string = $type." ".$substitute;
+                $this->Cell($hoursWidth, $h, $string, 1, 0, 'C', $fill);
+            }
+
+            $this->Ln();
         }
 
         $this->Output();
     }
+
+    private function getCurrentBlock($day, $hour, $blocks)
+    {
+        $start = strtotime($hour["start"].":00");
+        $end = strtotime($hour["end"].":00");
+        foreach ($blocks as $block) {
+            $bDay = date("N", strtotime($block["from_date"])) - 1;
+            if ($day != $bDay) {
+                continue;
+            } else {
+                $bStart = explode(" ", $block["from_date"])[1];
+                $startB = strtotime($bStart);
+                $bEnd = explode(" ", $block["to_date"])[1];
+                $endB = strtotime($bEnd);
+                if ($start == $startB || $end == $endB) {
+                    return $block;
+                }
+            }
+        }
+    }
+
+    public function TextWithDirection($x, $y, $txt, $direction='R')
+    {
+        if ($direction=='R') {
+            $s=sprintf('BT %.2F %.2F %.2F %.2F %.2F %.2F Tm (%s) Tj ET', 1, 0, 0, 1, $x*$this->k, ($this->h-$y)*$this->k, $this->_escape($txt));
+        } elseif ($direction=='L') {
+            $s=sprintf('BT %.2F %.2F %.2F %.2F %.2F %.2F Tm (%s) Tj ET', -1, 0, 0, -1, $x*$this->k, ($this->h-$y)*$this->k, $this->_escape($txt));
+        } elseif ($direction=='U') {
+            $s=sprintf('BT %.2F %.2F %.2F %.2F %.2F %.2F Tm (%s) Tj ET', 0, 1, -1, 0, $x*$this->k, ($this->h-$y)*$this->k, $this->_escape($txt));
+        } elseif ($direction=='D') {
+            $s=sprintf('BT %.2F %.2F %.2F %.2F %.2F %.2F Tm (%s) Tj ET', 0, -1, 1, 0, $x*$this->k, ($this->h-$y)*$this->k, $this->_escape($txt));
+        } else {
+            $s=sprintf('BT %.2F %.2F Td (%s) Tj ET', $x*$this->k, ($this->h-$y)*$this->k, $this->_escape($txt));
+        }
+        if ($this->ColorFlag) {
+            $s='q '.$this->TextColor.' '.$s.' Q';
+        }
+        $this->_out($s);
+    }
+
+    
 
     public function Header()
     {

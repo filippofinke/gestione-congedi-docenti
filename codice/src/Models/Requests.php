@@ -222,11 +222,10 @@ class Requests
     {
         $request = self::getById($id);
         if ($request["username"] == $_SESSION["username"] || Session::isSecretary()) {
-            $totalReasons = Reasons::getAll();
             $reasons = Reasons::getByRequestId($id);
             $hours = Substitutes::getByRequestId($id);
             $user = LdapUsers::getByUsername($request["username"]);
-            $pdf = new RequestPdf($totalReasons, $reasons, $request, $hours, $user);
+            $pdf = new RequestPdf($reasons, $request, $hours, $user);
         } else {
             echo "Non hai i permessi.";
             exit;
