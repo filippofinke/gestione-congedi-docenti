@@ -5,6 +5,7 @@ use FilippoFinke\Libs\Ldap;
 use FilippoFinke\Libs\Session;
 use FilippoFinke\Libs\LocalAuth;
 use FilippoFinke\Libs\Validators;
+use FilippoFinke\Models\LdapUser;
 use FilippoFinke\Models\Tokens;
 
 /**
@@ -44,6 +45,9 @@ class Auth
             } else {
                 $user = Ldap::login($username, $password);
             }
+            // Solo per debug
+            //$user = new LdapUser('filippo.finke', 'Filippo', 'Finke');
+            
             if ($user) {
                 $user->updateLastLogin();
                 Session::authenticate(array(
