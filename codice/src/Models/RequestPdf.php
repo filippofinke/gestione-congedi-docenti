@@ -10,10 +10,6 @@ class RequestPdf extends Fpdf
         parent::__construct('L', 'mm', 'letter');
         $this->AliasNbPages();
         $this->AddPage();
-        $this->Image(__DIR__ . '/cpt-logo.jpeg', 10, 10, -300);
-        $this->SetFont('Arial', 'B', 12);
-        $this->Cell(260, 18, 'ASSENZE E CONGEDI', 'B', 0, 'R');
-        $this->Ln(20);
         $this->SetFont('Arial', 'B', 13);
         $this->Cell(20, 8, "Cognome e nome:");
         $this->SetFont('Arial', '', 13);
@@ -71,6 +67,14 @@ class RequestPdf extends Fpdf
         }
 
         $this->Output();
+    }
+
+    public function Header()
+    {
+        $this->Image(__DIR__ . '/cpt-logo.jpeg', 10, 10, -300);
+        $this->SetFont('Arial', 'B', 12);
+        $this->Cell(260, 16, 'ASSENZE E CONGEDI', 'B', 0, 'R');
+        $this->Ln(16);
     }
 
     public function Footer()
