@@ -2,6 +2,7 @@
 
 namespace FilippoFinke\Models;
 
+use FilippoFinke\Libs\Session;
 use FilippoFinke\Models\RequestStatus;
 use FilippoFinke\Utils\Database;
 use PDOException;
@@ -215,5 +216,20 @@ class Requests
         } catch (PDOException $e) {
         }
         return false;
+    }
+
+    public static function generatePdfForId($id)
+    {
+        $request = self::getById($id);
+        if ($request["username"] == $_SESSION["username"] || Session::isSecretary()) {
+            $totalReasons = Reasons::getAll();
+            $reasons = Reasons::getByRequestId($id);
+            $hours = Substitutes::getByRequestId($id);
+            $user = LdapUsers::getByUsername($request["username"]);
+            $pdf = new RequestPdf($totalReasons, $reasons, $request, $hours, $user);
+        } else {
+            echo "Non hai i permessi.";
+            exit;
+        }
     }
 }

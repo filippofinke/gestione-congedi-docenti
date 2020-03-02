@@ -152,11 +152,9 @@ class Requests
         }
     }
 
-    public static function pdf($request, $response) {
+    public static function pdf($request, $response)
+    {
         $id = $request->getAttribute('id');
-        return $response->withBody(
-            file_get_contents(__DIR__ . '/sample.pdf')
-        )
-        ->withHeader("Content-Type", "application/pdf");
+        return ModelsRequests::generatePdfForId($id);
     }
 }
