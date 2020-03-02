@@ -3,7 +3,8 @@
     "description": "Applicativo web per la gestione delle richieste di congedo dei docenti del CPT",
     "type": "project",
     "require": {
-        "filippofinke/php-rest": "dev-master"
+        "filippofinke/php-rest": "dev-master",
+        "fpdf/fpdf": "dev-master"
     },
     "authors": [
         {
