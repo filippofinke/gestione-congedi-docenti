@@ -73,7 +73,7 @@ class FinkeLendar {
     var day = e.dataset.day;
     if (
       (this.selecting
-      && !this.isSelected(e)) || bypass
+        && !this.isSelected(e)) || bypass
     ) {
       e.setAttribute("data-selected", "true");
       this.currentSelection.push(e);
@@ -127,6 +127,13 @@ class FinkeLendar {
     }
   }
 
+  getMonday() {
+    var d = new Date();
+    var day = d.getDay(),
+      diff = d.getDate() - day + (day == 0 ? -6 : 1); // adjust when day is sunday
+    return new Date(d.setDate(diff));
+  }
+
   draw() {
     this.element.innerHTML = "";
 
@@ -139,9 +146,9 @@ class FinkeLendar {
     var btn = document.createElement("button");
     btn.classList = "btn btn-outline-danger col-3 float-left mr-3";
     btn.innerText = "X";
-    btn.onclick = () => { 
-      if(confirm("Sei sicuro di voler cancellare le date selezionate?")) {
-        this.reset(); 
+    btn.onclick = () => {
+      if (confirm("Sei sicuro di voler cancellare le date selezionate?")) {
+        this.reset();
       }
     };
 
@@ -172,6 +179,9 @@ class FinkeLendar {
 
     this.element.append(header);
 
+    var monday = this.getMonday();
+    const zeroPad = (num, places) => String(num).padStart(places, '0')
+
     for (var i = 0; i < this.labels.length; i++) {
 
       var row = document.createElement("div");
@@ -181,8 +191,10 @@ class FinkeLendar {
       label.classList = "col calendar-day";
       var date = document.createElement("input");
       date.type = "date";
-      date.style.fontSize = "10px";
-      date.classList = "form-control col-7 float-left";
+      date.step = "7";
+      var min = new Date(monday.getTime() + 86400000 * i);
+      date.min = min.getFullYear() + "-" + zeroPad((min.getMonth() + 1), 2) + "-" + zeroPad(min.getDate(), 2);
+      date.classList = "form-control col-7 float-left ml-3";
       date.setAttribute("data-index", i);
       date.addEventListener("change", (event) => {
         this.dates[event.target.dataset.index] = event.target.value;
@@ -213,3 +225,4 @@ class FinkeLendar {
     }
   }
 }
+
