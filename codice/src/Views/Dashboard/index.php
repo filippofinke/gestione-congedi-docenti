@@ -185,7 +185,11 @@ if (isset($request)) {
 		window.addEventListener("load", function() {		
 			console.log("loaded!");			
 
-			var labels = ["Lunedì", "Martedì", "Mercoledì", "Giovedì", "Venerdì", "Sabato"];
+			var labels = [
+				<?php foreach(CALENDAR_LABELS as $label): ?>
+					"<?php echo $label; ?>",
+				<?php endforeach; ?>
+			];
 			var hours = [
 				<?php foreach (CALENDAR_HOURS as $hour): ?>
 					{start:"<?php echo $hour["start"]; ?>", end:"<?php echo $hour["end"]; ?>", allow: <?php echo $hour["allow"]? 'true' : 'false'; ?>},

@@ -67,3 +67,5 @@ define("CALENDAR_HOURS", array(
     array("start" => "20:15", "end" => "21:00", "allow" => true),
     array("start" => "21:00", "end" => "21:45", "allow" => true),
 ));
+// Giorni del calendario.
+define("CALENDAR_LABELS", array("Lunedì", "Martedì", "Mercoledì", "Giovedì", "Venerdì", "Sabato"));
