@@ -162,7 +162,7 @@ class RequestPdf extends Fpdf
                 $startB = strtotime($bStart);
                 $bEnd = explode(" ", $block["to_date"])[1];
                 $endB = strtotime($bEnd);
-                if ($start == $startB || $end == $endB) {
+                if (($startB <= $start && $end <= $endB) || $start == $startB || $end == $endB) {
                     return $block;
                 }
             }
