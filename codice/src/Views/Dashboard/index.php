@@ -135,11 +135,11 @@ if (isset($request)) {
 								<div class="form-row">
 									<div class="col-4">
 										<select id="type" class="custom-select col-12">
-											<option selected value="">Supplenza</option>
-											<option>SI</option>
-											<option>SO</option>
-											<option>SP</option>
-											<option>SE</option>
+											<option selected value="">Tipologia</option>
+											<option value="SI">Supplenza Interna</option>
+											<option value="SO">Scambio d'orario</option>
+											<option value="SP">Sorveglianza parallela</option>
+											<option value="SE">Supplente esterno</option>
 										</select>
 									</div>
 									<div class="col-8">
