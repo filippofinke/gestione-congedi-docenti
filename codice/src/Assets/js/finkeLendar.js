@@ -144,7 +144,7 @@ class FinkeLendar {
     spacer.classList = "calendar-day-spacer col";
 
     var btn = document.createElement("button");
-    btn.classList = "btn btn-outline-danger col-3 float-left mr-3";
+    btn.classList = "btn btn-outline-danger col-4 float-left mr-3";
     btn.innerText = "X";
     btn.onclick = () => {
       if (confirm("Sei sicuro di voler cancellare le date selezionate?")) {
@@ -153,7 +153,7 @@ class FinkeLendar {
     };
 
     this.select = document.createElement("select");
-    this.select.classList = "custom-select col-8";
+    this.select.classList = "custom-select col-6";
     this.select.innerHTML = "<option disabled selected>Settimana</option>";
     this.select.innerHTML += "<option>A</option>";
     this.select.innerHTML += "<option>B</option>";

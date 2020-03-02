@@ -13,7 +13,7 @@
        -moz-user-select: none; /* Old versions of Firefox */
         -ms-user-select: none; /* Internet Explorer/Edge */
             user-select: none;
-    width: 2000px;
+    width: 2200px;
 }
 
 .calendar-container {
@@ -39,6 +39,14 @@
 .calendar .col-2 {
     display: block;
     width: 200px;
+    flex: none;
+    max-width: none;
+    -webkit-box-flex: none;
+}
+
+.calendar .col-3 {
+    display: block;
+    width: 300px;
     flex: none;
     max-width: none;
     -webkit-box-flex: none;

@@ -192,6 +192,7 @@ if (isset($request)) {
 				{start:"10:05", end:"10:50", allow:true},
 				{start:"10:50", end:"11:35", allow:true},
 				{start:"11:35", end:"12:20", allow:true},
+				{start:"12:30", end:"13:15", allow:false},
 				{start:"13:15", end:"14:00", allow:true},
 				{start:"14:00", end:"14:45", allow:true},
 				{start:"15:00", end:"15:45", allow:true},
