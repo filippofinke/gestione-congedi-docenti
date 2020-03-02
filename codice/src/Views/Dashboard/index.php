@@ -187,24 +187,9 @@ if (isset($request)) {
 
 			var labels = ["Lunedì", "Martedì", "Mercoledì", "Giovedì", "Venerdì", "Sabato"];
 			var hours = [
-				{start:"08:20", end:"09:05", allow:true},
-				{start:"09:05", end:"09:50", allow:true},
-				{start:"10:05", end:"10:50", allow:true},
-				{start:"10:50", end:"11:35", allow:true},
-				{start:"11:35", end:"12:20", allow:true},
-				{start:"12:30", end:"13:15", allow:false},
-				{start:"13:15", end:"14:00", allow:true},
-				{start:"14:00", end:"14:45", allow:true},
-				{start:"15:00", end:"15:45", allow:true},
-				{start:"15:45", end:"16:30", allow:true},
-				{start:"16:30", end:"17:15", allow:true},
-				{start:"16:00", end:"16:45", allow:true},
-				{start:"16:45", end:"17:30", allow:true},
-				{start:"17:30", end:"18:15", allow:true},
-				{start:"18:30", end:"19:15", allow:true},
-				{start:"19:15", end:"20:00", allow:true},
-				{start:"20:15", end:"21:00", allow:true},
-				{start:"21:00", end:"21:45", allow:true},
+				<?php foreach (CALENDAR_HOURS as $hour): ?>
+					{start:"<?php echo $hour["start"]; ?>", end:"<?php echo $hour["end"]; ?>", allow: <?php echo $hour["allow"]? 'true' : 'false'; ?>},
+				<?php endforeach; ?>
 			];
 
 			calendar = new FinkeLendar(
