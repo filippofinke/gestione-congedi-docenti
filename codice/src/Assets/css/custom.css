@@ -13,6 +13,12 @@
        -moz-user-select: none; /* Old versions of Firefox */
         -ms-user-select: none; /* Internet Explorer/Edge */
             user-select: none;
+    width: 2000px;
+}
+
+.calendar-container {
+    overflow: auto;
+    padding-bottom: 20px;
 }
 
 .calendar-hour {
@@ -21,6 +27,23 @@
     border-right: 1px solid black;
     border-top: 1px solid black;
 }
+
+.calendar .col-1 {
+    display: block;
+    width: 100px;
+    flex: none;
+    max-width: none;
+    -webkit-box-flex: none;
+}
+
+.calendar .col-2 {
+    display: block;
+    width: 200px;
+    flex: none;
+    max-width: none;
+    -webkit-box-flex: none;
+}
+
 
 .calendar-day-spacer {
     padding: 20px;

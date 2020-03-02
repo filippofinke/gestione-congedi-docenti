@@ -62,7 +62,9 @@ if (isset($request)) {
 								</div>
 							</div>
 							<div class="tab-pane fade" id="calendarTab" role="tabpanel">
-								<div class="calendar" id="calendar"></div>
+								<div class="calendar-container">
+									<div class="calendar" id="calendar"></div>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -189,11 +191,19 @@ if (isset($request)) {
 				{start:"09:05", end:"09:50", allow:true},
 				{start:"10:05", end:"10:50", allow:true},
 				{start:"10:50", end:"11:35", allow:true},
+				{start:"11:35", end:"12:20", allow:true},
 				{start:"13:15", end:"14:00", allow:true},
 				{start:"14:00", end:"14:45", allow:true},
 				{start:"15:00", end:"15:45", allow:true},
 				{start:"15:45", end:"16:30", allow:true},
-				{start:"16:30", end:"17:45", allow:true},
+				{start:"16:30", end:"17:15", allow:true},
+				{start:"16:00", end:"16:45", allow:true},
+				{start:"16:45", end:"17:30", allow:true},
+				{start:"17:30", end:"18:15", allow:true},
+				{start:"18:30", end:"19:15", allow:true},
+				{start:"19:15", end:"20:00", allow:true},
+				{start:"20:15", end:"21:00", allow:true},
+				{start:"21:00", end:"21:45", allow:true},
 			];
 
 			calendar = new FinkeLendar(
