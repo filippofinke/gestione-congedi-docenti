@@ -11,16 +11,41 @@ class RequestPdf extends Fpdf
         $this->AliasNbPages();
         $this->AddPage();
         $this->SetFont('Arial', 'B', 13);
-        $this->Cell(20, 8, "Cognome e nome:");
+        $this->Cell(12, 8, "Cognome e nome:");
         $this->SetFont('Arial', '', 13);
         $this->Cell(30);
-        $this->Cell(100, 8, $user["last_name"]." ".$user["name"]);
+        $full_name = iconv('UTF-8', 'windows-1252', $user["last_name"]." ".$user["name"]);
+        $this->Cell(40, 8, $full_name);
+        $this->SetFont('Arial', 'B', 13);
+        $this->Cell(45, 8, "Periodo di assenza:");
+        $this->SetFont('Arial', '', 12);
+        $dates = [];
+        for ($i = 0; $i < count($hours); $i++) {
+            $hour = explode(" ", $hours[$i]["from_date"])[0];
+            $date = strtotime($hour);
+            if(!in_array($date, $dates)) {
+                $dates[] = $date;
+            }
+        }
+        sort($dates);
+        $str = "";
+        for($i = 0; $i < count($dates); $i++) {
+            $str .= date("d.m.Y", $dates[$i]);
+            if($i != count($dates) - 1) {
+                $str .= ",";
+            }
+        }
+        $this->Cell(50, 8, $str);
         $this->Ln(8);
         $this->SetFont('Arial', 'BI', 11);
         $this->Cell(210, 7, 'Congedo pagato (art.27, 46, 47, 48, 49 LORD 1995 + art. 18, 19, 25, 26, 30, 31, 32, 33, 34, 35, 36, 38, 40 R. dip. 2017)', 'B');
         $this->Ln(10);
-
-        $newLine = 0;
+        $this->Cell(100, 8, "Motivazioni relative al congedo:");
+        $this->Ln(10);
+        foreach ($reasons as $reason) {
+            $this->Multicell($this->GetPageWidth() - 20, 6, $reason["name"]."\n".$reason["description"], 1);
+        }
+        /*$newLine = 0;
         $width = ($this->GetPageWidth() - 20) / 2;
         foreach ($reasons as $reason) {
             $y = $this->GetY();
@@ -32,8 +57,13 @@ class RequestPdf extends Fpdf
                 $this->SetX(10);
                 $this->SetY($y + 6 * 2);
             }
-        }
-        $this->ln(40);
+        }*/
+        $currentY = $this->GetY();
+        $this->Ln($this->GetPageHeight() - $currentY - 31);
+        $this->SetFont('Arial', '', 11);
+        $this->Cell(100, 10, 'Data: '.date("d.m.Y", strtotime($request["created_at"])));
+        $text = iconv('UTF-8', 'windows-1252', "Il congedo è stato creato dall'account di rete: ".$user["username"]);
+        $this->Cell(160, 10, $text, 0, 0, 'R');
 
         // Pagina del calendario
         $this->AddPage();
