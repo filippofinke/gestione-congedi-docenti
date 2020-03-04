@@ -155,6 +155,8 @@ class Requests
     public static function pdf($request, $response)
     {
         $id = $request->getAttribute('id');
-        return ModelsRequests::generatePdfForId($id);
+        if (!ModelsRequests::generatePdfForId($id)) {
+            return $response->withStatus(404)->withText("Il congedo non è stato trovato!");
+        }
     }
 }

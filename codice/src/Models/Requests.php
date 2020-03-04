@@ -221,14 +221,14 @@ class Requests
     public static function generatePdfForId($id)
     {
         $request = self::getById($id);
-        if ($request["username"] == $_SESSION["username"] || Session::isSecretary()) {
+        if ($request && ($request["username"] == $_SESSION["username"] || Session::isSecretary())) {
             $reasons = Reasons::getByRequestId($id);
             $hours = Substitutes::getByRequestId($id);
             $user = LdapUsers::getByUsername($request["username"]);
             $pdf = new RequestPdf($reasons, $request, $hours, $user);
+            return $pdf;
         } else {
-            echo "Non hai i permessi.";
-            exit;
+            return false;
         }
     }
 }
