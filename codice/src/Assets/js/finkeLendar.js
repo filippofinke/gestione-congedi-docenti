@@ -6,6 +6,13 @@
  */
 class FinkeLendar {
 
+  /**
+   * Metodo costruttore per il calendario.
+   * 
+   * @param element Elemento nel quale renderizzare il calendario.
+   * @param labels I giorni da mostrare nel calendario.
+   * @param hours Le ore disponibili alla selezione.
+   */
   constructor(element, labels, hours) {
     this.element = element;
     this.labels = labels;
@@ -21,19 +28,37 @@ class FinkeLendar {
     this.week = "";
   }
 
+  /**
+   * Metodo utilizzato per impostare la settimana del calendario 'A' o 'B'. 
+   *
+   * @param week La settimana del calendario.
+   */
   setWeek(week) {
     this.week = week;
     this.select.value = week;
   }
 
+  /**
+   * Metodo utilizzsato per impostare il callback quando si preme un blocco nel calendario.
+   * 
+   * @param callback Funzione da chiamare al click di un blocco nel calendario.
+   */
   setOnHourClick(callback) {
     this.onHourClick = callback;
   }
 
+  /**
+   * Metodo utilizzsato per impostare il callback quando si seleziona un blocco nel calendario.
+   * 
+   * @param callback Funzione da chiamare al select di un blocco nel calendario.
+   */
   setOnSelected(callback) {
     this.onSelected = callback;
   }
 
+  /**
+   * Metodo utilizzato per resettare il calendario.
+   */
   reset() {
     this.days = [];
     this.dates = [];
@@ -45,6 +70,11 @@ class FinkeLendar {
     this.draw();
   }
 
+  /**
+   * Metodo utilizzato per controllare se un elemento è gia stato selezionato.
+   * 
+   * @param element Il blocco da controllare.
+   */
   isSelected(element) {
     for (var day = 0; day < this.days.length; day++) {
       if (this.days[day].indexOf(element) != -1) {
@@ -54,11 +84,21 @@ class FinkeLendar {
     return false;
   }
 
+  /**
+   * Metodo chiamato quando si preme un blocco nel calendario.
+   * 
+   * @param event Evento del mouse.
+   */
   onCalendarPress(event) {
     this.selecting = true;
     this.onCalendarHover(event);
   }
 
+  /**
+   * Metodo chiamato quando si rilascia il mouse su un blocco del calendario.
+   * 
+   * @param event Evento del mouse.
+   */
   onCalendarRelease(event) {
     var e = event.target;
     this.selecting = false;
@@ -74,6 +114,11 @@ class FinkeLendar {
     }
   }
 
+  /**
+   * Metodo chiamato quando si passa con il mouse su un blocco del calendario.
+   * 
+   * @param event Evento del mouse.
+   */
   onCalendarHover(event, bypass = false) {
     var e = event.target;
     var day = e.dataset.day;
@@ -88,6 +133,9 @@ class FinkeLendar {
     }
   }
 
+  /**
+   * Metodo utilizzato per riordinare la selezione dei blocchi nel calendario.
+   */
   reorder() {
     for (var day = 0; day < this.days.length; day++) {
       this.days[day].sort(function (a, b) {
@@ -96,8 +144,10 @@ class FinkeLendar {
     }
   }
 
+  /**
+   * Metodo utilizzato per verificare ed unire i blocchi del calendario.
+   */
   render() {
-
 
     for (var day = 0; day < this.days.length; day++) {
       var lastStart = null;
@@ -133,13 +183,19 @@ class FinkeLendar {
     }
   }
 
+  /**
+   * Metodo per ricavare il lunedì della settimana corrente.
+   */
   getMonday() {
     var d = new Date();
     var day = d.getDay(),
-      diff = d.getDate() - day + (day == 0 ? -6 : 1); // adjust when day is sunday
+      diff = d.getDate() - day + (day == 0 ? -6 : 1);
     return new Date(d.setDate(diff));
   }
 
+  /**
+   * Metodo utilizzato per stampare il calendario nel contenitore.
+   */
   draw() {
     this.element.innerHTML = "";
 
@@ -200,8 +256,8 @@ class FinkeLendar {
       date.type = "date";
       date.step = "7";
       var min = new Date(monday.getTime() + 86400000 * i);
-      if(today.getTime() > min.getTime()) {
-        min.setTime(min.getTime() +  86400000 * 7);
+      if (today.getTime() > min.getTime()) {
+        min.setTime(min.getTime() + 86400000 * 7);
       }
       date.min = min.getFullYear() + "-" + zeroPad((min.getMonth() + 1), 2) + "-" + zeroPad(min.getDate(), 2);
       date.classList = "form-control col-7 float-left ml-3";
