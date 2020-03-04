@@ -186,6 +186,7 @@ class FinkeLendar {
     this.element.append(header);
 
     var monday = this.getMonday();
+    var today = new Date();
     const zeroPad = (num, places) => String(num).padStart(places, '0')
 
     for (var i = 0; i < this.labels.length; i++) {
@@ -199,6 +200,9 @@ class FinkeLendar {
       date.type = "date";
       date.step = "7";
       var min = new Date(monday.getTime() + 86400000 * i);
+      if(today.getTime() > min.getTime()) {
+        min.setTime(min.getTime() +  86400000 * 7);
+      }
       date.min = min.getFullYear() + "-" + zeroPad((min.getMonth() + 1), 2) + "-" + zeroPad(min.getDate(), 2);
       date.classList = "form-control col-7 float-left ml-3";
       date.setAttribute("data-index", i);

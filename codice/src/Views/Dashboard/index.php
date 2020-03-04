@@ -191,7 +191,9 @@ if (isset($request)) {
 				<?php endforeach; ?>
 			];
 			var hours = [
-				<?php foreach (CALENDAR_HOURS as $hour): ?>
+				<?php foreach (CALENDAR_HOURS as $hour): 
+					if(isset($hour["space"])) continue;
+				?>
 					{start:"<?php echo $hour["start"]; ?>", end:"<?php echo $hour["end"]; ?>", allow: <?php echo $hour["allow"]? 'true' : 'false'; ?>},
 				<?php endforeach; ?>
 			];
