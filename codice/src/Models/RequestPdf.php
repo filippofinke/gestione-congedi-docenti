@@ -58,6 +58,11 @@ class RequestPdf extends Fpdf
         $hoursWidth = 13;
         $this->SetFillColor(219, 219, 219);
         foreach (CALENDAR_HOURS as $hour) {
+            if (isset($hour["space"])) {
+                $this->Cell(5);
+                continue;
+            }
+
             $fill = false;
             if (!$hour["allow"]) {
                 $fill = true;
@@ -70,7 +75,7 @@ class RequestPdf extends Fpdf
         }
         $this->ln(10);
 
-        $rowHeight = 21;
+        $rowHeight = 23;
         foreach (CALENDAR_LABELS as $index => $label) {
             $this->Cell(5, $rowHeight, '', 1);
             $label = iconv('UTF-8', 'windows-1252', strtoupper($label));
@@ -105,6 +110,11 @@ class RequestPdf extends Fpdf
             $this->Cell(23);
             // Classe
             foreach (CALENDAR_HOURS as $hour) {
+                if (isset($hour["space"])) {
+                    $this->Cell(5);
+                    continue;
+                }
+
                 $fill = false;
                 if (!$hour["allow"]) {
                     $fill = true;
@@ -119,6 +129,11 @@ class RequestPdf extends Fpdf
             $this->Cell(23);
             // Aula
             foreach (CALENDAR_HOURS as $hour) {
+                if (isset($hour["space"])) {
+                    $this->Cell(5);
+                    continue;
+                }
+
                 $fill = false;
                 if (!$hour["allow"]) {
                     $fill = true;
@@ -132,6 +147,11 @@ class RequestPdf extends Fpdf
             $this->Cell(23);
             // Supplente
             foreach (CALENDAR_HOURS as $hour) {
+                if (isset($hour["space"])) {
+                    $this->Cell(5);
+                    continue;
+                }
+
                 $fill = false;
                 if (!$hour["allow"]) {
                     $fill = true;
