@@ -1,3 +1,9 @@
+/**
+ * FinkeLendar.js
+ * Classe utilizzata per la generazione e rappresentazione del calendario lato client.
+ * 
+ * @author Filippo Finke
+ */
 class FinkeLendar {
 
   constructor(element, labels, hours) {

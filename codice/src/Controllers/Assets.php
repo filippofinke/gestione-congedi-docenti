@@ -9,6 +9,9 @@ namespace FilippoFinke\Controllers;
  */
 class Assets
 {
+    /**
+     * Cartella base delle risorse.
+     */
     private const ASSETS_FOLDER = __DIR__ . '/../Assets';
 
     /**
