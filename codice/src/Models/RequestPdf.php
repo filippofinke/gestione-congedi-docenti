@@ -206,9 +206,11 @@ class RequestPdf extends Fpdf
 
             $this->Ln();
         }
-
-        $this->Output();
     }
+
+    public function getContent($type) {
+        return $this->Output($type);
+    } 
 
     private function getCurrentBlock($day, $hour, $blocks)
     {

@@ -219,7 +219,7 @@ class Requests
         return false;
     }
 
-    public static function generatePdfForId($id)
+    public static function generatePdfForId($id, $type = "I")
     {
         $request = self::getById($id);
         if ($request && ($request["username"] == $_SESSION["username"] || Session::isSecretary())) {
@@ -227,7 +227,7 @@ class Requests
             $hours = Substitutes::getByRequestId($id);
             $user = LdapUsers::getByUsername($request["username"]);
             $pdf = new RequestPdf($reasons, $request, $hours, $user);
-            return $pdf;
+            return $pdf->getContent($type);
         } else {
             return false;
         }
