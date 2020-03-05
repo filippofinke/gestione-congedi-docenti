@@ -78,7 +78,7 @@ class Tokens
         }
     }
 
-    private static function generateToken()
+    public static function generateToken()
     {
         $keyspace = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $pieces = [];
