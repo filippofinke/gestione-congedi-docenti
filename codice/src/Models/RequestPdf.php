@@ -23,15 +23,15 @@ class RequestPdf extends Fpdf
         for ($i = 0; $i < count($hours); $i++) {
             $hour = explode(" ", $hours[$i]["from_date"])[0];
             $date = strtotime($hour);
-            if(!in_array($date, $dates)) {
+            if (!in_array($date, $dates)) {
                 $dates[] = $date;
             }
         }
         sort($dates);
         $str = "";
-        for($i = 0; $i < count($dates); $i++) {
+        for ($i = 0; $i < count($dates); $i++) {
             $str .= date("d.m.Y", $dates[$i]);
-            if($i != count($dates) - 1) {
+            if ($i != count($dates) - 1) {
                 $str .= ",";
             }
         }
@@ -59,11 +59,22 @@ class RequestPdf extends Fpdf
             }
         }*/
         $currentY = $this->GetY();
-        $this->Ln($this->GetPageHeight() - $currentY - 31);
+        $this->Ln($this->GetPageHeight() - $currentY - 50);
+        $status = RequestStatus::get($request["status"]);
+        $this->SetFont('Arial', 'B', 12);
+        $this->Cell(100, 10, 'Decisione della direzione: '.$status);
+        $this->Ln(6);
+        $observations = iconv('UTF-8', 'windows-1252', $request["observations"]);
         $this->SetFont('Arial', '', 11);
-        $this->Cell(100, 10, 'Data: '.date("d.m.Y", strtotime($request["created_at"])));
+        $this->Cell(100, 10, 'Osservazioni: '.$observations);
+        $this->Ln(6);
+        $auditor = iconv('UTF-8', 'windows-1252', $request["auditor"]);
+        $this->Cell(100, 10, 'Firma: '.$auditor);
+        $this->Ln(6);
+        $this->Cell(50, 10, 'Data richiesta: '.date("d.m.Y", strtotime($request["created_at"])));
+        $this->Cell(100, 10, 'Data revisione: '.date("d.m.Y", strtotime($request["updated_at"])));
         $text = iconv('UTF-8', 'windows-1252', "Il congedo è stato creato dall'account di rete: ".$user["username"]);
-        $this->Cell(160, 10, $text, 0, 0, 'R');
+        $this->Cell(100, 10, $text, 0, 0, 'R');
 
         // Pagina del calendario
         $this->AddPage();
