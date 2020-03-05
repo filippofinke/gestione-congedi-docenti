@@ -43,10 +43,10 @@ class Auth
             if (Validators::isValidEmail($username)) {
                 $user = LocalAuth::login($username, $password);
             } else {
-                $user = Ldap::login($username, $password);
+               // $user = Ldap::login($username, $password);
+                // Solo per debug
+                $user = new LdapUser('filippo.finke', 'Filippo', 'Finke');
             }
-            // Solo per debug
-            $user = new LdapUser('filippo.finke', 'Filippo', 'Finke');
             
             if ($user) {
                 $user->updateLastLogin();

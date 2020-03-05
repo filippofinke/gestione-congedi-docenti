@@ -38,19 +38,17 @@ class Mail
     {
         $separator = md5(time());
         $eol = "\r\n";
-        $headers = "From: name <".self::$fromEmail.">" . $eol;
+        $headers = "From: <".self::$fromEmail.">" . $eol;
         $headers .= "MIME-Version: 1.0" . $eol;
         $headers .= "Content-Type: multipart/mixed; boundary=\"" . $separator . "\"" . $eol;
-        $headers .= "Content-Transfer-Encoding: 7bit" . $eol;
-        $headers .= "This is a MIME encoded message." . $eol;
 
         $body = "--" . $separator . $eol;
         $body .= "Content-Type: text/html; charset=\"utf-8\"" . $eol;
         $body .= $message . $eol .  $eol;
+        $body .= "--" . $separator . $eol;
 
         if ($file && $filename) {
             $content = chunk_split(base64_encode($file));
-            $body .= "--" . $separator . $eol;
             $body .= "Content-Type: application/octet-stream; name=\"" . $filename . "\"" . $eol;
             $body .= "Content-Transfer-Encoding: base64" . $eol;
             $body .= "Content-Disposition: attachment" . $eol;
