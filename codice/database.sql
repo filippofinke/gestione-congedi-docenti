@@ -63,6 +63,7 @@ CREATE TABLE requests(
     container TINYINT DEFAULT 0,
     week ENUM("A","B") NOT NULL,
     observations VARCHAR(255),
+    auditor varchar(50) default null,
     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
     FOREIGN KEY(username) REFERENCES users(username)
