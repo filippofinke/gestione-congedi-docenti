@@ -186,14 +186,16 @@ if (isset($request)) {
 			console.log("loaded!");			
 
 			var labels = [
-				<?php foreach(CALENDAR_LABELS as $label): ?>
+				<?php foreach (CALENDAR_LABELS as $label): ?>
 					"<?php echo $label; ?>",
 				<?php endforeach; ?>
 			];
 			var hours = [
-				<?php foreach (CALENDAR_HOURS as $hour): 
-					if(isset($hour["space"])) continue;
-				?>
+				<?php foreach (CALENDAR_HOURS as $hour):
+                    if (isset($hour["space"])) {
+                        continue;
+                    }
+                ?>
 					{start:"<?php echo $hour["start"]; ?>", end:"<?php echo $hour["end"]; ?>", allow: <?php echo $hour["allow"]? 'true' : 'false'; ?>},
 				<?php endforeach; ?>
 			];
@@ -248,8 +250,8 @@ if (isset($request)) {
 							block.setAttribute("data-room", substitute.room);
 							block.setAttribute("data-substitute", substitute.substitute);
 							block.setAttribute("data-type", substitute.type);
-							if(type != "") {
-								type = " (" + type + ")";
+							if(substitute.type != "") {
+								substitute.type = " (" + substitute.type + ")";
 							}
 							block.innerText = substitute.class + "\n" + substitute.room + "\n" + substitute.substitute + substitute.type;
 						}
