@@ -19,6 +19,9 @@ use FilippoFinke\RouteGroup;
  * @author Filippo Finke
  */
 
+// Rimpiazzo la base per il router.
+$_SERVER["REQUEST_URI"] = str_replace(BASE_URL, '', $_SERVER["REQUEST_URI"]);
+
 // Avvio sessione.
 session_start();
 

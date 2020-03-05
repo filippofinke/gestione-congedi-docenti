@@ -161,8 +161,8 @@ if (isset($request)) {
 		</div>
 	</div>
     <?php include(__DIR__ . '/../Global/script.php'); ?>
-	<script src="/assets/js/notify.js"></script>
-	<script src="/assets/js/finkeLendar.js"></script>
+	<script src="<?php echo BASE_URL; ?>/assets/js/notify.js"></script>
+	<script src="<?php echo BASE_URL; ?>/assets/js/finkeLendar.js"></script>
 	<script>	
 
 		var toEdit = null;
