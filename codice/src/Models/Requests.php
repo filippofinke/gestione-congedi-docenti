@@ -157,9 +157,10 @@ class Requests
                 $toSet .= ", ".$toAdd;
             }
         }
-        $query = "UPDATE requests SET $toSet WHERE id = :id";
+        $query = "UPDATE requests SET auditor = :auditor, $toSet WHERE id = :id";
         $stm = $pdo->prepare($query);
         $stm->bindParam(":id", $id);
+        $stm->bindValue(":auditor", $_SESSION["name"]." ".$_SESSION["lastName"]);
         if ($week) {
             $stm->bindParam(":week", $week);
         }

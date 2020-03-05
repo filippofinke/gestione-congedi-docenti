@@ -44,6 +44,9 @@ include(__DIR__ . '/../Global/head.php'); ?>
 								<th>Motivi/o</th>
 								<th>Assenze</th>
                                 <th>Stato</th>
+								<?php if (!$personal): ?>
+								<th>Revisionato da</th>
+								<?php endif; ?>
 								<th>Azione</th>
 							</tr>
 						</thead>
@@ -99,6 +102,9 @@ include(__DIR__ . '/../Global/head.php'); ?>
 								<td>
 									<?php echo RequestStatus::get($request["status"]); ?>
                                 </td>
+								<?php if (!$personal): ?>
+								<td><?php echo $request["auditor"]; ?></td>
+								<?php endif; ?>
                                 <td>
                                     <button class="btn btn-outline-primary" onclick="showPdf(<?php echo $request["id"]; ?>);">Visualizza PDF</button>
                                 </td>
