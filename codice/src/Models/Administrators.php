@@ -95,7 +95,13 @@ class Administrators
             /**
              * CONTROLLARE
              */
-            return $stm->execute() && Mail::send($email, 'Credenziali di accesso', 'La tua password: '.$password);
+
+            $content = "<p>Salve,<br>";
+            $content .= "è stato creato un account amministratore con questo indirizzo email.<br>";
+            $content .= "Credenziali di accesso:<br>";
+            $content .= "Email: ".$email."<br>";
+            $content .= "Password: ".$password."</p>";
+            return $stm->execute() && Mail::send($email, 'Credenziali di accesso | Gestione congedi', $content);
         } catch (PDOException $e) {
             return false;
         }
