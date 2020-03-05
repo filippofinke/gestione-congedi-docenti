@@ -2,6 +2,7 @@
 
 namespace FilippoFinke\Controllers;
 
+use FilippoFinke\Libs\Mail;
 use FilippoFinke\Libs\Validators;
 use FilippoFinke\Models\Container;
 use FilippoFinke\Models\Reasons;
@@ -9,6 +10,9 @@ use FilippoFinke\Models\Requests as ModelsRequests;
 use FilippoFinke\Models\Substitutes;
 use FilippoFinke\Utils\Database;
 use FilippoFinke\Libs\Session;
+use FilippoFinke\Models\LdapUser;
+use FilippoFinke\Models\LdapUsers;
+use FilippoFinke\Models\RequestStatus;
 
 /**
  * Requests.php
@@ -142,6 +146,17 @@ class Requests
                         }
                     }
                     Database::getConnection()->commit();
+                    if ($status != RequestStatus::WAITING) {
+                        $request = ModelsRequests::getById($id);
+                        $user = LdapUsers::getByUsername($request["username"]);
+                        $email = $user["name"].".".$user["last_name"]."@edu.ti.ch";
+                        $reqStatus = RequestStatus::get($status);
+                        $pdf = ModelsRequests::generatePdfForId($id, "S");
+                        $title = "Richiesta $reqStatus | Gestione congedi";
+                        $content = "<p>Salve,<br>";
+                        $content .= "la sua richiesta di congedo è stata ".strtolower($reqStatus)."</p>";
+                        Mail::send($email, $title, $content, $pdf, 'congedo.pdf');
+                    }
                     return $response->withStatus(200);
                 } else {
                     Database::getConnection()->rollBack();
