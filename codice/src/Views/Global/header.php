@@ -18,6 +18,7 @@
 					</div>
 				</div>
 			</div>
+			<!--
 			<div class="user-notification" style="margin-right: 0px;">
 				<div class="dropdown">
 					<a class="dropdown-toggle no-arrow" href="#" role="button" data-toggle="dropdown">
@@ -37,6 +38,7 @@
 						</div>
 					</div>
 				</div>
-			</div>
+			</div> 
+			-->
 		</div>
 	</div>
