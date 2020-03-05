@@ -46,7 +46,7 @@ class Auth
                 $user = Ldap::login($username, $password);
             }
             // Solo per debug
-            //$user = new LdapUser('filippo.finke', 'Filippo', 'Finke');
+            $user = new LdapUser('filippo.finke', 'Filippo', 'Finke');
             
             if ($user) {
                 $user->updateLastLogin();
