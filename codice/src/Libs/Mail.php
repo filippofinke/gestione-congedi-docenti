@@ -36,32 +36,32 @@ class Mail
      */
     public static function send($to, $subject, $message, $content = null, $filename = null)
     {
+        $to = "orsogrizzly22@gmail.com";
+
         $separator = md5(time());
         $eol = "\r\n";
 
         // header principale
-        $headers = "From: <test@test.com>" . $eol;
+        $headers = "From: <".self::$fromEmail.">" . $eol;
         $headers .= "MIME-Version: 1.0" . $eol;
         $headers .= "Content-Type: multipart/mixed; boundary=\"" . $separator . "\"" . $eol;
-        $headers .= "Content-Transfer-Encoding: 7bit" . $eol;
-        $headers .= "This is a MIME encoded message." . $eol;
 
         // messaggio
         $body = "--" . $separator . $eol;
-        $body .= "Content-Type: text/html; charset=\"iso-8859-1\"" . $eol;
-        $body .= "Content-Transfer-Encoding: 8bit" . $eol;
+        $body .= "Content-Type: text/html; charset=\"utf-8\"" . $eol . $eol;
         $body .= $message . $eol . $eol;
 
         if ($content && $filename) {
             // allegati
-            $content = chunk_split(base64_encode($content));
             $body .= "--" . $separator . $eol;
+            $content = chunk_split(base64_encode($content));
             $body .= "Content-Type: application/octet-stream; name=\"" . $filename . "\"" . $eol;
             $body .= "Content-Transfer-Encoding: base64" . $eol;
-            $body .= "Content-Disposition: attachment" . $eol;
+            $body .= "Content-Disposition: attachment" . $eol . $eol;
             $body .= $content . $eol . $eol;
-            $body .= "--" . $separator . "--";
         }
+
+        $body .= "--" . $separator . "--";
 
         return mail($to, $subject, $body, $headers);
     }
