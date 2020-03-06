@@ -36,7 +36,6 @@ class Mail
      */
     public static function send($to, $subject, $message, $content = null, $filename = null)
     {
-        
         $separator = md5(time());
         $eol = "\r\n";
 
