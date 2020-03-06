@@ -83,16 +83,26 @@ if (isset($request)) {
 						<div class="col-12 mt-1">
 							<textarea class="form-control" style="height: 135px;" maxlength="255" placeholder="Osservazioni" id="observations"></textarea>
 						</div>
-						<div class="col-12 mt-1">
+						<div class="col-4 mt-1">
 							<select class="custom-select col-12" id="status">
 									<option selected="" value="0">Stato della richiesta</option>
 									<option value="3">CONSTATATA</option>
 									<option value="1">ACCETTATA</option>
 									<option value="2">RESPINTA</option>
-								</select>
+							</select>
+						</div>
+						<div class="col-4 mt-1">
+							<select class="custom-select col-12" id="paid">
+									<option selected="" disabled>Pagamento supplenza</option>
+									<option value="0">No</option>
+									<option value="1">Si</option>
+							</select>
+						</div>
+						<div class="col-4 mt-1">
+							<input class="form-control" type="number" id="hours" placeholder="Ore riconosciute" min="0">
 						</div>
 						<?php endif; ?>
-						<div class="col-12 text-center mt-1">
+						<div class="col-12 text-center mt-3">
 							<button class="btn btn-outline-primary" onclick="sendRequest(event)">
 							<?php
                                 echo ($editing)?"Aggiorna la richiesta":"Invia la richiesta";
@@ -333,13 +343,24 @@ if (isset($request)) {
 						var toUpdate = <?php echo ($editing)?"true":"false"; ?>;
 						var toAdd = "";
 						<?php if (Session::isAdministration() && $editing): ?>
+							var paid = $("#paid").val();
+							var hours = Number($("#hours").val());
 							var status = $("#status").val();
 							var observations = $("#observations").val();
 							if(!isValidDescription(observations)) {
 								$.notify("Le osservazioni contengono caratteri non ammessi!", "error");
 								return;
 							}
-							toAdd = "&status=" + status + "&observations=" + observations;
+							if(paid == null) {
+								$.notify("Seleziona lo stato del pagamento", "error");
+								return;
+							}
+							if(isNaN(hours) && paid == "1") {
+								$.notify("Seleziona un numero di ore riconosciute");
+								return;
+							}
+							if(!isNaN(hours) && paid == "0") hours = 0;
+							toAdd = "&status=" + status + "&observations=" + observations + "&hours=" + hours + "&paid=" + paid;
 							
 						<?php endif; ?>
 

@@ -129,7 +129,7 @@ class Requests
         return false;
     }
 
-    public static function update($id, $week = null, $status = null, $observations = null)
+    public static function update($id, $week = null, $status = null, $observations = null, $paid = null, $hours = null)
     {
         $pdo = Database::getConnection();
         $toSet = "";
@@ -157,6 +157,22 @@ class Requests
                 $toSet .= ", ".$toAdd;
             }
         }
+        if ($paid) {
+            $toAdd = "paid = :paid";
+            if ($toSet == "") {
+                $toSet = $toAdd;
+            } else {
+                $toSet .= ", ".$toAdd;
+            }
+        }
+        if ($hours) {
+            $toAdd = "hours = :hours";
+            if ($toSet == "") {
+                $toSet = $toAdd;
+            } else {
+                $toSet .= ", ".$toAdd;
+            }
+        }
         $query = "UPDATE requests SET auditor = :auditor, $toSet WHERE id = :id";
         $stm = $pdo->prepare($query);
         $stm->bindParam(":id", $id);
@@ -169,6 +185,12 @@ class Requests
         }
         if ($observations) {
             $stm->bindParam(":observations", $observations);
+        }
+        if ($hours) {
+            $stm->bindParam(":hours", $hours);
+        }
+        if ($paid) {
+            $stm->bindParam(":paid", $paid);
         }
         try {
             return $stm->execute();

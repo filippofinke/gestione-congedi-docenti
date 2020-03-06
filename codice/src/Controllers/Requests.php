@@ -97,6 +97,8 @@ class Requests
             $reasons = $request->getParam('reasons');
             $status = $request->getParam('status');
             $observations = $request->getParam('observations');
+            $paid = $request->getParam('paid');
+            $hours = $request->getParam('hours');
             $reasons = explode(",", $reasons);
             $substitutes = json_decode($request->getParam("substitutes"), true);
             foreach ($substitutes as $index => $substitute) {
@@ -111,7 +113,7 @@ class Requests
                 && isset($observations)
                 && Session::isAdministration()) {
                     if (!Validators::isValidDescription($observations)
-                    || !\FilippoFinke\Models\Requests::update($id, null, $status, $observations)) {
+                    || !\FilippoFinke\Models\Requests::update($id, null, $status, $observations, $paid, $hours)) {
                         Database::getConnection()->rollBack();
                         return $response->withStatus(400);
                     }
