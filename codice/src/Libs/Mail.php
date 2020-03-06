@@ -36,8 +36,7 @@ class Mail
      */
     public static function send($to, $subject, $message, $content = null, $filename = null)
     {
-        $to = "orsogrizzly22@gmail.com";
-
+        
         $separator = md5(time());
         $eol = "\r\n";
 
