@@ -62,7 +62,8 @@ class RequestPdf extends Fpdf
         $this->Ln($this->GetPageHeight() - $currentY - 50);
         $status = RequestStatus::get($request["status"]);
         $this->SetFont('Arial', 'B', 12);
-        $this->Cell(100, 10, 'Decisione della direzione: '.$status);
+        $this->Cell(150, 10, 'Decisione della direzione: '.$status);
+        $this->Cell(100, 10, 'Pagamento supplenza: '.($request["paid"]?"Si":"No").', Ore riconosciute: '.$request["hours"], 0, 0, 'L');
         $this->Ln(6);
         $observations = iconv('UTF-8', 'windows-1252', $request["observations"]);
         $this->SetFont('Arial', '', 11);
@@ -208,9 +209,10 @@ class RequestPdf extends Fpdf
         }
     }
 
-    public function getContent($type) {
+    public function getContent($type)
+    {
         return $this->Output($type);
-    } 
+    }
 
     private function getCurrentBlock($day, $hour, $blocks)
     {
