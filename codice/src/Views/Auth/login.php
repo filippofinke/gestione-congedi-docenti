@@ -25,7 +25,7 @@
 				<div id="success" class="alert alert-success" role="alert" style="display: none;">
 				</div>
 				<div class="input-group">
-					<button type="submit" class="btn btn-outline-primary btn-lg btn-block">Accedi</button>
+					<button id="loginButton" type="submit" class="btn btn-outline-primary btn-lg btn-block" disabled>Attendi...</button>
 				</div>
 				<div id="forgot-password" style="display:none;">
 					<div class="forgot-password padding-top-10"><a onclick="forgotPassword()">Password dimenticata?</a></div>
@@ -36,6 +36,11 @@
     <?php include(__DIR__ . '/../Global/script.php'); ?>
 	
 	<script>
+
+	$( document ).ready(function() {
+		$("#loginButton").removeAttr('disabled');
+		$("#loginButton").text("Accedi");
+	});
 	
 	function doLogin(event) {
 		event.preventDefault();
