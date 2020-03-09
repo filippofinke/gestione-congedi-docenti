@@ -3,7 +3,7 @@
 	<title>Gestione congedi</title>
 
 	<!-- Site favicon -->
-	<!-- <link rel="shortcut icon" href="images/favicon.ico"> -->
+	<link rel="shortcut icon" href="<?php echo BASE_URL; ?>/assets/img/favicon.ico"> -->
 
 	<!-- Mobile Specific Metas -->
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
