@@ -209,6 +209,7 @@ class RequestPdf extends Fpdf
             $this->Cell(23);
             // Supplente
             foreach (CALENDAR_HOURS as $hour) {
+                $this->SetFont('Arial', '', 7);
                 if (isset($hour["space"])) {
                     $this->Cell(5);
                     continue;
@@ -219,10 +220,23 @@ class RequestPdf extends Fpdf
                     $fill = true;
                 }
                 $block = $this->getCurrentBlock($index, $hour, $hours);
-                $substitute = $block["substitute"];
-                $type = $block["type"];
-                $string = $type." ".$substitute;
-                $this->Cell($hoursWidth, $h, $string, 1, 0, 'C', $fill);
+                
+                $substitute = $block["substitute"] ?? ' ';
+                $type = $block["type"] ?? ' ';
+                $x = $this->GetX() + 0.5;
+                $y = $this->GetY() + 3;
+                $this->Cell($hoursWidth, $h, '', 1, 0, 'C', $fill);
+                $this->Text($x + 4.5, $y, $type);
+                $y += $h / 2;
+
+                $fontSize = 7;
+                while ($this->GetStringWidth($substitute) >= $hoursWidth) {
+                    $this->SetFont('Arial', '', $fontSize);
+                    $fontSize--;
+                }
+                $w = $this->GetStringWidth($substitute);
+                $margin = ($hoursWidth - $w - 1) / 2;
+                $this->Text($x + $margin, $y, $substitute);
             }
 
             $this->Ln();
