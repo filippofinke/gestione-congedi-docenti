@@ -5,9 +5,12 @@ use Fpdf\Fpdf;
 
 class RequestPdf extends Fpdf
 {
+    private $fileName = "";
+
     public function __construct($reasons, $request, $hours, $user)
     {
         parent::__construct('L', 'mm', 'letter');
+        $this->fileName = "Congedo_".date("d_m_Y", strtotime($request["updated_at"])).".pdf";
         $this->AliasNbPages();
         $this->AddPage();
         $this->SetFont('Arial', 'B', 13);
@@ -211,7 +214,7 @@ class RequestPdf extends Fpdf
 
     public function getContent($type)
     {
-        $output = $this->Output($type);
+        $output = $this->Output($type, $this->fileName);
         if ($type == "I") {
             return true;
         } else {
