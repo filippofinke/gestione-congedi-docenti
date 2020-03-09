@@ -16,6 +16,12 @@ use PDOException;
  */
 class Tokens
 {
+    /**
+     * Metodo utilizzato per eseguire il login direttamente con un token.
+     *
+     * @param $token Il token da utilizzare.
+     * @return boolean True o false.
+     */
     public static function login($token)
     {
         $hash = hash('sha256', $token);
@@ -45,6 +51,12 @@ class Tokens
         }
     }
 
+    /**
+     * Metodo utilizzato per resettare i token di un utente.
+     *
+     * @param $email L'email dell'utente.
+     * @return boolean True o false.
+     */
     public static function resetTokens($email)
     {
         $pdo = Database::getConnection();
@@ -58,6 +70,12 @@ class Tokens
         }
     }
 
+    /**
+     * Metodo utilizzato per generare ed inviare un token di recupero per email.
+     *
+     * @param $email L'email dell'utente.
+     * @param boolean True o false.
+     */
     public static function sendToken($email)
     {
         $pdo = Database::getConnection();
@@ -78,6 +96,11 @@ class Tokens
         }
     }
 
+    /**
+     * Metodo utilizzato per generare un token randomico di 20 caratteri.
+     *
+     * @return string Un token di 20 caratteri.
+     */
     public static function generateToken()
     {
         $keyspace = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';

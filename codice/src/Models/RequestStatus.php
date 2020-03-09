@@ -30,6 +30,12 @@ class RequestStatus
      */
     public const NOTICED = 3;
 
+    /**
+     * Metodo utilizzato per ricavare lo stato del congedo come stringa.
+     *
+     * @param $status Lo stato da ricavare.
+     * @return string La stringa dello stato.
+     */
     public static function get($status)
     {
         switch ($status) {

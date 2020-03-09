@@ -3,10 +3,27 @@ namespace FilippoFinke\Models;
 
 use Fpdf\Fpdf;
 
+/**
+ * RequestPdf.php
+ * Classe utilizzata per la generazione di PDF.
+ *
+ * @author Filippo Finke
+ */
 class RequestPdf extends Fpdf
 {
+    /**
+     * Il nome del file PDF.
+     */
     private $fileName = "";
 
+    /**
+     * Metodo costruttore che si occupa di generare la struttura del PDF.
+     *
+     * @param $reasons I motivi del congedo.
+     * @param $request La richiesta di congedo.
+     * @param $hours Le ore del calendario occupate dalla richiesta di congedo.
+     * @param $user L'utente che ha richiesto il congedo.
+     */
     public function __construct($reasons, $request, $hours, $user)
     {
         parent::__construct('L', 'mm', 'letter');
@@ -212,6 +229,13 @@ class RequestPdf extends Fpdf
         }
     }
 
+    /**
+     * Metodo utilizzato per ricavare il PDF.
+     *
+     * @param $type La tipologia di output, "I" stampa sul browser, "S" ritorna il congedo
+     * come se fosse una stringa.
+     * @return boolean|string A dipendenza della tipologia di output.
+     */
     public function getContent($type)
     {
         $output = $this->Output($type, $this->fileName);
@@ -222,6 +246,13 @@ class RequestPdf extends Fpdf
         }
     }
 
+    /**
+     * Metodo utilizzato per determinare se il blocco del calendario è occupato oppure no.
+     *
+     * @param $day Il giorno.
+     * @param $hour L'orario del blocco.
+     * @param $blocks Tutti i blocchi da controllare.
+     */
     private function getCurrentBlock($day, $hour, $blocks)
     {
         $start = strtotime($hour["start"].":00");
@@ -242,6 +273,16 @@ class RequestPdf extends Fpdf
         }
     }
 
+    /**
+     * Metodo utilizzato per impostare la direzione del testo da stampare.
+     *
+     * @param $x La x dove stampare il testo.
+     * @param $y La y dove stampare il testo.
+     * @param $txt Il testo da stampare.
+     * @param $direction La direzione di stampa "R","L","U","D"
+     *
+     * Fonte: http://www.fpdf.org/en/script/script31.php
+     */
     public function TextWithDirection($x, $y, $txt, $direction='R')
     {
         if ($direction=='R') {
@@ -261,8 +302,10 @@ class RequestPdf extends Fpdf
         $this->_out($s);
     }
 
-    
 
+    /**
+     * Metodo che genera l'intestazione del file PDF.
+     */
     public function Header()
     {
         $this->Image(__DIR__ . '/cpt-logo.jpeg', 10, 10, -300);
@@ -271,6 +314,9 @@ class RequestPdf extends Fpdf
         $this->Ln(16);
     }
 
+    /**
+     * Metodo che genera il piè di pagina del file PDF.
+     */
     public function Footer()
     {
         $this->SetY(-17);

@@ -169,6 +169,13 @@ class Requests
         }
     }
 
+    /**
+     * Metodo utilizzato per generare il PDF relativo ad un congedo.
+     *
+     * @param $request La richiesta.
+     * @param $response La risposta.
+     * @return Response La risposta.
+     */
     public static function pdf($request, $response)
     {
         $id = $request->getAttribute('id');

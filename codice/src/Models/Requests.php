@@ -37,6 +37,12 @@ class Requests
         return false;
     }
 
+    /**
+     * Metodo utilizzato per ricavare i congedi revisionati di un utente.
+     *
+     * @param $username L'username dell'utente.
+     * @return array Array di congedi.
+     */
     public static function getPersonalHistory($username)
     {
         $pdo = Database::getConnection();
@@ -52,6 +58,11 @@ class Requests
         return false;
     }
 
+    /**
+     * Metodo utilizzato per ricavare tutti i congedi revisionati.
+     *
+     * @return array Array di congedi.
+     */
     public static function getAll()
     {
         $pdo = Database::getConnection();
@@ -93,7 +104,7 @@ class Requests
      *
      * @param $id L'id del congedo.
      * @param $container Il contenitore.
-     * @return array True o false.
+     * @return boolean True o false.
      */
     public static function setContainer($id, $container)
     {
@@ -129,6 +140,16 @@ class Requests
         return false;
     }
 
+    /**
+     * Metodo utilizzato per aggiornare un congedo.
+     *
+     * @param $id L'id del congedo.
+     * @param $week La settimana del congedo "A" oppure "B".
+     * @param $observations Le osservazioni del congedo.
+     * @param $paid Se il congedo è pagato oppure no.
+     * @param $hours Le ore riconosciute.
+     * @return boolean True o false.
+     */
     public static function update($id, $week = null, $status = null, $observations = null, $paid = null, $hours = null)
     {
         $pdo = Database::getConnection();
@@ -199,6 +220,12 @@ class Requests
         return false;
     }
 
+    /**
+     * Metodo utilizzato per eliminare la correlazione tra motivi e congedo.
+     *
+     * @param $id L'id del congedo.
+     * @return boolean True o false.
+     */
     public static function deleteReasons($id)
     {
         $pdo = Database::getConnection();
@@ -212,6 +239,12 @@ class Requests
         return false;
     }
 
+    /**
+     * Metodo utilizzato per eliminare i sostituti di un congedo.
+     *
+     * @param $id L'id del congedo.
+     * @return boolean True o false.
+     */
     public static function deleteSubstitutes($id)
     {
         $pdo = Database::getConnection();
@@ -224,7 +257,14 @@ class Requests
         }
         return false;
     }
-
+    
+    /**
+     * Metodo utilizzato per inserire un congedo.
+     *
+     * @param $username L'utente del congedo.
+     * @param $week La settimana "A" o "B" del congedo.
+     * @return boolean True o false.
+     */
     public static function insert($username, $week)
     {
         $pdo = Database::getConnection();
@@ -241,6 +281,13 @@ class Requests
         return false;
     }
 
+    /**
+     * Metodo utilizzato per generare il PDF di un congedo.
+     *
+     * @param $id Il congedo.
+     * @param $type La tipologia di output del congedo. "I" per browser o "S" per stringa.
+     * @return void|string|boolean A dipendenza della tipologia di output.
+     */
     public static function generatePdfForId($id, $type = "I")
     {
         $request = self::getById($id);

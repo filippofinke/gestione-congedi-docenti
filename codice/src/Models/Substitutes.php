@@ -5,8 +5,20 @@ namespace FilippoFinke\Models;
 use FilippoFinke\Utils\Database;
 use PDOException;
 
+/**
+ * Substitutes.php
+ * Classe utilizzata per rappresentare i sostituti di una richiesta di congedo.
+ *
+ * @author Filippo Finke
+ */
 class Substitutes
 {
+    /**
+     * Metodo utilizzato per ricavare i sostituti di una richiesta di congedo.
+     *
+     * @param $id L'id della richiesta di congedo.
+     * @return array Array di sostituti.
+     */
     public static function getByRequestId($id)
     {
         $pdo = Database::getConnection();
@@ -21,6 +33,18 @@ class Substitutes
         }
     }
 
+    /**
+     * Metodo utilizzato per inserire un sostituto ad una richiesta di congedo.
+     *
+     * @param $request L'id della richiesta di congedo.
+     * @param $from La data di inizio.
+     * @param $to La data di fine.
+     * @param $type Il tipo di supplenza.
+     * @param $room L'aula.
+     * @param $substitute Il supplente.
+     * @param $class La classe.
+     * @return boolean True o false.
+     */
     public static function insert($request, $from, $to, $type, $room, $substitute, $class)
     {
         $pdo = Database::getConnection();

@@ -7,14 +7,14 @@ use FilippoFinke\Libs\Session;
 /**
  * AdministrationRequired.php
  * Classe utilizzata per controllare se un utente
- * ha l'accesso a determinati percorsi come Amministrazione.
+ * ha l'accesso a determinati percorsi come amministrazione.
  *
  * @author Filippo Finke
  */
 class AdministrationRequired
 {
     /**
-     * Controlla il permesso dell'utente.
+     * Controlla se l'utente fa parte dell'amministrazione.
      *
      * @param $request La richiesta.
      * @param $response La risposta.

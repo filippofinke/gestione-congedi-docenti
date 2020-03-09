@@ -86,7 +86,13 @@ class Dashboard
             __DIR__ . '/../Views/Dashboard/secretariat.php'
         );
     }
-
+    /**
+     * Metodo che si occupa di renderizzare il contenitore della direzione.
+     *
+     * @param $request La richiesta.
+     * @param $response La risposta.
+     * @return Response La risposta.
+     */
     public static function administration($request, $response)
     {
         return $response->render(
@@ -94,6 +100,13 @@ class Dashboard
         );
     }
 
+    /**
+     * Metodo che si occupa di renderizzare il contenitore dell'istoriato.
+     *
+     * @param $request La richiesta.
+     * @param $response La risposta.
+     * @return Response La risposta.
+     */
     public static function history($request, $response)
     {
         $personal = false;
