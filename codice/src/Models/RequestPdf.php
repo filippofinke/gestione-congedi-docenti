@@ -67,7 +67,7 @@ class RequestPdf extends Fpdf
         $this->Ln(6);
         $observations = iconv('UTF-8', 'windows-1252', $request["observations"]);
         $this->SetFont('Arial', '', 11);
-        $this->Cell(100, 10, 'Osservazioni: '.$observations);
+        $this->Cell(100, 10, 'Osservazioni: '.(($observations == "")?'Nessuna osservazione':$observations));
         $this->Ln(6);
         $auditor = iconv('UTF-8', 'windows-1252', $request["auditor"]);
         $this->Cell(100, 10, 'Firma: '.$auditor);
@@ -211,7 +211,12 @@ class RequestPdf extends Fpdf
 
     public function getContent($type)
     {
-        return $this->Output($type);
+        $output = $this->Output($type);
+        if ($type == "I") {
+            return true;
+        } else {
+            return $output;
+        }
     }
 
     private function getCurrentBlock($day, $hour, $blocks)
