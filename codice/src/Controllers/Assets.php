@@ -103,7 +103,10 @@ class Assets
             if (!$type) {
                 $type = mime_content_type($file);
             }
+            header_remove("Pragma");
             return $response
+            ->withHeader("Cache-Control", "public, max-age=3600")
+            ->withHeader("Expires", gmdate('D, d M Y H:i:s', time()+3600).'GMT')
             ->withHeader("Content-Type", $type)
             ->withBody(file_get_contents($file))
             ->withStatus(200);
