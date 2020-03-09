@@ -250,6 +250,10 @@ if (isset($request)) {
 					if(substitute.type == null) {
 						substitute.type = "";
 					}
+					var type = "";
+					if(substitute.type != "") {
+						type = " (" + substitute.type + ")";
+					}
 					for(var block of blocks) {
 						var blockStart = new Date("1990-01-01 " + block.dataset.start);
 						var blockEnd = new Date("1990-01-01 " + block.dataset.end);
@@ -260,10 +264,7 @@ if (isset($request)) {
 							block.setAttribute("data-room", substitute.room);
 							block.setAttribute("data-substitute", substitute.substitute);
 							block.setAttribute("data-type", substitute.type);
-							if(substitute.type != "") {
-								substitute.type = " (" + substitute.type + ")";
-							}
-							block.innerText = substitute.class + "\n" + substitute.room + "\n" + substitute.substitute + substitute.type;
+							block.innerText = substitute.class + "\n" + substitute.room + "\n" + substitute.substitute + type;
 						}
 					}
 				}
