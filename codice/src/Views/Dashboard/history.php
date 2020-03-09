@@ -127,6 +127,7 @@ include(__DIR__ . '/../Global/head.php'); ?>
 							</div>
 						</div>
 						<div class="modal-footer">
+							<a id="download-button" class="btn btn-secondary text-white" download>Scarica</a>
 							<button type="button" class="btn btn-secondary" onclick="printPdf()">Stampa</button>
 							<button type="button" class="btn btn-secondary" data-dismiss="modal">Chiudi</button>
 						</div>
@@ -147,6 +148,7 @@ include(__DIR__ . '/../Global/head.php'); ?>
 	function showPdf(id) {
 		var url = "<?php echo BASE_URL; ?>/requests/" + id + "/pdf";
 		$('#iframe').attr("src", url);
+		$('#download-button').attr("href", url);
 		$('#pdf-modal').modal('toggle');
 	}
 
