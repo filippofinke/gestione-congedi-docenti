@@ -14,7 +14,7 @@ class RequestStatus
      * Richiesta in attesa.
      */
     public const WAITING = 0;
-    
+
     /**
      * Richiesta accettata.
      */
@@ -46,7 +46,7 @@ class RequestStatus
             case self::REJECTED:
                 return 'Respinta';
             case self::NOTICED:
-                return 'Costatata';
+                return 'Constatata';
             default:
                 return null;
         }
