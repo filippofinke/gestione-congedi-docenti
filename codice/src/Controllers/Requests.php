@@ -86,8 +86,15 @@ class Requests
     {
         $id = $request->getAttribute('id');
         $approve = $request->getParam('approve');
+        $return = $request->getParam('return');
         if ($approve) {
             if (ModelsRequests::setContainer($id, Container::ADMINISTRATION)) {
+                return $response->withStatus(200);
+            } else {
+                return $response->withStatus(400);
+            }
+        } elseif ($return && Session::isAdministration()) {
+            if (ModelsRequests::setContainer($id, Container::SECRETARY)) {
                 return $response->withStatus(200);
             } else {
                 return $response->withStatus(400);

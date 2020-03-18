@@ -111,7 +111,7 @@ class Requests
         $pdo = Database::getConnection();
         $query = "UPDATE requests SET container = :container WHERE id = :id";
         $stm = $pdo->prepare($query);
-        $stm->bindParam(":container", $container);
+        $stm->bindParam(":container", $container, \PDO::PARAM_INT);
         $stm->bindValue(":id", $id);
         try {
             return $stm->execute();
