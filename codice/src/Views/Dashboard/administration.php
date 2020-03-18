@@ -95,7 +95,6 @@ include(__DIR__ . '/../Global/head.php'); ?>
                                 <td><?php echo $request["observations"]; ?></td>
                                 <td><?php echo RequestStatus::get($request["status"]); ?></td>
 								<td>
-                                    <button class="btn btn-outline-danger" onclick="returnToSecretary(<?php echo $request["id"]; ?>)">Ritorna in segreteria</button>
                                     <a class="btn btn-outline-primary text-primary" href="<?php echo BASE_URL; ?>/dashboard/<?php echo $request["id"]; ?>">Revisiona</a>
 								</td>
 							</tr>
@@ -141,26 +140,6 @@ include(__DIR__ . '/../Global/head.php'); ?>
             body.highlight( table.search() );  
         });
 	});
-
-	function returnToSecretary(id) {
-        if(confirm("Sei sicuro/a di voler inoltrare il congedo nel contenitore della segreteria?")) {
-            fetch('<?php echo BASE_URL; ?>/requests/' + id, {
-				method: "PUT",
-				body: "return=true"
-			}).then((response) => {
-				if(response.status == 200) {
-                    $.notify("Il congedo è stato inoltrato al contenitore della segreteria!", "success");
-                    setTimeout(function() {
-						location.reload();
-					}, 500);
-				} else {
-					$.notify("Impossibile inoltrare il congedo!", "error");
-				}
-				return response.text();
-			});
-        }
-    }
-
 	</script>
 </body>
 </html>

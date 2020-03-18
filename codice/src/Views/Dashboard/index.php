@@ -1,6 +1,7 @@
 <?php
 
 use FilippoFinke\Libs\Session;
+use FilippoFinke\Models\Container;
 
 $editing = false;
 if (isset($request)) {
@@ -103,9 +104,12 @@ if (isset($request)) {
 						</div>
 						<?php endif; ?>
 						<div class="col-12 text-center mt-3">
+							<?php if ($editing && Session::isAdministration() && $request['request']['container'] != Container::SECRETARY): ?>
+							<button class="btn btn-outline-danger" onclick="returnToSecretary(<?php echo $request['request']['id']; ?>)">Ritorna in segreteria</button>
+							<?php endif; ?>
 							<button class="btn btn-outline-primary" onclick="sendRequest(event)">
 							<?php
-                                echo ($editing)?"Aggiorna la richiesta":"Invia la richiesta";
+                                echo ($editing)?"Salva la richiesta":"Invia la richiesta";
                             ?>
 							</button>
 							<?php if ($editing): ?>
@@ -449,6 +453,29 @@ if (isset($request)) {
 				calendar.render();
 				$('#calendar-modal').modal('toggle');
 			}
+
+
+	<?php if (Session::isAdministration()): ?>
+	function returnToSecretary(id) {
+        if(confirm("Sei sicuro/a di voler inoltrare il congedo nel contenitore della segreteria?")) {
+            fetch('<?php echo BASE_URL; ?>/requests/' + id, {
+				method: "PUT",
+				body: "return=true"
+			}).then((response) => {
+				if(response.status == 200) {
+                    $.notify("Il congedo è stato inoltrato al contenitore della segreteria!", "success");
+                    setTimeout(function() {
+						location.reload();
+						window.history.back();
+					}, 500);
+				} else {
+					$.notify("Impossibile inoltrare il congedo!", "error");
+				}
+				return response.text();
+			});
+        }
+    }
+	<?php endif; ?>
 	</script>
 	
 </body>
