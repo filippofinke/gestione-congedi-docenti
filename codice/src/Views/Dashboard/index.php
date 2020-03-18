@@ -105,7 +105,7 @@ if (isset($request)) {
 						<?php endif; ?>
 						<div class="col-12 text-center mt-3">
 							<?php if ($editing && Session::isAdministration() && $request['request']['container'] != Container::SECRETARY): ?>
-							<button class="btn btn-outline-danger" onclick="returnToSecretary(<?php echo $request['request']['id']; ?>)">Ritorna in segreteria</button>
+							<button class="btn btn-outline-danger" onclick="returnToSecretary(<?php echo $request['request']['id']; ?>)">Rimanda in segreteria</button>
 							<?php endif; ?>
 							<button class="btn btn-outline-primary" onclick="sendRequest(event)">
 							<?php
@@ -457,14 +457,14 @@ if (isset($request)) {
 
 	<?php if (Session::isAdministration()): ?>
 	function returnToSecretary(id) {
-        if(confirm("Sei sicuro/a di voler inoltrare il congedo nel contenitore della segreteria?")) {
-            fetch('<?php echo BASE_URL; ?>/requests/' + id, {
+		if(confirm("Sei sicuro/a di voler inoltrare il congedo nel contenitore della segreteria?")) {
+			fetch('<?php echo BASE_URL; ?>/requests/' + id, {
 				method: "PUT",
 				body: "return=true"
 			}).then((response) => {
 				if(response.status == 200) {
-                    $.notify("Il congedo è stato inoltrato al contenitore della segreteria!", "success");
-                    setTimeout(function() {
+					$.notify("Il congedo è stato inoltrato al contenitore della segreteria!", "success");
+					setTimeout(function() {
 						location.reload();
 						window.history.back();
 					}, 500);
@@ -473,8 +473,8 @@ if (isset($request)) {
 				}
 				return response.text();
 			});
-        }
-    }
+		}
+	}
 	<?php endif; ?>
 	</script>
 	
