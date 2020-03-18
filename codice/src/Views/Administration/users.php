@@ -230,9 +230,9 @@
 				body: "permission=" + permission
 			}).then((response) => {
 				if(response.status == 200) {
-					$.notify("Permesso di " + username + " aggiornato!", "success");
+					$.notify(username + " fa ora parte del gruppo " + permission + "!", "success");
 				} else {
-					$.notify("Impossibile aggiornare il permesso.", "error");
+					$.notify("Impossibile aggiornare il permesso, riprova!", "error");
 				}
 			});
 		}
@@ -252,34 +252,34 @@
 					}
 				}).then((response) => {
 					if(response.status == 201) {
-						$.notify("Utente creato, password inviata per email!", "success");
+						$.notify("L'utente è stato creato con successo, tutti i dati sono stati inviati per email!", "success");
 						setTimeout(function() {
 							location.reload();
-						}, 500);
+						}, 1000);
 					} else if(response.status == 400) {
-						$.notify("Richiesta malformata.", "error");
+						$.notify("Impossibile creare l'utente, riprova!", "error");
 					} else {
-						$.notify("Impossibile creare l'utente, già esistente.", "error");
+						$.notify("L'email utilizzata è gia esistente!", "error");
 					}
 				});
 			} else {
-				$.notify("Completa tutti i campi.","error");
+				$.notify("Per creare un utente sono richiesti tutti i campi!","error");
 			}
 		}
 
 		function deleteAdministrator(row, email) {
-			if(confirm("Sei sicuro di voler eliminare " + email + "?")) {
+			if(confirm("Sei sicuro di voler eliminare l'utente con email: " + email + "?")) {
 				fetch('<?php echo BASE_URL; ?>/users', {
 					method: "DELETE",
 					body: "email=" + email,
 				}).then((response) => {
 					if(response.status == 200) {
-						$.notify("Amministratore eliminato!", "success");
+						$.notify("L'amministratore con email: " + email + " è stato eliminato!", "success");
 						row.parentElement.parentElement.remove();
 					} else if(response.status == 400) {
-						$.notify("Richiesta malformata.", "error");
+						$.notify("Impossibile eliminare l'utente, riprova!", "error");
 					} else {
-						$.notify("Non puoi eliminare te stesso!", "error");
+						$.notify("Non puoi eliminare l'utente corrente!", "error");
 					}
 				});
 			}
@@ -301,18 +301,18 @@
 					}
 				}).then((response) => {
 					if(response.status == 201) {
-						$.notify("Utente LDAP creato!", "success");
+						$.notify("L'utente ldap è stato creato!", "success");
 						setTimeout(function() {
 							location.reload();
 						}, 500);
 					} else if(response.status == 400) {
-						$.notify("Richiesta malformata.", "error");
+						$.notify("Impossibile creare l'utente LDAP, riprova!", "error");
 					} else {
-						$.notify("Impossibile creare l'utente, già esistente.", "error");
+						$.notify("L'utente è gia presente nel database!", "error");
 					}
 				});
 			} else {
-				$.notify("Compila tutti i campi!", "error");
+				$.notify("Per la creazione di un utente LDAP sono richiesti tutti i campi!", "error");
 			}
 		}
 

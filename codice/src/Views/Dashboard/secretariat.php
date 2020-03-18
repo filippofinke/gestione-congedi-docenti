@@ -139,19 +139,19 @@ include(__DIR__ . '/../Global/head.php'); ?>
 	});
     
     function approve(id) {
-        if(confirm("Sei sicuro/a di voler mandare il congedo in direzione?")) {
+        if(confirm("Sei sicuro/a di voler inoltrare il congedo nel contenitore della direzione?")) {
             console.log("Approving " + id);
             fetch('<?php echo BASE_URL; ?>/requests/' + id, {
 				method: "PUT",
 				body: "approve=true"
 			}).then((response) => {
 				if(response.status == 200) {
-                    $.notify("Congedo mandato in direzione!", "success");
+                    $.notify("Il congedo è stato inoltrato al contenitore della direzione!", "success");
                     setTimeout(function() {
 						location.reload();
 					}, 500);
 				} else {
-					$.notify("Impossibile approvare il congedo!", "error");
+					$.notify("Impossibile inoltrare il congedo!", "error");
                 }
 			});
         }

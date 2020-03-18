@@ -183,6 +183,21 @@ if (isset($request)) {
 		<?php endif; ?>
 		var calendar = null;
 
+		var labels = [
+				<?php foreach (CALENDAR_LABELS as $label): ?>
+					"<?php echo $label; ?>",
+				<?php endforeach; ?>
+			];
+		var hours = [
+			<?php foreach (CALENDAR_HOURS as $hour):
+                if (isset($hour["space"])) {
+                    continue;
+                }
+            ?>
+				{start:"<?php echo $hour["start"]; ?>", end:"<?php echo $hour["end"]; ?>", allow: <?php echo $hour["allow"]? 'true' : 'false'; ?>},
+			<?php endforeach; ?>
+		];
+
 		function toggleReason(id) {
 			var index = reasons.indexOf(id);
 			if (index == -1) {
@@ -194,21 +209,6 @@ if (isset($request)) {
 
 		window.addEventListener("load", function() {		
 			console.log("loaded!");			
-
-			var labels = [
-				<?php foreach (CALENDAR_LABELS as $label): ?>
-					"<?php echo $label; ?>",
-				<?php endforeach; ?>
-			];
-			var hours = [
-				<?php foreach (CALENDAR_HOURS as $hour):
-                    if (isset($hour["space"])) {
-                        continue;
-                    }
-                ?>
-					{start:"<?php echo $hour["start"]; ?>", end:"<?php echo $hour["end"]; ?>", allow: <?php echo $hour["allow"]? 'true' : 'false'; ?>},
-				<?php endforeach; ?>
-			];
 
 			calendar = new FinkeLendar(
 				document.getElementById('calendar'),
@@ -282,10 +282,10 @@ if (isset($request)) {
 
 				var errors = [];
 				if(reasons.length == 0) {
-					errors.push("Seleziona una motivazione!");
+					errors.push("Seleziona almeno una motivazione!");
 				}
 				if(calendar.week == "") {
-					errors.push("Seleziona una settimana!");
+					errors.push("Seleziona la settimana (A o B)!");
 				}
 				var selected = false;
 				for(var i = 0; i < calendar.days.length; i++) { 
@@ -295,11 +295,11 @@ if (isset($request)) {
 					}
 				}
 				if(!selected) {
-					errors.push("Seleziona un periodo!");
+					errors.push("Seleziona almeno un periodo di assenza!");
 				}
 
 				if(calendar.dates.length == 0) {
-					errors.push("Seleziona le date!");
+					errors.push("Seleziona le date di assenza per i vari giorni!");
 				}
 
 				var toSave = [];
@@ -314,10 +314,10 @@ if (isset($request)) {
 							var end = element.dataset.end;
 							var d = new Date(date);
 							if(typeof date == "undefined") {
-								errors.push("Data mancante!");
+								errors.push("Seleziona una data per " + labels[i] + "!");
 								exit = true;
 							} else if(d.getDay() - 1 != i) {
-								errors.push("La data non corrisponde con il giorno!");
+								errors.push("La data selezionata non corrisponde con il giorno!");
 								exit = true;
 							} else {
 								var course = element.dataset.course;
@@ -353,11 +353,11 @@ if (isset($request)) {
 								return;
 							}
 							if(paid == null) {
-								$.notify("Seleziona lo stato del pagamento", "error");
+								$.notify("Seleziona lo stato del pagamento!", "error");
 								return;
 							}
 							if(isNaN(hours) && paid == "1") {
-								$.notify("Seleziona un numero di ore riconosciute");
+								$.notify("Seleziona un numero di ore riconosciute!", "error");
 								return;
 							}
 							if(!isNaN(hours) && paid == "0") hours = 0;
@@ -375,9 +375,9 @@ if (isset($request)) {
 							if(response.status == 201 || response.status == 200) {
 								event.target.disabled = true;
 								if(toUpdate) {
-									$.notify("Congedo aggiornato!", "success");
+									$.notify("La richiesta di congedo è stata aggiornata!", "success");
 								} else {
-									$.notify("Congedo creato!", "success");
+									$.notify("La richiesta di congedo è stata creata!", "success");
 								}
 								setTimeout(function() {
 									if(toUpdate) {
@@ -387,7 +387,7 @@ if (isset($request)) {
 									}
 								}, 500);
 							} else if(response.status == 400) {
-								$.notify("Richiesta malformata.", "error");
+								$.notify("Impossibile salvare la richiesta di congedo, riprova!", "error");
 							}
 							return response.text();
 						}).then(r => console.log(r));
@@ -404,11 +404,21 @@ if (isset($request)) {
 				var course = $("#course").val();
 				var room = $("#room").val();
 				var substitute = $("#substitute").val();
+				var errors = [];
+				if(substitute.length > 0 && !isValidName(substitute)) {
+					errors.push("Il campo supplente contiene caratteri non validi!");
+				}
+				if(room.length > 0 && !isValidDescription(room, 1, 5)) {
+					errors.push("L'aula ha un massimo di 5 caratteri!");
+				}
+				if(course.length > 0 && !isValidDescription(course, 1, 15)) {
+					errors.push("La classe ha un massimo di 15 caratteri!");
+				}
 
-				if((substitute.length > 0 && !isValidName(substitute))
-				|| (room.length > 0 && !isValidDescription(room, 1, 5))
-				|| (course.length > 0 && !isValidDescription(course, 1, 15))) {
-					$.notify("I valori inseriti non sono validi!", "error");
+				if(errors.length > 0) {
+					for(var error of errors) {
+						$.notify(error, "error");
+					}
 					return;
 				}
 
