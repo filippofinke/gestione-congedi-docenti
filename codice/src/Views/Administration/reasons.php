@@ -80,7 +80,7 @@
                                     <td><?php echo $reason["name"]; ?></td>
 									<td><?php echo $reason["description"]; ?></td>
 									<td class="float-right">
-										<button class="btn btn-outline-warning" onclick="showUpdateDialog(this, <?php echo $reason["id"]; ?>)">Aggiorna</button>
+										<button class="btn btn-outline-primary" onclick="showUpdateDialog(this, <?php echo $reason["id"]; ?>)">Modifica</button>
 										<button class="btn btn-outline-danger" onclick="deleteReason(this, <?php echo $reason["id"]; ?>)">Elimina</button>
 									</td>
                                 </tr>
