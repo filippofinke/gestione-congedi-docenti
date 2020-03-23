@@ -359,7 +359,7 @@ if (isset($request)) {
 						var method = "<?php echo ($editing)?"PUT":"POST";?>";
 						var toUpdate = <?php echo ($editing)?"true":"false"; ?>;
 						var toAdd = "";
-						<?php if ((Session::isAdministration() || $request['request']['can_be_forwarded']) && $editing): ?>
+						<?php if ((Session::isAdministration() || (isset($request) && $request['request']['can_be_forwarded'])) && $editing): ?>
 							var paid = $("#paid").val();
 							var hours = Number($("#hours").val());
 							var status = $("#status").val();
@@ -467,7 +467,7 @@ if (isset($request)) {
 			}
 
 
-	<?php if (Session::isAdministration() || $request['request']['can_be_forwarded']): ?>
+	<?php if (Session::isAdministration() || (isset($request) && $request['request']['can_be_forwarded'])): ?>
 	function returnToSecretary(id) {
 
 		let canBeForwarded = ($("#can_be_forwarded").is(":checked")?'1':'0');
