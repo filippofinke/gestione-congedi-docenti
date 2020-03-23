@@ -95,8 +95,6 @@
 			$("#success").css("display","none");
 		}
 	}
-
 	</script>
-
 </body>
 </html>

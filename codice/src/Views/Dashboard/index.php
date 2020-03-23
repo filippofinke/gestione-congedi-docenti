@@ -80,7 +80,7 @@ if (isset($request)) {
                                 ?>
 							</h5>
 						</div>
-						<?php if ((Session::isAdministration() || $request['request']['can_be_forwarded']) && $editing): ?>
+						<?php if ((Session::isAdministration() || (isset($request) && $request['request']['can_be_forwarded'])) && $editing): ?>
 						<div class="col-12 mt-1">
 							<textarea class="form-control" style="height: 135px;" maxlength="255" placeholder="Osservazioni" id="observations"></textarea>
 						</div>
