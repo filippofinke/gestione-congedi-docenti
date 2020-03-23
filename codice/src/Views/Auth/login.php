@@ -25,7 +25,7 @@
 				<div id="success" class="alert alert-success" role="alert" style="display: none;">
 				</div>
 				<div class="input-group">
-					<button id="loginButton" type="submit" class="btn btn-outline-primary btn-lg btn-block" disabled>Attendi...</button>
+					<button id="loginButton" type="submit" class="btn btn-primary btn-lg btn-block" disabled>Attendi...</button>
 				</div>
 				<div id="forgot-password" style="display:none;">
 					<div class="forgot-password padding-top-10"><a onclick="forgotPassword()">Password dimenticata?</a></div>

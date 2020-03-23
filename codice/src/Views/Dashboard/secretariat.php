@@ -91,8 +91,8 @@ include(__DIR__ . '/../Global/head.php'); ?>
 									</ul>
 								</td>
 								<td>
-                                    <a class="btn btn-outline-primary text-primary" href="<?php echo BASE_URL; ?>/dashboard/<?php echo $request["id"]; ?>">Visualizza</a>
-                                    <button class="btn btn-outline-success" onclick="approve(<?php echo $request["id"]; ?>)">Conferma</button>
+                                    <a class="btn btn-primary text-primary" href="<?php echo BASE_URL; ?>/dashboard/<?php echo $request["id"]; ?>">Revisiona</a>
+                                    <button class="btn btn-success" onclick="approve(<?php echo $request["id"]; ?>)">Conferma</button>
 								</td>
 							</tr>
 							<?php endforeach; ?>

@@ -206,7 +206,7 @@ class FinkeLendar {
     spacer.classList = "calendar-day-spacer col";
 
     var btn = document.createElement("button");
-    btn.classList = "btn btn-outline-danger col-4 float-left mr-3";
+    btn.classList = "btn btn-danger col-4 float-left mr-3";
     btn.innerText = "X";
     btn.onclick = () => {
       if (confirm("Sei sicuro di voler cancellare le date selezionate?")) {

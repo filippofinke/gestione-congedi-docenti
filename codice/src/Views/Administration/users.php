@@ -15,10 +15,10 @@
 				<div class="page-header">
 					<div class="row float-right text-right">
 						<div class="col-12">
-							<button class="btn btn-outline-primary" data-toggle="modal" data-target="#new-user-modal">Aggiungi amministratore</button>
+							<button class="btn btn-primary" data-toggle="modal" data-target="#new-user-modal">Aggiungi amministratore</button>
 						</div>
 						<div class="col-12 mt-1">
-							<button class="btn btn-outline-primary" data-toggle="modal" data-target="#new-ldap-user-modal">Aggiungi utente LDAP</button>
+							<button class="btn btn-primary" data-toggle="modal" data-target="#new-ldap-user-modal">Aggiungi utente LDAP</button>
 						</div>
 					</div>
 
@@ -70,7 +70,7 @@
 										<div class="row">
 											<div class="col-sm-12">
 												<div class="input-group">
-													<button type="submit" class="btn btn-outline-primary btn-block">Crea</button>
+													<button type="submit" class="btn btn-primary btn-block">Crea</button>
 												</div>
 											</div>
 										</div>
@@ -114,7 +114,7 @@
 										<div class="row">
 											<div class="col-sm-12">
 												<div class="input-group">
-													<button type="submit" class="btn btn-outline-primary btn-block">Crea</button>
+													<button type="submit" class="btn btn-primary btn-block">Crea</button>
 												</div>
 											</div>
 										</div>
@@ -181,7 +181,7 @@
 									<td><?php echo ($administrator["last_login"])?date("H:i d.m.Y", strtotime($administrator["last_login"])):"Mai"; ?></td>
 									<td>
 										<?php if ($_SESSION["username"] != $administrator["email"]): ?>
-										<button class="btn btn-outline-danger" onclick="deleteAdministrator(this, '<?php echo $administrator["email"]; ?>')">Elimina</button>
+										<button class="btn btn-danger" onclick="deleteAdministrator(this, '<?php echo $administrator["email"]; ?>')">Elimina</button>
 										<?php endif; ?>
 									</td>
 								</tr>

@@ -112,11 +112,11 @@ if (isset($request)) {
 								</div>
 							</div>
 							<div class="col">
-								<button class="btn btn-outline-danger" onclick="returnToSecretary(<?php echo $request['request']['id']; ?>)">Rimanda in segreteria</button>
+								<button class="btn btn-danger" onclick="returnToSecretary(<?php echo $request['request']['id']; ?>)">Rimanda in segreteria</button>
 							</div>
 							<?php endif; ?>
 							<div class="col <?php echo (!$editing)?'-12':''; ?>">
-								<button class="btn btn-outline-primary" onclick="sendRequest(event)">
+								<button class="btn btn-primary" onclick="sendRequest(event)">
 								<?php
                                     echo ($editing)?"Salva la richiesta":"Invia la richiesta";
                                 ?>
@@ -124,7 +124,7 @@ if (isset($request)) {
 							</div>
 							<?php if ($editing): ?>
 							<div class="col">
-								<button class="btn btn-outline-dark" onclick="window.history.back();">Torna indietro</button>
+								<button class="btn btn-dark" onclick="window.history.back();">Torna indietro</button>
 							</div>
 							<?php endif; ?>
 						</div>

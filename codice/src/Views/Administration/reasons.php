@@ -15,7 +15,7 @@
 				<div class="page-header">
 					<div class="row float-right text-right">
 						<div class="col-12">
-							<button class="btn btn-outline-primary" data-toggle="modal" data-target="#new-motivation-modal">Aggiungi motivazione</button>
+							<button class="btn btn-primary" data-toggle="modal" data-target="#new-motivation-modal">Aggiungi motivazione</button>
 						</div>
 					</div>
 					
@@ -41,7 +41,7 @@
 										<div class="row">
 											<div class="col-sm-12">
 												<div class="input-group">
-													<button type="submit" class="btn btn-outline-primary btn-block">Crea</button>
+													<button type="submit" class="btn btn-primary btn-block">Crea</button>
 												</div>
 											</div>
 										</div>
@@ -80,8 +80,8 @@
                                     <td><?php echo $reason["name"]; ?></td>
 									<td><?php echo $reason["description"]; ?></td>
 									<td class="float-right">
-										<button class="btn btn-outline-primary" onclick="showUpdateDialog(this, <?php echo $reason["id"]; ?>)">Modifica</button>
-										<button class="btn btn-outline-danger" onclick="deleteReason(this, <?php echo $reason["id"]; ?>)">Elimina</button>
+										<button class="btn btn-secondary" onclick="showUpdateDialog(this, <?php echo $reason["id"]; ?>)">Modifica</button>
+										<button class="btn btn-danger" onclick="deleteReason(this, <?php echo $reason["id"]; ?>)">Elimina</button>
 									</td>
                                 </tr>
 							<?php endforeach; ?>
@@ -113,7 +113,7 @@
 								<div class="row">
 									<div class="col-sm-12">
 										<div class="input-group">
-											<button type="submit" class="btn btn-outline-primary btn-block">Aggiorna</button>
+											<button type="submit" class="btn btn-primary btn-block">Aggiorna</button>
 										</div>
 									</div>
 								</div>

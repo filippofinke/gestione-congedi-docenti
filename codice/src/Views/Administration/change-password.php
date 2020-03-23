@@ -45,7 +45,7 @@
                                     </div>	
                                 </div>
                             </div>
-                            <button class="btn btn-block btn-outline-primary">Imposta la password</button>		
+                            <button class="btn btn-block btn-primary">Imposta la password</button>		
                         </form>
                     </div>
                 </div>

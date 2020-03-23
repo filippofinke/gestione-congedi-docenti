@@ -106,7 +106,7 @@ include(__DIR__ . '/../Global/head.php'); ?>
 								<td><?php echo $request["auditor"]; ?></td>
 								<?php endif; ?>
                                 <td>
-                                    <button class="btn btn-outline-primary" onclick="showPdf(<?php echo $request["id"]; ?>);">Visualizza PDF</button>
+                                    <button class="btn btn-primary" onclick="showPdf(<?php echo $request["id"]; ?>);">Visualizza PDF</button>
                                 </td>
 							</tr>
 							<?php endforeach; ?>

@@ -95,7 +95,7 @@ include(__DIR__ . '/../Global/head.php'); ?>
                                 <td><?php echo $request["observations"]; ?></td>
                                 <td><?php echo RequestStatus::get($request["status"]); ?></td>
 								<td>
-                                    <a class="btn btn-outline-primary text-primary" href="<?php echo BASE_URL; ?>/dashboard/<?php echo $request["id"]; ?>">Revisiona</a>
+                                    <a class="btn btn-primary text-primary" href="<?php echo BASE_URL; ?>/dashboard/<?php echo $request["id"]; ?>">Revisiona</a>
 								</td>
 							</tr>
 							<?php endforeach; ?>
