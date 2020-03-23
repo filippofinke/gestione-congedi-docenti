@@ -89,7 +89,7 @@ class Tokens
             $content = "Salve,<br>";
             $content .= "è stato richiesto un recupero password a questo indirizzo email.<br>";
             $content .= "Per eseguire l'accesso e impostare una nuova password prema il collegamento qui sotto:<br>";
-            $content .= "<a href='http://".$_SERVER['SERVER_NAME']."/login/".$token."'>Accedi al sito web</a>";
+            $content .= "<a href='http://".$_SERVER['SERVER_NAME'].BASE_URL."/login/".$token."'>Accedi al sito web</a>";
             return $stm->execute() && Mail::send($email, 'Recupero password | Gestione congedi', $content);
         } catch (PDOException $e) {
             return false;
