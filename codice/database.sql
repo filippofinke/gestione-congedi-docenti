@@ -66,6 +66,7 @@ CREATE TABLE requests(
     auditor VARCHAR(50) default null,
     paid TINYINT(1) default 0,
     hours INT default 0,
+    can_be_forwarded TINYINT(1) default 0,
     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
     FOREIGN KEY(username) REFERENCES users(username)
