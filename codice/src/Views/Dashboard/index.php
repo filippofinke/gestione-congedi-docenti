@@ -80,7 +80,7 @@ if (isset($request)) {
                                 ?>
 							</h5>
 						</div>
-						<?php if (Session::isAdministration() && $editing): ?>
+						<?php if ((Session::isAdministration() || $request['request']['can_be_forwarded']) && $editing): ?>
 						<div class="col-12 mt-1">
 							<textarea class="form-control" style="height: 135px;" maxlength="255" placeholder="Osservazioni" id="observations"></textarea>
 						</div>
@@ -103,17 +103,29 @@ if (isset($request)) {
 							<input class="form-control" type="number" id="hours" placeholder="Ore riconosciute" min="0">
 						</div>
 						<?php endif; ?>
-						<div class="col-12 text-center mt-3">
-							<?php if ($editing && Session::isAdministration() && $request['request']['container'] != Container::SECRETARY): ?>
-							<button class="btn btn-outline-danger" onclick="returnToSecretary(<?php echo $request['request']['id']; ?>)">Rimanda in segreteria</button>
+						<div class="row text-center mt-3 col-12">
+							<?php if ($editing && (Session::isAdministration() || $request['request']['can_be_forwarded']) && $request['request']['container'] != Container::SECRETARY): ?>
+							<div class="col-4 ml-3">
+								<div class="custom-control custom-checkbox mb-5">
+									<input type="checkbox" class="custom-control-input" id="can_be_forwarded">
+									<label class="custom-control-label" for="can_be_forwarded">Può essere spedito dalla segreteria.</label>
+								</div>
+							</div>
+							<div class="col">
+								<button class="btn btn-outline-danger" onclick="returnToSecretary(<?php echo $request['request']['id']; ?>)">Rimanda in segreteria</button>
+							</div>
 							<?php endif; ?>
-							<button class="btn btn-outline-primary" onclick="sendRequest(event)">
-							<?php
-                                echo ($editing)?"Salva la richiesta":"Invia la richiesta";
-                            ?>
-							</button>
+							<div class="col <?php echo (!$editing)?'-12':''; ?>">
+								<button class="btn btn-outline-primary" onclick="sendRequest(event)">
+								<?php
+                                    echo ($editing)?"Salva la richiesta":"Invia la richiesta";
+                                ?>
+								</button>
+							</div>
 							<?php if ($editing): ?>
-							<button class="btn btn-outline-dark" onclick="window.history.back();">Torna indietro</button>
+							<div class="col">
+								<button class="btn btn-outline-dark" onclick="window.history.back();">Torna indietro</button>
+							</div>
 							<?php endif; ?>
 						</div>
 					</div>
@@ -347,7 +359,7 @@ if (isset($request)) {
 						var method = "<?php echo ($editing)?"PUT":"POST";?>";
 						var toUpdate = <?php echo ($editing)?"true":"false"; ?>;
 						var toAdd = "";
-						<?php if (Session::isAdministration() && $editing): ?>
+						<?php if ((Session::isAdministration() || $request['request']['can_be_forwarded']) && $editing): ?>
 							var paid = $("#paid").val();
 							var hours = Number($("#hours").val());
 							var status = $("#status").val();
@@ -455,12 +467,15 @@ if (isset($request)) {
 			}
 
 
-	<?php if (Session::isAdministration()): ?>
+	<?php if (Session::isAdministration() || $request['request']['can_be_forwarded']): ?>
 	function returnToSecretary(id) {
+
+		let canBeForwarded = ($("#can_be_forwarded").is(":checked")?'1':'0');
+
 		if(confirm("Sei sicuro/a di voler inoltrare il congedo nel contenitore della segreteria?")) {
 			fetch('<?php echo BASE_URL; ?>/requests/' + id, {
 				method: "PUT",
-				body: "return=true"
+				body: "return=true&canBeForwarded=" + canBeForwarded
 			}).then((response) => {
 				if(response.status == 200) {
 					$.notify("Il congedo è stato inoltrato al contenitore della segreteria!", "success");

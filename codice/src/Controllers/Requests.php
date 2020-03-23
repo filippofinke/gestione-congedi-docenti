@@ -87,6 +87,7 @@ class Requests
         $id = $request->getAttribute('id');
         $approve = $request->getParam('approve');
         $return = $request->getParam('return');
+        $canBeForwarded = $request->getParam('canBeForwarded');
         if ($approve) {
             if (ModelsRequests::setContainer($id, Container::ADMINISTRATION)) {
                 return $response->withStatus(200);
@@ -94,7 +95,7 @@ class Requests
                 return $response->withStatus(400);
             }
         } elseif ($return && Session::isAdministration()) {
-            if (ModelsRequests::setContainer($id, Container::SECRETARY)) {
+            if (ModelsRequests::setContainer($id, Container::SECRETARY) && ModelsRequests::update($id, null, null, null, null, null, $canBeForwarded)) {
                 return $response->withStatus(200);
             } else {
                 return $response->withStatus(400);
@@ -113,12 +114,13 @@ class Requests
                     $substitutes[$index][$key] = htmlspecialchars($value);
                 }
             }
+            $req = ModelsRequests::getById($id);
             if (($week == "A" || $week == "B") && is_array($reasons) && is_array($substitutes)) {
                 Database::getConnection()->beginTransaction();
 
                 if (isset($status)
                 && isset($observations)
-                && Session::isAdministration()) {
+                && (Session::isAdministration() || $req['can_be_forwarded'])) {
                     if (!Validators::isValidDescription($observations)
                     || !\FilippoFinke\Models\Requests::update($id, null, $status, $observations, $paid, $hours)) {
                         Database::getConnection()->rollBack();

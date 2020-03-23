@@ -150,7 +150,7 @@ class Requests
      * @param $hours Le ore riconosciute.
      * @return boolean True o false.
      */
-    public static function update($id, $week = null, $status = null, $observations = null, $paid = null, $hours = null)
+    public static function update($id, $week = null, $status = null, $observations = null, $paid = null, $hours = null, $canBeForwarded = null)
     {
         $pdo = Database::getConnection();
         $toSet = "";
@@ -194,6 +194,14 @@ class Requests
                 $toSet .= ", ".$toAdd;
             }
         }
+        if ($canBeForwarded) {
+            $toAdd = "can_be_forwarded = :can_be_forwarded";
+            if ($toSet == "") {
+                $toSet = $toAdd;
+            } else {
+                $toSet .= ", ".$toAdd;
+            }
+        }
         $query = "UPDATE requests SET auditor = :auditor, $toSet WHERE id = :id";
         $stm = $pdo->prepare($query);
         $stm->bindParam(":id", $id);
@@ -212,6 +220,9 @@ class Requests
         }
         if ($paid) {
             $stm->bindParam(":paid", $paid);
+        }
+        if ($canBeForwarded) {
+            $stm->bindParam(":can_be_forwarded", $canBeForwarded, \PDO::PARAM_INT);
         }
         try {
             return $stm->execute();
