@@ -376,6 +376,10 @@ if (isset($request)) {
 								$.notify("Seleziona un numero di ore riconosciute!", "error");
 								return;
 							}
+							if(status == 0) {
+								$.notify("Seleziona lo stato del congedo!", "error");
+								return;
+							}
 							if(!isNaN(hours) && paid == "0") hours = 0;
 							toAdd = "&status=" + status + "&observations=" + observations + "&hours=" + hours + "&paid=" + paid;
 							

@@ -1,9 +1,11 @@
 <?php
 namespace FilippoFinke\Controllers;
 
+use FilippoFinke\Libs\Session;
 use FilippoFinke\Models\LdapUsers;
 use FilippoFinke\Models\Reasons;
 use FilippoFinke\Models\Requests;
+use FilippoFinke\Models\RequestStatus;
 use FilippoFinke\Models\Substitutes;
 
 /**
@@ -30,7 +32,7 @@ class Dashboard
         // Se è presente un identificativo apri la visualizzazione in modifica.
         if ($id) {
             $request = Requests::getById($id);
-            if ($request) {
+            if ($request && $request["status"] == RequestStatus::WAITING) {
                 $toCheck = Reasons::getByRequestId($request["id"]);
                 $mapped = array_map(function ($e) {
                     return $e["id"];
@@ -48,7 +50,11 @@ class Dashboard
                     )
                 );
             } else {
-                return $response->redirect(BASE_URL . "/dashboard/secretariat");
+                if (Session::isAdministration()) {
+                    return $response->redirect(BASE_URL . "/dashboard/administration");
+                } else {
+                    return $response->redirect(BASE_URL . "/dashboard/secretariat");
+                }
             }
         } else {
             return $response->render(
@@ -118,7 +124,7 @@ class Dashboard
         }
         return $response->render(
             __DIR__ . '/../Views/Dashboard/history.php',
-            array( 
+            array(
                 'history' => $history,
                 'personal' => $personal
             )
