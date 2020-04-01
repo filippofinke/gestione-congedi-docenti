@@ -95,6 +95,7 @@ class Ldap
      */
     private static function isAllowed($group)
     {
+        $group = strtolower($group);
         foreach (self::$allowedGroups as $allowed) {
             if (strpos($group, $allowed) !== false) {
                 return true;
@@ -112,11 +113,16 @@ class Ldap
      */
     public static function login($username, $password)
     {
-        // SOLO PER DEBUG 
-        list($name, $lastName) = explode(".", $username, 2);
-        return new LdapUser($username, ucfirst($name), ucfirst($lastName));
-        // SOLO PER DEBUG
-
+        if (EXTERNAL_LDAP) {
+            $data = ExternalLdap::login($username, $password);
+            if ($data && self::isAllowed($data["appartenenza"])) {
+                list($name, $lastName) = explode(".", $data["username"], 2);
+                return new LdapUser($username, ucfirst($name), ucfirst($lastName));
+            } else {
+                return false;
+            }
+        }
+        
         $connectionString = ldap_connect("ldap://".self::$host.":".self::$port."/");
 
         ldap_set_option($connectionString, LDAP_OPT_PROTOCOL_VERSION, 3);
