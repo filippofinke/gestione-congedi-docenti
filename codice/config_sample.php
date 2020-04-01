@@ -2,7 +2,7 @@
 /**
  * Config.php
  * File nel quale risiede la configurazione del progetto.
- * 
+ *
  * @author Filippo Finke
  */
 
@@ -31,6 +31,8 @@ define("EMAIL_FROM", "no-reply@gestione-congedi-cpt.ch");
 /**
  * Configurazioni riguardanti LDAP.
  */
+// Specifia se usare LDAP locale oppure esterno.
+define("EXTERNAL_LDAP", true);
 // Il server LDAP da interrogare.
 define("LDAP_HOST", "sv-104-dc.cpt.local");
 // Il prefisso del dominio da appendere all'inizio di ogni nome utente.
@@ -39,8 +41,11 @@ define("LDAP_PREFIX", "CPT\\");
 define("LDAP_SEARCH_DN", "DC=CPT,DC=local");
 // I gruppi che hanno il permesso di accedere all'applicativo tramite LDAP.
 define("LDAP_ALLOWED_GROUPS", array(
-    "docenti", // Gruppo docenti
-    "amministrazione" // Gruppo amministrazione che comprende Segretariato, Direzione e Vice direzione.
+    "docenti", // Gruppo docenti.
+    "docente", // Gruppo docenti.
+    "direzione", // Gruppo direzione.
+    "amministrazione", // Gruppo amministrazione.
+    "studente" // Utilizzato per test.
 ));
 
 /**
