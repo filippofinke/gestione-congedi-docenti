@@ -42,6 +42,13 @@ Database::setUsername(DB_USERNAME);
 // Imposto della password per accedere al database.
 Database::setPassword(DB_PASSWORD);
 
+// Controllo connessione alla banca dati.
+try {
+    Database::getConnection();
+} catch(PDOException $e) {
+    exit("Impossibile collegarsi alla banca dati: ".$e->getMessage());
+}
+
 // Imposto l'indirizzo email dal quale inviare la posta elettronica.
 Mail::setFromEmail(EMAIL_FROM);
 
