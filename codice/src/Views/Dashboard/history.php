@@ -144,44 +144,53 @@ include(__DIR__ . '/../Global/head.php'); ?>
 	<script src="<?php echo BASE_URL; ?>/assets/js/responsive.bootstrap4.js"></script>
     <script src="<?php echo BASE_URL; ?>/assets/js/notify.js"></script>
 	<script>
+		/**
+		 * Funzione per mostrare il PDF di un congedo.
+		 * 
+		 * @param id L'identificativo del congedo.
+		 */
+		function showPdf(id) {
+			var url = "<?php echo BASE_URL; ?>/requests/" + id + "/pdf";
+			$('#iframe').attr("src", url);
+			$('#download-button').attr("href", url);
+			$('#pdf-modal').modal('toggle');
+		}
 
-	function showPdf(id) {
-		var url = "<?php echo BASE_URL; ?>/requests/" + id + "/pdf";
-		$('#iframe').attr("src", url);
-		$('#download-button').attr("href", url);
-		$('#pdf-modal').modal('toggle');
-	}
-
-	function printPdf() {
-		$('#iframe').get(0).contentWindow.print();
-	}
-	
-	$('document').ready(function(){
-		var table = $('.data-table').DataTable({
-			scrollCollapse: true,
-			autoWidth: false,
-			responsive: true,
-			ordering: false,
-			"lengthMenu": [[5, 10, 25, -1], [5, 10, 25, "Tutti"]],
-			"language": {
-				"lengthMenu": "Mostra _MENU_ congedi per pagina",
-				"info": "_START_-_END_ di _TOTAL_ congedi",
-                "infoEmpty": "",
-                "zeroRecords": "Nessun risultato corrispondente alla ricerca.",
-				searchPlaceholder: "Cerca",
-                "emptyTable": "Nessun dato da mostrare.",
-                "infoFiltered": "(filtrate da _MAX_ congedi totali)",
-                "paginate": {
-                    "previous": "Prima",
-                    "next": "Dopo"
-                }
-			},
-		});
-        table.on( 'draw', function (e) {
-            var body = $( table.table().body() );
-            body.unhighlight();
-            body.highlight( table.search() );  
-        });
+		/**
+		 * Funzione utilizzata per mostrare la pagina di stampa.
+		 */
+		function printPdf() {
+			$('#iframe').get(0).contentWindow.print();
+		}
+		
+		// Attendo che il documento sia caricato.
+		$('document').ready(function(){
+			// Creazione dataTable.
+			var table = $('.data-table').DataTable({
+				scrollCollapse: true,
+				autoWidth: false,
+				responsive: true,
+				ordering: false,
+				"lengthMenu": [[5, 10, 25, -1], [5, 10, 25, "Tutti"]],
+				"language": {
+					"lengthMenu": "Mostra _MENU_ congedi per pagina",
+					"info": "_START_-_END_ di _TOTAL_ congedi",
+					"infoEmpty": "",
+					"zeroRecords": "Nessun risultato corrispondente alla ricerca.",
+					searchPlaceholder: "Cerca",
+					"emptyTable": "Nessun dato da mostrare.",
+					"infoFiltered": "(filtrate da _MAX_ congedi totali)",
+					"paginate": {
+						"previous": "Prima",
+						"next": "Dopo"
+					}
+				},
+			});
+			table.on( 'draw', function (e) {
+				var body = $( table.table().body() );
+				body.unhighlight();
+				body.highlight( table.search() );  
+			});
 	});
 	</script>
 </body>

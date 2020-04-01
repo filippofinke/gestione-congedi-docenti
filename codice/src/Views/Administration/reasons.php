@@ -132,7 +132,9 @@
 	<script src="<?php echo BASE_URL; ?>/assets/js/responsive.bootstrap4.js"></script>
 	<script src="<?php echo BASE_URL; ?>/assets/js/notify.js"></script>
 	<script>
+	    // Attendo che il documento sia caricato.
 		$('document').ready(function(){
+			// Creazione dataTable.
 			$('.data-table').DataTable({
 				scrollCollapse: true,
 				autoWidth: false,
@@ -154,6 +156,11 @@
 			});
 		});
 
+		/**
+         * Funzione utilizzata per aggiornare una motivazione.
+         * 
+         * @param event L'evento dell'invio del form.
+         */
 		function updateReason(event) {
 			event.preventDefault();
 			var name = $("#update_name").val();
@@ -169,11 +176,17 @@
 						location.reload();
 					}, 500);
 				} else {
-					$.notify("Richiesta malformata.", "error");
+					$.notify("Alcuni campi contengono caratteri che non sono consentiti!", "error");
 				}
 			});
 		}
 
+		/**
+		 * Funzione utilizzata per mostrare il form di aggiornamento di una motivazione.
+		 * 
+		 * @param element La riga dal quale ricavare i dati.
+		 * @param id L'id della motivazione da aggiornare.
+		 */
 		function showUpdateDialog(element, id) {
 			var tds = element.parentElement.parentElement.getElementsByTagName("td");
 			var name = tds[0].innerText;
@@ -184,6 +197,12 @@
 			$("#update-motivation-modal").modal("toggle");
 		}
 		
+		/**
+		 * Funzione utilizzata per eliminare una motivazione.
+		 * 
+		 * @param element La riga da eliminare.
+		 * @param id L'id della motivazione da aggiornare.
+		 */
 		function deleteReason(element, id) {
 			if(confirm("Sei sicuro di voler eliminare la motivazione? Potrà essere eliminata solamente se non ci saranno più congedi correlati.")) {
 				fetch('<?php echo BASE_URL; ?>/reasons/' + id, {
@@ -193,12 +212,17 @@
 						element.parentElement.parentElement.remove();
 						$.notify("Motivazione rimossa!", "success");
 					} else {
-						$.notify("Richiesta malformata.", "error");
+						$.notify("Impossibile eliminare una motivazione che è collegata ad un congedo!", "error");
 					}
 				 });
 			}
 		}
 
+		/**
+		 * Funzione utilizzata per la creazione di una motivazione.
+		 * 
+		 * @param event L'evento dell'invio del form.
+		 */
 		function createReason(event) {
 			event.preventDefault();
 			var name = $("#name").val();

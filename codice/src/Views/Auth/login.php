@@ -36,65 +36,73 @@
     <?php include(__DIR__ . '/../Global/script.php'); ?>
 	
 	<script>
-
-	$( document ).ready(function() {
-		$("#loginButton").removeAttr('disabled');
-		$("#loginButton").text("Accedi");
-	});
-	
-	function doLogin(event) {
-		event.preventDefault();
-		var username = $("#username").val();
-		var password = $("#password").val();
-		console.log(username, password);
-		if((isValidLdapUsername(username) || isValidEmail(username)) && password.length > 0) {
-			fetch('<?php echo BASE_URL; ?>/login', {
-				method:'post',
-				body: "username=" + username + "&password=" + password,
-				headers:{
-					"Content-Type":"application/x-www-form-urlencoded"
-				}
-			}).then((response) => {
-				if(response.status == 200) {
-					$("#error").css("display","none");
-					$("#success").css("display","block").text("Accesso eseguito!");
-					setTimeout(function() {
-						window.location = "<?php echo BASE_URL; ?>/";
-					}, 500);
-				} else {
-					$("#error").css("display","block").text("Credenziali errate!");
-					$("#success").css("display","none");
-					if(isValidEmail(username)) {
-						$("#forgot-password").css("display","block");
+		// Attendo che il documento sia caricato.
+		$( document ).ready(function() {
+			$("#loginButton").removeAttr('disabled');
+			$("#loginButton").text("Accedi");
+		});
+		
+		/**
+		 * Funzione utilizzata per eseguire il login.
+		 * 
+		 * @param event L'evento dell'invio del form.
+		 */
+		function doLogin(event) {
+			event.preventDefault();
+			var username = $("#username").val();
+			var password = $("#password").val();
+			if((isValidLdapUsername(username) || isValidEmail(username)) && password.length > 0) {
+				fetch('<?php echo BASE_URL; ?>/login', {
+					method:'post',
+					body: "username=" + username + "&password=" + password,
+					headers:{
+						"Content-Type":"application/x-www-form-urlencoded"
 					}
-				}
-			})
+				}).then((response) => {
+					if(response.status == 200) {
+						$("#error").css("display","none");
+						$("#success").css("display","block").text("Accesso eseguito!");
+						setTimeout(function() {
+							window.location = "<?php echo BASE_URL; ?>/";
+						}, 500);
+					} else {
+						$("#error").css("display","block").text("Credenziali errate!");
+						$("#success").css("display","none");
+						if(isValidEmail(username)) {
+							$("#forgot-password").css("display","block");
+						}
+					}
+				})
+			}
 		}
-	}
 
-	function forgotPassword() {
-		var username = $("#username").val();
-		if(isValidEmail(username)) {
-			fetch('<?php echo BASE_URL; ?>/forgot-password', {
-				method:'POST',
-				body: "email=" + username,
-				headers:{
-					"Content-Type":"application/x-www-form-urlencoded"
-				}
-			}).then((response) => { 
-				if(response.status == 200) {
-					$("#error").css("display","none");
-					$("#success").css("display","block").text("Email di recupero inviata!");
-				} else {
-					$("#error").css("display","block").text("Impossibile inviare una email di recupero!");
-					$("#success").css("display","none");
-				}
-			});
-		} else {
-			$("#error").css("display","block").text("Inserisci l'email!");
-			$("#success").css("display","none");
+		/**
+		 * Funzione utilizzata per richiedere il recupero della password.
+		 */
+		function forgotPassword() {
+			var username = $("#username").val();
+			if(isValidEmail(username)) {
+				fetch('<?php echo BASE_URL; ?>/forgot-password', {
+					method:'POST',
+					body: "email=" + username,
+					headers:{
+						"Content-Type":"application/x-www-form-urlencoded"
+					}
+				}).then((response) => { 
+					if(response.status == 200) {
+						$("#error").css("display","none");
+						$("#success").css("display","block").text("Email di recupero inviata!");
+						$("#forgot-password").css("display","none");
+					} else {
+						$("#error").css("display","block").text("Impossibile inviare una email di recupero!");
+						$("#success").css("display","none");
+					}
+				});
+			} else {
+				$("#error").css("display","block").text("Inserisci l'email!");
+				$("#success").css("display","none");
+			}
 		}
-	}
 	</script>
 </body>
 </html>

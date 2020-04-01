@@ -191,19 +191,25 @@ if (isset($request)) {
 	<script src="<?php echo BASE_URL; ?>/assets/js/finkeLendar.js"></script>
 	<script>	
 
+	    // Congedo da modificare.
 		var toEdit = null;
+	    // Lista di motivazioni
 		<?php if ($editing) :?>
 		var reasons = [<?php echo implode(",", $request["reasons"]); ?>];
 		<?php else: ?>
 		var reasons = [];
 		<?php endif; ?>
+		// Calendario.
 		var calendar = null;
 
+		// I nomi di ogni riga.
 		var labels = [
 				<?php foreach (CALENDAR_LABELS as $label): ?>
 					"<?php echo $label; ?>",
 				<?php endforeach; ?>
 			];
+		
+		// Gli orari disponibili nel calendario.
 		var hours = [
 			<?php foreach (CALENDAR_HOURS as $hour):
                 if (isset($hour["space"])) {
@@ -214,6 +220,11 @@ if (isset($request)) {
 			<?php endforeach; ?>
 		];
 
+		/**
+		 * Funzione utilizzata per selezionare una motivazione.
+		 * 
+		 * @param id L'id della motivazione da selezionare.
+		 */
 		function toggleReason(id) {
 			var index = reasons.indexOf(id);
 			if (index == -1) {
@@ -223,15 +234,17 @@ if (isset($request)) {
 			}
 		}
 
+		// Attendo il caricamento della pagina.
 		window.addEventListener("load", function() {		
-			console.log("loaded!");			
 
+			// Creazione del calendario.
 			calendar = new FinkeLendar(
 				document.getElementById('calendar'),
 				labels,
 				hours
 			);
 			
+			// Funzione chiamata al click nel calendario.
 			calendar.setOnHourClick(function(event) {
 				toEdit = event.target;
 				$("#course").val(toEdit.dataset.course);
@@ -241,13 +254,16 @@ if (isset($request)) {
 				$('#calendar-modal').modal('toggle');
 			});
 
+			// Funzione chiamata al select del calendario.
 			calendar.setOnSelected(function(event) {
 				toEdit = event.target;
 				$('#calendar-modal').modal('toggle');
 			});
 
+			// Disegna il calendario.
 			calendar.draw();
 
+			// Modalità di editing.
 			<?php if ($editing): ?>
 				calendar.setWeek("<?php echo $request["request"]["week"]; ?>");
 				var substitues = JSON.parse('<?php echo json_encode($request["substitutes"]); ?>');
@@ -290,12 +306,12 @@ if (isset($request)) {
 			<?php endif; ?>
 		});
 
+		/**
+		 * Funzione utilizzata per inviare una richiesta di congedo.
+		 * 
+		 * @param event L'evento del form.
+		 */
 		function sendRequest(event) {
-				console.log("reasons", reasons);
-				console.log("week", calendar.week);
-				console.log("days", calendar.days);
-				console.log("dates", calendar.dates);
-
 				var errors = [];
 				if(reasons.length == 0) {
 					errors.push("Seleziona almeno una motivazione!");
@@ -419,6 +435,11 @@ if (isset($request)) {
 				
 			}
 
+		/**
+		 * Funzione utilizzata per salvare un congedo.
+		 * 
+		 * @param event L'evento del form.
+		 */
 		function save(event) {
 				event.preventDefault();
 				var course = $("#course").val();
@@ -472,6 +493,12 @@ if (isset($request)) {
 
 
 	<?php if (Session::isAdministration() || (isset($request) && $request['request']['can_be_forwarded'])): ?>
+	
+	/**
+	 * Funzione utilizzata per rimandare un congedo in segreteria.
+	 * 
+	 * @param id L'id del congedo.
+	 */
 	function returnToSecretary(id) {
 
 		let canBeForwarded = ($("#can_be_forwarded").is(":checked")?'1':'0');

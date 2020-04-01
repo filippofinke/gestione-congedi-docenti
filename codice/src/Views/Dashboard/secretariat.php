@@ -110,7 +110,9 @@ include(__DIR__ . '/../Global/head.php'); ?>
 	<script src="<?php echo BASE_URL; ?>/assets/js/responsive.bootstrap4.js"></script>
 	<script src="<?php echo BASE_URL; ?>/assets/js/notify.js"></script>
 	<script>
+	// Attendo il caricamento della pagina.
 	$('document').ready(function(){
+		// Creazione dataTable.
 		var table = $('.data-table').DataTable({
 			scrollCollapse: true,
 			autoWidth: false,
@@ -137,7 +139,12 @@ include(__DIR__ . '/../Global/head.php'); ?>
             body.highlight( table.search() );  
         });
 	});
-    
+	
+	/**
+	 * Funzione utilizzata per approvare un congedo e mandarlo al contenitore successivo.
+	 * 
+	 * @param id L'id del congedo da approvare.
+	 */
     function approve(id) {
         if(confirm("Sei sicuro/a di voler inoltrare il congedo nel contenitore della direzione?")) {
             console.log("Approving " + id);

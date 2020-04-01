@@ -92,10 +92,6 @@ class Administrators
         $hash = password_hash($password, PASSWORD_DEFAULT);
         $stm->bindParam(':password', $hash);
         try {
-            /**
-             * CONTROLLARE
-             */
-
             $content = "<p>Salve,<br>";
             $content .= "è stato creato un account amministratore con questo indirizzo email.<br>";
             $content .= "Credenziali di accesso:<br>";

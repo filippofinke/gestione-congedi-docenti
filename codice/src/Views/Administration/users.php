@@ -201,7 +201,9 @@
 	<script src="<?php echo BASE_URL; ?>/assets/js/responsive.bootstrap4.js"></script>
 	<script src="<?php echo BASE_URL; ?>/assets/js/notify.js"></script>
 	<script>
+		// Attendo che il documento sia caricato.
 		$('document').ready(function(){
+			// Creazione dataTable.
 			$('.data-table').DataTable({
 				scrollCollapse: true,
 				autoWidth: false,
@@ -223,6 +225,12 @@
 			});
 		});
 
+		/**
+		 * Funzione utilizzata per aggiornare il permesso di un utente.
+		 * 
+		 * @param username L'utente da aggiornare.
+		 * @param permission Il nuovo permesso dell'utente.
+		 */
 		function updatePermission(username, permission) {
 			console.log(username);
 			fetch('<?php echo BASE_URL; ?>/users/' + username, {
@@ -237,6 +245,11 @@
 			});
 		}
 
+		/**
+		 * Funzione utilizzata per creare un amministratore.
+		 * 
+		 * @param event L'evento dell'invio del form.
+		 */
 		function createAdministrator(event) {
 			event.preventDefault();
 			var name = $("#name").val();
@@ -257,7 +270,7 @@
 							location.reload();
 						}, 1000);
 					} else if(response.status == 400) {
-						$.notify("Impossibile creare l'utente, riprova!", "error");
+						$.notify("Alcuni campi contengono caratteri che non sono consentiti!", "error");
 					} else {
 						$.notify("L'email utilizzata è gia esistente!", "error");
 					}
@@ -267,6 +280,12 @@
 			}
 		}
 
+		/**
+		 * Funzione utilizzato per eliminare un amministratore.
+		 * 
+		 * @param row La riga da eliminare.
+		 * @param email L'email da eliminare.
+		 */
 		function deleteAdministrator(row, email) {
 			if(confirm("Sei sicuro di voler eliminare l'utente con email: " + email + "?")) {
 				fetch('<?php echo BASE_URL; ?>/users', {
@@ -285,6 +304,11 @@
 			}
 		}
 
+		/**
+		 * Funzione utilizzata per creare un utente LDAP.
+		 * 
+		 * @param event L'evento dell'invio del form.
+		 */
 		function createLdapUser(event) {
 			event.preventDefault();
 			var name = $("#ldapName").val();
@@ -306,7 +330,7 @@
 							location.reload();
 						}, 500);
 					} else if(response.status == 400) {
-						$.notify("Impossibile creare l'utente LDAP, riprova!", "error");
+						$.notify("Alcuni campi contengono caratteri che non sono consentiti!", "error");
 					} else {
 						$.notify("L'utente è gia presente nel database!", "error");
 					}

@@ -7287,13 +7287,13 @@ Plugin URI: http://manos.malihu.gr/jquery-custom-content-scroller
 */
 /*
 CONTENTS: 
-	1. BASIC STYLE - Plugin's basic/essential CSS properties (normally, should not be edited). 
-	2. VERTICAL SCROLLBAR - Positioning and dimensions of vertical scrollbar. 
-	3. HORIZONTAL SCROLLBAR - Positioning and dimensions of horizontal scrollbar.
-	4. VERTICAL AND HORIZONTAL SCROLLBARS - Positioning and dimensions of 2-axis scrollbars. 
-	5. TRANSITIONS - CSS3 transitions for hover events, auto-expanded and auto-hidden scrollbars. 
-	6. SCROLLBAR COLORS, OPACITY AND BACKGROUNDS 
-		6.1 THEMES - Scrollbar colors, opacity, dimensions, backgrounds etc. via ready-to-use themes.
+  1. BASIC STYLE - Plugin's basic/essential CSS properties (normally, should not be edited). 
+  2. VERTICAL SCROLLBAR - Positioning and dimensions of vertical scrollbar. 
+  3. HORIZONTAL SCROLLBAR - Positioning and dimensions of horizontal scrollbar.
+  4. VERTICAL AND HORIZONTAL SCROLLBARS - Positioning and dimensions of 2-axis scrollbars. 
+  5. TRANSITIONS - CSS3 transitions for hover events, auto-expanded and auto-hidden scrollbars. 
+  6. SCROLLBAR COLORS, OPACITY AND BACKGROUNDS 
+    6.1 THEMES - Scrollbar colors, opacity, dimensions, backgrounds etc. via ready-to-use themes.
 */
 /* 
 ------------------------------------------------------------------------------------------------------------------------
@@ -7605,10 +7605,10 @@ yx-axis
 ------------------------------------------------------------------------------------------------------------------------
 */
 /* 
-	----------------------------------------
-	6.1 THEMES 
-	----------------------------------------
-	*/
+  ----------------------------------------
+  6.1 THEMES 
+  ----------------------------------------
+  */
 /* default theme ("light") */
 .mCSB_scrollTools {
   opacity: 0.75;
@@ -7670,34 +7670,34 @@ yx-axis
 .mCSB_scrollTools .mCSB_buttonUp {
   background-position: 0 0;
   /* 
-		sprites locations 
-		light: 0 0, -16px 0, -32px 0, -48px 0, 0 -72px, -16px -72px, -32px -72px
-		dark: -80px 0, -96px 0, -112px 0, -128px 0, -80px -72px, -96px -72px, -112px -72px
-		*/ }
+    sprites locations 
+    light: 0 0, -16px 0, -32px 0, -48px 0, 0 -72px, -16px -72px, -32px -72px
+    dark: -80px 0, -96px 0, -112px 0, -128px 0, -80px -72px, -96px -72px, -112px -72px
+    */ }
 
 .mCSB_scrollTools .mCSB_buttonDown {
   background-position: 0 -20px;
   /* 
-		sprites locations
-		light: 0 -20px, -16px -20px, -32px -20px, -48px -20px, 0 -92px, -16px -92px, -32px -92px
-		dark: -80px -20px, -96px -20px, -112px -20px, -128px -20px, -80px -92px, -96px -92px, -112 -92px
-		*/ }
+    sprites locations
+    light: 0 -20px, -16px -20px, -32px -20px, -48px -20px, 0 -92px, -16px -92px, -32px -92px
+    dark: -80px -20px, -96px -20px, -112px -20px, -128px -20px, -80px -92px, -96px -92px, -112 -92px
+    */ }
 
 .mCSB_scrollTools .mCSB_buttonLeft {
   background-position: 0 -40px;
   /* 
-		sprites locations 
-		light: 0 -40px, -20px -40px, -40px -40px, -60px -40px, 0 -112px, -20px -112px, -40px -112px
-		dark: -80px -40px, -100px -40px, -120px -40px, -140px -40px, -80px -112px, -100px -112px, -120px -112px
-		*/ }
+    sprites locations 
+    light: 0 -40px, -20px -40px, -40px -40px, -60px -40px, 0 -112px, -20px -112px, -40px -112px
+    dark: -80px -40px, -100px -40px, -120px -40px, -140px -40px, -80px -112px, -100px -112px, -120px -112px
+    */ }
 
 .mCSB_scrollTools .mCSB_buttonRight {
   background-position: 0 -56px;
   /* 
-		sprites locations 
-		light: 0 -56px, -20px -56px, -40px -56px, -60px -56px, 0 -128px, -20px -128px, -40px -128px
-		dark: -80px -56px, -100px -56px, -120px -56px, -140px -56px, -80px -128px, -100px -128px, -120px -128px
-		*/ }
+    sprites locations 
+    light: 0 -56px, -20px -56px, -40px -56px, -60px -56px, 0 -128px, -20px -128px, -40px -128px
+    dark: -80px -56px, -100px -56px, -120px -56px, -140px -56px, -80px -128px, -100px -128px, -120px -128px
+    */ }
 
 .mCSB_scrollTools .mCSB_buttonUp:hover,
 .mCSB_scrollTools .mCSB_buttonDown:hover,
@@ -16494,12 +16494,12 @@ ul.wysihtml5-toolbar .fa {
 
 
 .td-rubber {
-	-webkit-animation-name: td-rubber;
-	animation-name: td-rubber;
-	-webkit-animation-duration: .8s;
-	animation-duration: .8s;
-	-webkit-animation-fill-mode: both;
-	animation-fill-mode: both;
+  -webkit-animation-name: td-rubber;
+  animation-name: td-rubber;
+  -webkit-animation-duration: .8s;
+  animation-duration: .8s;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
 }
 
 */
@@ -17743,12 +17743,12 @@ select.selectpicker {
 
 /*==============================================================
 
-	Name:style.css
-	Version:1.0.0
+  Name:style.css
+  Version:1.0.0
 
 ==============================================================*/
 /*==============================================================
-	Common Styles Initials
+  Common Styles Initials
 ==============================================================*/
 html {
   -webkit-text-size-adjust: none;
@@ -17834,7 +17834,7 @@ p {
   width: 100%; }
 
 /*==============================================================
-	Global Styles Start
+  Global Styles Start
 ==============================================================*/
 .pre-loader {
   background: url(/assets/img/logo.jpg) no-repeat #fffef2;
@@ -18426,10 +18426,10 @@ textarea.form-control {
   max-width: 100%; }
 
 /*==============================================================
-	Global Styles End
+  Global Styles End
 ==============================================================*/
 /*==============================================================
-	Header Start
+  Header Start
 ==============================================================*/
 .header {
   position: fixed;
@@ -18564,10 +18564,10 @@ textarea.form-control {
   margin-bottom: 0; }
 
 /*==============================================================
-	Header End
+  Header End
 ==============================================================*/
 /*==============================================================
-	Footer Start
+  Footer Start
 ==============================================================*/
 .footer-wrap {
   width: 100%;
@@ -18577,10 +18577,10 @@ textarea.form-control {
   font-weight: 500; }
 
 /*==============================================================
-	Footer End
+  Footer End
 ==============================================================*/
 /*==============================================================
-	Side Bar Start
+  Side Bar Start
 ==============================================================*/
 .menu-icon {
   width: 47px;
@@ -18815,10 +18815,10 @@ textarea.form-control {
   background: #def2ff; }
 
 /*==============================================================
-	Side Bar End
+  Side Bar End
 ==============================================================*/
 /*==============================================================
-	Login Start
+  Login Start
 ==============================================================*/
 .login-wrap {
   height: 100%; }
@@ -18841,7 +18841,7 @@ textarea.form-control {
   text-align: right; }
 
 /*==============================================================
-	Login End
+  Login End
 ==============================================================*/
 .main-container {
   padding: 70px 0 0px 250px;
@@ -19254,7 +19254,7 @@ textarea.form-control {
   border-color: #0099ff; }
 
 /*==============================================================
-	Timeline Start
+  Timeline Start
 ==============================================================*/
 .timeline ul {
   position: relative; }
@@ -19297,10 +19297,10 @@ textarea.form-control {
   border-radius: 5px; }
 
 /*==============================================================
-	Timeline End
+  Timeline End
 ==============================================================*/
 /*==============================================================
-	sitemap Start
+  sitemap Start
 ==============================================================*/
 .list-unstyled > li > ul {
   margin-left: 35px; }
@@ -19369,10 +19369,10 @@ textarea.form-control {
   display: none; }
 
 /*==============================================================
-	sitemap Start
+  sitemap Start
 ==============================================================*/
 /*==============================================================
-	Calendar Start
+  Calendar Start
 ==============================================================*/
 .calendar-wrap .fc-event.ui-draggable-handle {
   padding: 5px;
@@ -19393,10 +19393,10 @@ textarea.form-control {
   font-size: 24px; }
 
 /*==============================================================
-	Calendar End
+  Calendar End
 ==============================================================*/
 /*==============================================================
-	Blog Start
+  Blog Start
 ==============================================================*/
 .blog-wrap {
   padding-bottom: 50px; }
@@ -19513,10 +19513,10 @@ textarea.form-control {
   font-weight: 500; }
 
 /*==============================================================
-	Blog Start
+  Blog Start
 ==============================================================*/
 /*==============================================================
-	Product Page Start
+  Product Page Start
 ==============================================================*/
 .product-list ul li {
   margin-bottom: 30px; }
@@ -19627,10 +19627,10 @@ textarea.form-control {
   color: #78909c; }
 
 /*==============================================================
-	Product Page End
+  Product Page End
 ==============================================================*/
 /*==============================================================
-	Faq Page Start
+  Faq Page Start
 ==============================================================*/
 .faq-wrap .card {
   margin-bottom: 20px;
@@ -19675,13 +19675,13 @@ textarea.form-control {
   color: #78909c; }
 
 /*==============================================================
-	Faq Page End
+  Faq Page End
 ==============================================================*/
 .gallery-wrap > ul > li {
   margin-bottom: 30px; }
 
 /*==============================================================
-	pricing-table Start
+  pricing-table Start
 ==============================================================*/
 .pricing-table-wrap .card {
   border: 0;
@@ -19709,10 +19709,10 @@ textarea.form-control {
   width: 100%; }
 
 /*==============================================================
-	pricing-table End
+  pricing-table End
 ==============================================================*/
 /*==============================================================
-	Profile Page Start
+  Profile Page Start
 ==============================================================*/
 .profile-photo {
   width: 160px;
@@ -19964,7 +19964,7 @@ textarea.form-control {
   font-size: 16px; }
 
 /*==============================================================
-	Profile Page End
+  Profile Page End
 ==============================================================*/
 .contact-directory-list > ul > li {
   margin-bottom: 30px; }
@@ -20056,7 +20056,7 @@ textarea.form-control {
   transition: all 0.3s ease-in-out; }
 
 /*==============================================================
-	Invoice Page Start
+  Invoice Page Start
 ==============================================================*/
 .invoice-wrap {
   overflow: auto; }
@@ -20106,10 +20106,10 @@ textarea.form-control {
   padding-bottom: 5px; }
 
 /*==============================================================
-	Invoice Page End
+  Invoice Page End
 ==============================================================*/
 /*==============================================================
-	Chat Module Start
+  Chat Module Start
 ==============================================================*/
 .chat-list {
   border: 1px solid #eff5f7;
@@ -20403,11 +20403,11 @@ textarea.form-control {
   padding: 20px; }
 
 /*==============================================================
-	Chat Module End
+  Chat Module End
 ==============================================================*/
 
 /*==============================================================
-	Media css
+  Media css
 ==============================================================*/
 @media (min-width: 1200px) and (max-width: 1400px) {
   .device-usage-chart .width-50-p {

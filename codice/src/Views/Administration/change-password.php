@@ -56,6 +56,11 @@
     <?php include(__DIR__ . '/../Global/script.php'); ?>
 	<script src="<?php echo BASE_URL; ?>/assets/js/notify.js"></script>
 	<script>
+        /**
+         * Funzione utilizzata per impostare la nuova password dell'utente.
+         * 
+         * @param event L'evento dell'invio del form.
+         */
         function setPassword(event) {
             event.preventDefault();
             var password = $("#password").val();

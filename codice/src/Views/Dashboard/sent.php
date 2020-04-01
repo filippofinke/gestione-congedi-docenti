@@ -106,7 +106,9 @@ include(__DIR__ . '/../Global/head.php'); ?>
 	<script src="<?php echo BASE_URL; ?>/assets/js/responsive.bootstrap4.js"></script>
 	<script src="<?php echo BASE_URL; ?>/assets/js/notify.js"></script>
 	<script>
+	// Attendo che il documento sia caricato.
 	$('document').ready(function(){
+		// Creazione dataTable.
 		var table = $('.data-table').DataTable({
 			scrollCollapse: true,
 			autoWidth: false,
