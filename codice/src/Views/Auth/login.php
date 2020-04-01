@@ -49,6 +49,8 @@
 		 */
 		function doLogin(event) {
 			event.preventDefault();
+			$("#loginButton").attr("disabled", true);
+			$("#loginButton").text("Sto eseguendo l'accesso...");
 			var username = $("#username").val();
 			var password = $("#password").val();
 			if((isValidLdapUsername(username) || isValidEmail(username)) && password.length > 0) {
@@ -59,6 +61,8 @@
 						"Content-Type":"application/x-www-form-urlencoded"
 					}
 				}).then((response) => {
+					$("#loginButton").attr("disabled", false);
+					$("#loginButton").text("Accedi");
 					if(response.status == 200) {
 						$("#error").css("display","none");
 						$("#success").css("display","block").text("Accesso eseguito!");
