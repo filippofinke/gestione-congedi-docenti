@@ -7,14 +7,31 @@
    $password = ...
 
    !ATTENZIONE: ogni autenticazione richiede almeno 3 secondi (voluto)
+
+   Modifiche:
+   - 01.04.2020 Filippo Finke: Aggiunta classe ExternalLdap che semplifica l'utilizzo dello script
+                               per l'ecosistema dell'applicativo web.
 */
 namespace FilippoFinke\Libs;
 
+/**
+ * ExternalLdap.php
+ * Classe utilizzata per gestire la connessione LDAP esterno.
+ *
+ * @author Filippo Finke
+ */
 class ExternalLdap
 {
+    /**
+     * Metodo utilizzato per autenticarsi sul server LDAP attraverso l'esterno.
+     *
+     * @param $username Il nome utente.
+     * @param $password La password da utilizzare.
+     * @return bool Array contenente i dati se l'accesso è eseguito altrimenti false.
+     */
     public static function login($username, $password)
     {
-        if ($username and $password) {
+        if ($username && $password) {
             $cod = new EnDecryptText();
             $u=$cod->Encrypt_Text($username);
             $p=$cod->Encrypt_Text($password);
@@ -27,7 +44,6 @@ class ExternalLdap
     }
 }
 
- 
 class EnDecryptText // Create a class of EnDecryptText.
 {
     //------------------------------------------------------------------------------------
