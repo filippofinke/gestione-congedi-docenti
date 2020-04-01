@@ -4,11 +4,11 @@
 # @author Filippo Finke
 
 # Elimino il database se esiste già.
-DROP DATABASE IF EXISTS congedi;
+# DROP DATABASE IF EXISTS congedi;
 # Creo il database congedi.
-CREATE DATABASE congedi;
+# CREATE DATABASE congedi;
 # Seleziono il database da utilizzare.
-USE congedi;
+# USE congedi;
 
 # Creazione della tabella permissions che verrà utilizzata 
 # per la gestione dei permessi.
@@ -100,13 +100,8 @@ INSERT INTO permissions(name) VALUES ("Segreteria");
 INSERT INTO permissions(name) VALUES ("Vice direzione");
 INSERT INTO permissions(name) VALUES ("Direzione");
 
-# Inserimento di un utente di prova.
-INSERT INTO users(username, name, last_name) VALUES("filippo.finke", "Filippo", "Finke");
-
 # Inserimento amministratore di prova.
-INSERT INTO administrators(email, name, last_name, password) VALUES ("filippo.finke@samtrevano.ch","Filippo","Finke","$2y$10$5TLq/1LFthARn3i0AosZV.hPJBj4Ps729q9.IbyfLsi1LxLO0cBkO"); # Password: 123456
+INSERT INTO administrators(email, name, last_name, password) VALUES ("admin@samtrevano.ch","Account","Admin","$2y$10$5TLq/1LFthARn3i0AosZV.hPJBj4Ps729q9.IbyfLsi1LxLO0cBkO"); # Password: 123456
 
 # Inserimento motivazione di prova.
-INSERT INTO reasons(name, description) VALUES ("Adozione","(16 settimane, previo giustificazione dei motivi)");
-INSERT INTO reasons(name, description) VALUES ("Prova","Prova");
-INSERT INTO reasons(name, description) VALUES ("Prova","Prova");
+INSERT INTO reasons(name, description) VALUES ("Titolo","Descrizione");
