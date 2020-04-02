@@ -1,17 +1,4 @@
 <?php
-/* Autenticazione utenti CPT dall'esterno
-   ver. 2.0  09.08.15 Ivan Raimondi
-
-   autentica con i parametri:
-   $username = nome utente rete CPT, ad esempio ivan.raimondi
-   $password = ...
-
-   !ATTENZIONE: ogni autenticazione richiede almeno 3 secondi (voluto)
-
-   Modifiche:
-   - 01.04.2020 Filippo Finke: Aggiunta classe ExternalLdap che semplifica l'utilizzo dello script
-                               per l'ecosistema dell'applicativo web.
-*/
 namespace FilippoFinke\Libs;
 
 /**
@@ -44,6 +31,19 @@ class ExternalLdap
     }
 }
 
+/* Autenticazione utenti CPT dall'esterno
+   ver. 2.0  09.08.15 Ivan Raimondi
+
+   autentica con i parametri:
+   $username = nome utente rete CPT, ad esempio ivan.raimondi
+   $password = ...
+
+   !ATTENZIONE: ogni autenticazione richiede almeno 3 secondi (voluto)
+
+   Modifiche:
+   - 01.04.2020 Filippo Finke: Aggiunta classe ExternalLdap che semplifica l'utilizzo dello script
+                               per l'ecosistema dell'applicativo web.
+*/
 class EnDecryptText // Create a class of EnDecryptText.
 {
     //------------------------------------------------------------------------------------
