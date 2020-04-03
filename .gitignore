@@ -1,12 +1,9 @@
-# Ignoro tutti i file word nella cartella diari
-/diari/docx
-
 # Ignoro i file di mac
 .DS_Store
 
 # Ignoro la cartella vendor
-/codice/vendor
-/codice/composer.lock
+/5_Sito o applicativo/vendor
+/5_Sito o applicativo/composer.lock
 
 # Ignoro il file di config corrente
-/codice/config.php
+/5_Sito o applicativo/config.php
