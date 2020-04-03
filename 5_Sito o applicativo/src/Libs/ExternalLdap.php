@@ -23,7 +23,12 @@ class ExternalLdap
             $u=$cod->Encrypt_Text($username);
             $p=$cod->Encrypt_Text($password);
             $url = "http://212.117.109.242:1935/autenticami_esterno_2016.php?u=$u&p=$p&chi=cpt";
-            parse_str(file_get_contents($url), $out);
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, $url);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+            $result = curl_exec($ch);
+            curl_close($ch);
+            parse_str($result, $out);
             return $out;
         } else {
             return false;
