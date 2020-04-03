@@ -168,7 +168,9 @@
 									</td>
 									<td>LDAP</td>
 									<td><?php echo ($ldapUser["last_login"])?date("H:i d.m.Y", strtotime($ldapUser["last_login"])):"Mai"; ?></td>
-									<td></td>
+									<td>
+										<button class="btn btn-danger" onclick="deleteLdapUser(this, '<?php echo $ldapUser["username"]; ?>')">Elimina</button>
+									</td>
 								</tr>
 							<?php endforeach; ?>
 							<?php foreach ($administrators as $administrator) :?>
@@ -294,6 +296,30 @@
 				}).then((response) => {
 					if(response.status == 200) {
 						$.notify("L'amministratore con email: " + email + " è stato eliminato!", "success");
+						row.parentElement.parentElement.remove();
+					} else if(response.status == 400) {
+						$.notify("Impossibile eliminare l'utente, riprova!", "error");
+					} else {
+						$.notify("Non puoi eliminare l'utente corrente!", "error");
+					}
+				});
+			}
+		}
+
+		/**
+		 * Funzione utilizzato per eliminare un utente LDAP.
+		 * 
+		 * @param row La riga da eliminare.
+		 * @param email L'email da eliminare.
+		 */
+		function deleteLdapUser(row, username) {
+			if(confirm("Sei sicuro di voler eliminare l'utente con username: " + username + "?")) {
+				fetch('<?php echo BASE_URL; ?>/users', {
+					method: "DELETE",
+					body: "username=" + username,
+				}).then((response) => {
+					if(response.status == 200) {
+						$.notify("L'utente LDAP con username: " + username + " è stato eliminato!", "success");
 						row.parentElement.parentElement.remove();
 					} else if(response.status == 400) {
 						$.notify("Impossibile eliminare l'utente, riprova!", "error");

@@ -93,4 +93,23 @@ class LdapUsers
             return false;
         }
     }
+
+    /**
+     * Metodo utilizzato per eliminare un utente LDAP usando l'username.
+     *
+     * @param $username L'username da eliminare.
+     * @return boolean True oppure false.
+     */
+    public static function delete($username)
+    {
+        $pdo = Database::getConnection();
+        $query = "DELETE FROM users WHERE username = :username";
+        $stm = $pdo->prepare($query);
+        $stm->bindParam(':username', $username);
+        try {
+            return $stm->execute();
+        } catch (PDOException $e) {
+            return false;
+        }
+    }
 }

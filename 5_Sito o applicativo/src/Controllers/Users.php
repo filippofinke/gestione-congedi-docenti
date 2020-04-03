@@ -101,12 +101,15 @@ class Users
     public static function delete($request, $response)
     {
         $email = $request->getParam('email');
-        if (Validators::isValidEmail($email)) {
+        $username = $request->getParam('username');
+        if ($email && Validators::isValidEmail($email)) {
             if ($_SESSION["username"] == $email) {
                 return $response->withStatus(401);
             } elseif (Administrators::delete($email)) {
                 return $response->withStatus(200);
             }
+        } elseif ($username && LdapUsers::delete($username)) {
+            return $response->withStatus(200);
         }
         return $response->withStatus(400);
     }
