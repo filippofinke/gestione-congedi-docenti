@@ -35,6 +35,11 @@ class RequestPdf extends Fpdf
         $this->SetFont('Arial', '', 13);
         $this->Cell(30);
         $full_name = iconv('UTF-8', 'windows-1252', $user["last_name"]." ".$user["name"]);
+        $fontSize = 13;
+        while ($this->GetStringWidth($full_name) >= 40) {
+            $this->SetFont('Arial', '', $fontSize);
+            $fontSize--;
+        }
         $this->Cell(40, 8, $full_name);
         $this->SetFont('Arial', 'B', 13);
         $this->Cell(45, 8, "Periodo di assenza:");
