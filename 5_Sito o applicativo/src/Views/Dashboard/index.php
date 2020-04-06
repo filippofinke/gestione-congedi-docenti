@@ -49,8 +49,8 @@ if (isset($request)) {
 							<div class="tab-pane fade active show" id="reasonTab" role="tabpanel">	
 								<div class="row mt-1">
 									<?php foreach ($reasons as $reason): ?>
-										<div class="col-6">
-											<div class="card reason">
+										<div class="col-6 mb-1">
+											<div class="card reason" style="height: 100%;">
 												<div class="card-body">
 													<div class="custom-control custom-checkbox mb-5">
 														<input type="checkbox" class="custom-control-input" id="<?php echo $reason["id"]; ?>" onchange="toggleReason(<?php echo $reason["id"]; ?>)" <?php echo ($editing && in_array($reason["id"], $request["reasons"]))?'checked':''; ?>>

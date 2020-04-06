@@ -23,7 +23,7 @@ class Reasons
     {
         $name = $request->getParam('name');
         $description = $request->getParam('description');
-        if (Validators::isValidAlphabetAndAccents($name, 255)
+        if (Validators::isValidDescription($name)
         && Validators::isValidDescription($description)) {
             if (\FilippoFinke\Models\Reasons::insert($name, $description)) {
                 return $response->withStatus(201);
@@ -46,7 +46,7 @@ class Reasons
         $id = $request->getAttribute('id');
         $name = $request->getParam('name');
         $description = $request->getParam('description');
-        if (Validators::isValidName($name)
+        if (Validators::isValidDescription($name)
         && Validators::isValidDescription($description)) {
             if (\FilippoFinke\Models\Reasons::update($id, $name, $description)) {
                 return $response->withStatus(200);

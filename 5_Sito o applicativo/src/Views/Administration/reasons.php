@@ -76,7 +76,7 @@
 							</thead>
 							<tbody>
 							<?php foreach ($reasons as $reason): ?>
-                                <tr>
+							  <tr id="<?php echo $reason["id"]; ?>">
                                     <td><?php echo $reason["name"]; ?></td>
 									<td><?php echo $reason["description"]; ?></td>
 									<td class="float-right">
@@ -188,7 +188,7 @@
 		 * @param id L'id della motivazione da aggiornare.
 		 */
 		function showUpdateDialog(element, id) {
-			var tds = element.parentElement.parentElement.getElementsByTagName("td");
+			var tds = document.getElementById(id).getElementsByTagName("td");
 			var name = tds[0].innerText;
 			var description = tds[1].innerText;
 			$("#update_name").val(name);
@@ -227,7 +227,7 @@
 			event.preventDefault();
 			var name = $("#name").val();
 			var description = $("#description").val();
-			if(isValidAlphabetAndAccents(name, 255) && isValidDescription(description)) {
+			if(isValidDescription(name) && isValidDescription(description)) {
 				console.log(name, description);
 				fetch('<?php echo BASE_URL; ?>/reasons', {
 					method: "POST",
